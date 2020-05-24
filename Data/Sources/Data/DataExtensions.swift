@@ -15,9 +15,7 @@ extension String {
         formatter4.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         if let date = formatter4.date(from: self) {
             formatter4.dateFormat = "dd, MMM yyyy HH:mm"
-            print(self)
             self = formatter4.string(from: date)
-            print(self)
         }
     }
     
@@ -41,5 +39,22 @@ public extension OrderData {
         }
         
         return values
+    }
+    
+    func getColor() -> String {
+        let typeValue = OrderStatus.init(rawValue: self.status)
+        
+        switch typeValue {
+        case .PROCESSING:
+            return "#cddc39"
+        case .COMPLETED:
+            return "#4caf50"
+        case .ONHOLD:
+            return "#42a5f5"
+        case .CANCELED:
+            return "#e57373"
+        default:
+            return "#4dd0e1"
+        }
     }
 }

@@ -51,7 +51,6 @@ public struct WooRepository:WooService {
     public func changeIP(newIp: String) {
         ip = newIp
         base = "https://\(ip)/hellojussy/index.php/wp-json/wc/v3/"
-        print("new ip \(base)")
     }
     
     

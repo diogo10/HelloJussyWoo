@@ -47,7 +47,8 @@ struct OrderView: View {
                 Text(placeholder.customerNote)
             }.padding()
         }
-        .background(Color.green)
+        .background(Color.init(hexStringToUIColor(hex: placeholder.getColor())))
+        
     }
 }
 let orders = [OrderData]()
