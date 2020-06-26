@@ -1,10 +1,10 @@
 import Foundation
 import Alamofire
 
-var ip = "192.168.64.2"
+var ip = "hellojussy.pt"
 let consumerKey = "ck_468fd2df86c0cdcb645e36446578950b0d416135"
 let consumerSecret = "cs_6fe5dff60892c9062f089733bfade59d676ef774"
-var base = "https://\(ip)/hellojussy/index.php/wp-json/wc/v3/"
+var base = "https://\(ip)/index.php/wp-json/wc/v3/"
 let query = "consumer_key=\(consumerKey)&consumer_secret=\(consumerSecret)"
 
 private let session: Session = {
