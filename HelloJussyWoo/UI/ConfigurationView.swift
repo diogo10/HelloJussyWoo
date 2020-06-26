@@ -12,7 +12,7 @@ struct ConfigurationView: View {
     
     @ObservedObject var viewModel: ConfigurationViewModel
     
-    @State private var ipText = "192.168.64.1"
+    @State private var ipText = ""
     
     var body: some View {
         Form {
