@@ -15,10 +15,10 @@ struct FinanceView: View {
         
         List { Section(header: ListHeader().padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)), footer: ListFooter()) {
             Item()
-             Item()
-             Item()
-             Item()
-             Item()
+            Item()
+            Item()
+            Item()
+            Item()
             }
         }.listStyle(GroupedListStyle())
         
@@ -118,28 +118,15 @@ private struct ListHeader: View {
             }.padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 5))
             
             HStack {
-                
-               
-                HStack {
-                    
-                    Button(action: {
-                        print("Button action Expense")
-                    }) {
-                        HStack {
-                            Text("Expense").bold().foregroundColor(.blue)
-                        }
-                    }
-                    
-                    Button(action: {
-                        print("Button action Income")
-                    }) {
-                        HStack {
-                            Text("Income").bold().foregroundColor(.gray)
-                        }
+                Text("Transations").bold().font(.subheadline)
+                Spacer()
+                Button(action: {
+                    print("more filter")
+                }) {
+                    HStack {
+                        Text("....").bold().foregroundColor(.blue)
                     }
                 }
-                 Spacer()
-                Text("...").bold().font(.subheadline)
                 
             }.padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
             
