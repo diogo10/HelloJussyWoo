@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D950894F24D5568800D30648 /* ContentViewV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D950894E24D5568800D30648 /* ContentViewV2.swift */; };
+		D950895124D5570000D30648 /* FinanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D950895024D5570000D30648 /* FinanceView.swift */; };
 		D9874DA3247A766D0018B243 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9874DA2247A766D0018B243 /* ViewExtensions.swift */; };
 		D9ABB30B247A95E500107707 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB30A247A95E500107707 /* ActivityIndicator.swift */; };
 		D9ABB30F247AAD7900107707 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB30E247AAD7900107707 /* ConfigurationView.swift */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D950894E24D5568800D30648 /* ContentViewV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewV2.swift; sourceTree = "<group>"; };
+		D950895024D5570000D30648 /* FinanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceView.swift; sourceTree = "<group>"; };
 		D9874DA2247A766D0018B243 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		D9ABB30A247A95E500107707 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		D9ABB30E247AAD7900107707 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
@@ -63,6 +67,7 @@
 				D9874DA2247A766D0018B243 /* ViewExtensions.swift */,
 				D9ABB30A247A95E500107707 /* ActivityIndicator.swift */,
 				D9ABB30E247AAD7900107707 /* ConfigurationView.swift */,
+				D950895024D5570000D30648 /* FinanceView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -100,6 +105,7 @@
 				D9C59D622470885100569FC8 /* README.md */,
 				D9C59D472470717F00569FC8 /* AppDelegate.swift */,
 				D9C59D492470717F00569FC8 /* SceneDelegate.swift */,
+				D950894E24D5568800D30648 /* ContentViewV2.swift */,
 				D9C59D4B2470717F00569FC8 /* ContentView.swift */,
 				D9C59D4D2470718000569FC8 /* Assets.xcassets */,
 				D9C59D522470718000569FC8 /* LaunchScreen.storyboard */,
@@ -211,6 +217,8 @@
 				D9C59D4C2470717F00569FC8 /* ContentView.swift in Sources */,
 				D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */,
 				D9ABB30B247A95E500107707 /* ActivityIndicator.swift in Sources */,
+				D950894F24D5568800D30648 /* ContentViewV2.swift in Sources */,
+				D950895124D5570000D30648 /* FinanceView.swift in Sources */,
 				D9ABB30F247AAD7900107707 /* ConfigurationView.swift in Sources */,
 				D9874DA3247A766D0018B243 /* ViewExtensions.swift in Sources */,
 				D9C59D612470762100569FC8 /* OrdersViewModel.swift in Sources */,
