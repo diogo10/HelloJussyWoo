@@ -76,7 +76,7 @@ struct ProfileHeader: View {
             
             List {
                 
-                NavigationLink(destination: Text("")) {
+                NavigationLink(destination: CountryFormView()) {
                     CountryItem(viewModel: self.viewModel)
                 }
                 
@@ -84,11 +84,11 @@ struct ProfileHeader: View {
                     FixedExpenseItem(viewModel: self.viewModel)
                 }
                 
-                NavigationLink(destination: Text("")) {
+                NavigationLink(destination: TargetSalesFormView()) {
                     TargetInputItem(viewModel: self.viewModel)
                 }
                 
-                NavigationLink(destination: Text("")) {
+                NavigationLink(destination: TaxFormView()) {
                     TaxInputItem(viewModel: viewModel)
                 }
                 
