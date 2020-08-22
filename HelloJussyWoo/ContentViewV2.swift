@@ -9,8 +9,8 @@
 import SwiftUI
 
 struct ContentViewV2: View {
-    @State private var selection = 0
-    @State private var options = ["Finance"]
+    @State private var selection = 1
+    @State private var options = ["Finance", "Settings"]
     
     var body: some View {
         
@@ -22,11 +22,20 @@ struct ContentViewV2: View {
                             Image("bag")
                             Text("Finance")
                         }
+                        
+                    }.tag(0)
+                    
+                    ProfileView()
+                        .tabItem {
+                            VStack {
+                                Image("config")
+                                Text("Settings")
+                            }
                     }
+                    .tag(1)
                 
                 }
                 
-                .navigationBarTitle("Finance", displayMode: .large)
             }.onAppear {
                 //UITableView.appearance().separatorStyle = .none
             }

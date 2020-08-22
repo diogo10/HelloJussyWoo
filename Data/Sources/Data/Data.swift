@@ -100,7 +100,79 @@ public struct WooRepository:WooService {
     }
 }
 
+protocol ExpensesService {
+    func getFixedExpense(result: @escaping ([FixedExpense]) -> Void)
+    func total() -> Double
+    mutating func addTax(value: Double)
+    func impactInEachProduct() -> Double
+    mutating func setCurrency(value: String)
+    func getCurrency() -> String
+    func getTargetSales() -> Double
+    mutating func setTargetSales(value: Double)
+}
+
+public struct ExpensesServiceRepository: ExpensesService {
+ 
+    private let list = [FixedExpense(name: "Aluguel" , total: 0.0), FixedExpense(name: "Gasolina",  total: 0.0)]
+    private var tax = 0.0
+    private var targetSalesValue = 0.0
+    private var currency = "R$"
+    
+    public init() {}
+    
+    public func getFixedExpense(result: @escaping ([FixedExpense]) -> Void) {
+        result(list)
+    }
+    
+    public func total() -> Double {
+        return list.map { item in
+            item.total
+        }.sum()
+    }
+    
+   
+    mutating func addTax(value: Double) {
+        self.tax = value
+    }
+    
+    public func getTax() -> Double {
+        return self.tax
+    }
+    
+    public func impactInEachProduct() -> Double {
+        return 23.0
+    }
+    
+    public mutating func setCurrency(value: String) {
+        self.currency = value
+    }
+    
+    public func getCurrency() -> String {
+        return self.currency
+    }
+    
+    public func getTargetSales() -> Double {
+        return targetSalesValue
+    }
+    
+    public mutating func setTargetSales(value: Double) {
+        self.targetSalesValue = value
+    }
+    
+}
+
+extension Sequence where Element: AdditiveArithmetic {
+    func sum() -> Element { reduce(.zero, +) }
+}
+
 //MARK: MODELS
+
+public struct FixedExpense : Identifiable {
+    public var id = UUID()
+    public var name: String
+    public var total: Double
+    public var color: String = "#EEEEEE"
+}
 
 public struct OrderData : Identifiable,Decodable{
     public var id: Int
