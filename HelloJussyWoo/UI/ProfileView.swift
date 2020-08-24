@@ -13,13 +13,8 @@ struct ProfileView: View {
 
 class ProfileViewModel : FixedExpensesViewModel {
     
-    lazy var currency: String = {
-        return repoExpenses.getCurrency()
-    }()
-    
-    
     func getTax() -> String {
-        return String(format: "\(currency) %.2f", repoExpenses.getTax())
+        return String(format: "\(repoExpenses.getCurrency()) %.2f", repoExpenses.getTax())
     }
     
     func getImpact() -> String {
@@ -27,7 +22,7 @@ class ProfileViewModel : FixedExpensesViewModel {
     }
     
     func getCurrencyFlagName() -> String {
-        if currency == "R$" {
+        if repoExpenses.getCurrency() == "R$" {
             return "flag_brazil"
         }else {
             return "flag_eu"
@@ -35,7 +30,7 @@ class ProfileViewModel : FixedExpensesViewModel {
     }
     
     func getTargetSales() -> String {
-        return String(format: "\(currency) %.2f", repoExpenses.getTargetSales())
+        return String(format: "\(repoExpenses.getCurrency()) %.2f", repoExpenses.getTargetSales())
     }
 
 }

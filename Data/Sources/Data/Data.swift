@@ -102,72 +102,131 @@ public struct WooRepository:WooService {
 
 protocol ExpensesService {
     func getFixedExpense(result: @escaping ([FixedExpense]) -> Void)
+    func addFixedExpense(value: Double, name: String)
     func total() -> Double
-    mutating func addTax(value: Double)
+    func addTax(value: Double)
     func impactInEachProduct() -> Double
-    mutating func setCurrency(value: String)
+    func setCurrency(value: String)
     func getCurrency() -> String
     func getTargetSales() -> Double
     mutating func setTargetSales(value: Double)
 }
 
 public struct ExpensesServiceRepository: ExpensesService {
- 
-    private let list = [FixedExpense(name: "Aluguel" , total: 0.0), FixedExpense(name: "Gasolina",  total: 0.0)]
-    private var tax = 0.0
-    private var targetSalesValue = 0.0
-    private var currency = "R$"
+    
+    private var defaults = UserDefaults.standard
     
     public init() {}
     
+    func addFixedExpense(value: Double, name: String) {
+        var list = getFixedExpense()
+        list.append(FixedExpense(name: name, total: value))
+        do {
+            try defaults.setObject(list, forKey: "FixedExpenseList")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     public func getFixedExpense(result: @escaping ([FixedExpense]) -> Void) {
-        result(list)
+        result(getFixedExpense())
+    }
+    
+    private func getFixedExpense() -> [FixedExpense] {
+        let list : [FixedExpense] = []
+        do {
+            let playingItMyWay = try defaults.getObject(forKey: "FixedExpenseList", castTo: [FixedExpense].self)
+            print(playingItMyWay)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        return list
     }
     
     public func total() -> Double {
-        return list.map { item in
+        return getFixedExpense().map { item in
             item.total
         }.sum()
     }
     
-   
-    mutating func addTax(value: Double) {
-        self.tax = value
+    public func addTax(value: Double) {
+        defaults.set(value, forKey: "tax")
     }
     
     public func getTax() -> Double {
-        return self.tax
+        return defaults.double(forKey: "tax")
     }
     
     public func impactInEachProduct() -> Double {
         return 23.0
     }
     
-    public mutating func setCurrency(value: String) {
-        self.currency = value
+    public func setCurrency(value: String) {
+        defaults.set(value, forKey: "currencySimbol")
     }
     
     public func getCurrency() -> String {
-        return self.currency
+        return defaults.string(forKey: "currencySimbol") ?? "R$"
     }
     
     public func getTargetSales() -> Double {
-        return targetSalesValue
+        return defaults.double(forKey: "targetSales")
     }
     
-    public mutating func setTargetSales(value: Double) {
-        self.targetSalesValue = value
+    public func setTargetSales(value: Double) {
+        defaults.set(value, forKey: "targetSales")
     }
     
+}
+
+//MARK: Extension
+
+protocol ObjectSavable {
+    func setObject<Object>(_ object: Object, forKey: String) throws where Object: Encodable
+    func getObject<Object>(forKey: String, castTo type: Object.Type) throws -> Object where Object: Decodable
 }
 
 extension Sequence where Element: AdditiveArithmetic {
     func sum() -> Element { reduce(.zero, +) }
 }
 
+enum ObjectSavableError: String, LocalizedError {
+    case unableToEncode = "Unable to encode object into data"
+    case noValue = "No data object found for the given key"
+    case unableToDecode = "Unable to decode object into given type"
+    
+    var errorDescription: String? {
+        rawValue
+    }
+}
+
+extension UserDefaults: ObjectSavable {
+    func setObject<Object>(_ object: Object, forKey: String) throws where Object: Encodable {
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(object)
+            set(data, forKey: forKey)
+        } catch {
+            throw ObjectSavableError.unableToEncode
+        }
+    }
+    
+    func getObject<Object>(forKey: String, castTo type: Object.Type) throws -> Object where Object: Decodable {
+        guard let data = data(forKey: forKey) else { throw ObjectSavableError.noValue }
+        let decoder = JSONDecoder()
+        do {
+            let object = try decoder.decode(type, from: data)
+            return object
+        } catch {
+            throw ObjectSavableError.unableToDecode
+        }
+    }
+}
+
 //MARK: MODELS
 
-public struct FixedExpense : Identifiable {
+public struct FixedExpense : Identifiable, Codable {
     public var id = UUID()
     public var name: String
     public var total: Double

@@ -52,19 +52,40 @@ class BaseFormViewModel : FixedExpensesViewModel {
         }
     }
     
+    func getInputType(type: BaseFormType) -> UIKeyboardType {
+        switch type {
+        case .tax:
+            return .numberPad
+        case .targetInSales:
+            return .numberPad
+         default:
+            return .default
+        }
+    }
+    
     func saveCurrency(value: Int) {
+         print("value: \(value)")
+        
+        if value == 1 {
+            //EU
+            repoExpenses.setCurrency(value: "€")
+        } else {
+            repoExpenses.setCurrency(value: "R$")
+        }
         
     }
     
     func save(type: BaseFormType, value: String) {
          print("value: \(value)")
+        let doubleValue = Double(value) ?? 0.0
         switch type {
         case .tax:
             print("in tax")
-        case .targetInSales:
+            repoExpenses.addTax(value: doubleValue)
+           
+       default:
             print("in target")
-        case .currency:
-            print("in currency")
+             repoExpenses.setTargetSales(value: doubleValue)
         }
     }
 }
@@ -75,6 +96,7 @@ struct BaseFormView: View {
     private var type:BaseFormType = .tax
     @State private var previewIndex = 0
     var previewOptions: [String] = []
+    @Environment(\.presentationMode) var presentation
     
     init(value: BaseFormType) {
         self.type = value
@@ -96,6 +118,7 @@ struct BaseFormView: View {
                         }.pickerStyle(WheelPickerStyle())
                     }else {
                         TextField("Type in your value", text: $value)
+                            .keyboardType(self.viewModel.getInputType(type: self.type))
                     }
                     
                 }
@@ -108,7 +131,7 @@ struct BaseFormView: View {
                         }else {
                            self.viewModel.save(type: self.type, value: self.value)
                         }
-                        
+                        self.presentation.wrappedValue.dismiss()
                         
                         
                     }) {
