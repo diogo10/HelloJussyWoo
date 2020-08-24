@@ -38,9 +38,9 @@ struct FixedExpensesView: View {
         List {
             Section(header: Text("General"), footer: FixedExpensesListFooter(value: viewModel.total() )) {
                 ForEach(viewModel.list) { section in
-                
+                    
                     NavigationLink(destination: Text(section.name) ) {
-                       VStack {
+                        VStack {
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text("\(section.name)").bold().font(.subheadline)
@@ -56,13 +56,21 @@ struct FixedExpensesView: View {
                     
                 }
             }
-                
+            
             
         }.onAppear {
             self.viewModel.load()
         }
         .navigationBarTitle("Fixed Expenses")
         .listStyle(GroupedListStyle())
+        .navigationBarItems(trailing: NavigationLink(destination: Text("section.name") ) {
+            AddButtonView()
+        })
+    }
+}
+struct AddButtonView: View {
+    var body: some View {
+        Text("Add").foregroundColor(Color.blue)
     }
 }
 
