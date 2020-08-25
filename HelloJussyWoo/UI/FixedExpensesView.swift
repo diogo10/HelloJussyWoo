@@ -63,7 +63,7 @@ struct FixedExpensesView: View {
         }
         .navigationBarTitle("Fixed Expenses")
         .listStyle(GroupedListStyle())
-        .navigationBarItems(trailing: NavigationLink(destination: Text("section.name") ) {
+        .navigationBarItems(trailing: NavigationLink(destination: ManageFixedExpenses(viewModel: ManageFixedExpensesViewModel()) ) {
             AddButtonView()
         })
     }

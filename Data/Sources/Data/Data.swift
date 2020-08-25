@@ -118,7 +118,7 @@ public struct ExpensesServiceRepository: ExpensesService {
     
     public init() {}
     
-    func addFixedExpense(value: Double, name: String) {
+    public func addFixedExpense(value: Double, name: String) {
         var list = getFixedExpense()
         list.append(FixedExpense(name: name, total: value))
         do {
@@ -133,10 +133,10 @@ public struct ExpensesServiceRepository: ExpensesService {
     }
     
     private func getFixedExpense() -> [FixedExpense] {
-        let list : [FixedExpense] = []
+        var list : [FixedExpense] = []
         do {
-            let playingItMyWay = try defaults.getObject(forKey: "FixedExpenseList", castTo: [FixedExpense].self)
-            print(playingItMyWay)
+            let it = try defaults.getObject(forKey: "FixedExpenseList", castTo: [FixedExpense].self)
+            list.append(contentsOf: it)
         } catch {
             print(error.localizedDescription)
         }
