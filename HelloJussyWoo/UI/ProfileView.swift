@@ -89,7 +89,7 @@ struct ProfileHeader: View {
                 
                 TotalItem(viewModel: self.viewModel)
                 
-            }.padding(.top, 30)
+            }.padding(.top, 20)
             
             
         }

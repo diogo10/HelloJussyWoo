@@ -10,7 +10,6 @@ struct TaxFormView: View {
 }
 
 struct TargetSalesFormView: View {
-    
     var body: some View {
         VStack {
             BaseFormView(value: .targetInSales)
@@ -49,6 +48,17 @@ class BaseFormViewModel : FixedExpensesViewModel {
             return "Target in Sales"
         case .currency:
             return "Currency"
+        }
+    }
+    
+    func getValue(type: BaseFormType) -> String {
+        switch type {
+        case .tax:
+            return repoExpenses.getTax().format()
+        case .targetInSales:
+            return repoExpenses.getTargetSales().format()
+         default:
+            return ""
         }
     }
     
@@ -138,6 +148,8 @@ struct BaseFormView: View {
                         Text("Save changes")
                     }
                 }
+            }.onAppear {
+                self.value = self.viewModel.getValue(type: self.type)
             }
             
             
@@ -149,5 +161,11 @@ struct BaseFormView: View {
 struct SimpleFormView_Previews: PreviewProvider {
     static var previews: some View {
         BaseFormView(value: .tax)
+    }
+}
+
+public extension Double {
+    func format() -> String {
+        return String(format: "%.2f", self)
     }
 }
