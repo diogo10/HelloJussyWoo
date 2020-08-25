@@ -105,6 +105,8 @@ protocol ExpensesService {
     func addFixedExpense(value: Double, name: String)
     func updateFixedExpense(id: String, value: Double, name: String)
     func getFixedExpense(id: String) -> FixedExpense?
+    func deleteFixedExpense(index: [Int])
+    
     func total() -> Double
     func addTax(value: Double)
     func impactInEachProduct() -> Double
@@ -168,6 +170,19 @@ public struct ExpensesServiceRepository: ExpensesService {
         }
         
         return list
+    }
+    
+    public func deleteFixedExpense(index: [Int]) {
+        var list = getFixedExpense()
+        index.forEach { item in
+            list.remove(at: item)
+        }
+        
+        do {
+            try defaults.setObject(list, forKey: "FixedExpenseList")
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     public func total() -> Double {

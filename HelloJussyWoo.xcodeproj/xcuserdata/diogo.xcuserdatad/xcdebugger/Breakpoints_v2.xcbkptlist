@@ -20,53 +20,5 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "772EE94D-3FE5-4666-A55C-957461195517"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HelloJussyWoo/UI/FixedExpenses/FixedExpensesView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "772EE94D-3FE5-4666-A55C-957461195517 - 9442a2ff16a03896"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Data.FixedExpense) -&gt; SwiftUI.NavigationLink&lt;SwiftUI.VStack&lt;&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;, HelloJussyWoo.ManageFixedExpenses&gt; in closure #1 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;Data.FixedExpense&gt;, Foundation.UUID, SwiftUI.NavigationLink&lt;SwiftUI.VStack&lt;&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;, HelloJussyWoo.ManageFixedExpenses&gt;&gt; in closure #1 () -&gt; SwiftUI.Section&lt;SwiftUI.Text, SwiftUI.ForEach&lt;Swift.Array&lt;Data.FixedExpense&gt;, Foundation.UUID, SwiftUI.NavigationLink&lt;SwiftUI.VStack&lt;&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;, HelloJussyWoo.ManageFixedExpenses&gt;&gt;, HelloJussyWoo.(FixedExpensesListFooter in _5444EB19E74FDD4AD97BB5E974FA1FD6)&gt; in HelloJussyWoo.FixedExpensesView.body.getter : some"
-                  moduleName = "HelloJussyWoo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/diogo/Documents/XcodeProjects/HelloJussyWoo/HelloJussyWoo/UI/FixedExpenses/FixedExpensesView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "42"
-                  endingLineNumber = "42"
-                  offsetFromSymbolStart = "145">
-               </Location>
-               <Location
-                  uuid = "772EE94D-3FE5-4666-A55C-957461195517 - 651b131afe3dc9b0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; SwiftUI.VStack&lt;&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt; in closure #1 (Data.FixedExpense) -&gt; SwiftUI.NavigationLink&lt;SwiftUI.VStack&lt;&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;, HelloJussyWoo.ManageFixedExpenses&gt; in closure #1 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;Data.FixedExpense&gt;, Foundation.UUID, SwiftUI.NavigationLink&lt;SwiftUI.VStack&lt;&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;, HelloJussyWoo.ManageFixedExpenses&gt;&gt; in closure #1 () -&gt; SwiftUI.Section&lt;SwiftUI.Text, SwiftUI.ForEach&lt;Swift.Array&lt;Data.FixedExpense&gt;, Foundation.UUID, SwiftUI.NavigationLink&lt;SwiftUI.VStack&lt;&lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;, HelloJussyWoo.ManageFixedExpenses&gt;&gt;, HelloJussyWoo.(FixedExpensesListFooter in _5444EB19E74FDD4AD97BB5E974FA1FD6)&gt; in HelloJussyWoo.FixedExpensesView.body.getter : some"
-                  moduleName = "HelloJussyWoo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/diogo/Documents/XcodeProjects/HelloJussyWoo/HelloJussyWoo/UI/FixedExpenses/FixedExpensesView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "20">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

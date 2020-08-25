@@ -24,6 +24,11 @@ class FixedExpensesViewModel : ObservableObject{
         }
     }
     
+    func delete(index: [Int]) {
+        repoExpenses.deleteFixedExpense(index: index)
+        load()
+    }
+    
     func total() -> String {
         return String(format: "\(repoExpenses.getCurrency()) %.2f", repoExpenses.total())
     }
@@ -54,9 +59,8 @@ struct FixedExpensesView: View {
                     }
                     
                     
-                }
+                }.onDelete(perform: self.deleteItem)
             }
-            
             
         }.onAppear {
             self.viewModel.load()
@@ -66,6 +70,13 @@ struct FixedExpensesView: View {
         .navigationBarItems(trailing: NavigationLink(destination: ManageFixedExpenses(id: "") ) {
             AddButtonView()
         })
+    }
+    
+    private func deleteItem(at indexSet: IndexSet) {
+        self.viewModel.delete(index: indexSet.map({ it in
+            it
+        }))
+        
     }
 }
 struct AddButtonView: View {
