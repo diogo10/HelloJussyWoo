@@ -70,6 +70,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D962EA5D24F5451B00D4F521 /* FixedExpenses */ = {
+			isa = PBXGroup;
+			children = (
+				5B29606CC2FD27C3A633913B /* FixedExpensesView.swift */,
+				D962EA5B24F53DA400D4F521 /* ManageFixedExpenses.swift */,
+			);
+			path = FixedExpenses;
+			sourceTree = "<group>";
+		};
 		D9ABB30C247A964E00107707 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,10 +88,9 @@
 				D9ABB30E247AAD7900107707 /* ConfigurationView.swift */,
 				D950895024D5570000D30648 /* FinanceView.swift */,
 				D9B6A8C124F11FA8005437D9 /* SettingsView.swift */,
-				5B29606CC2FD27C3A633913B /* FixedExpensesView.swift */,
+				D962EA5D24F5451B00D4F521 /* FixedExpenses */,
 				D92A82C124F145A800ED30BF /* ProfileView.swift */,
 				D92A82C324F1601200ED30BF /* BaseFormView.swift */,
-				D962EA5B24F53DA400D4F521 /* ManageFixedExpenses.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";

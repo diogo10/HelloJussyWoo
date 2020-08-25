@@ -10,14 +10,35 @@ import SwiftUI
 
 
 class ManageFixedExpensesViewModel : FixedExpensesViewModel {
+    private var id: String = ""
+    var name: String?
+    var double: Double?
+    
+    
+    func setId(id: String) {
+        self.id = id
+    }
+    
+    func initValues() {
+        let item = repoExpenses.getFixedExpense(id: self.id)
+        self.name = item?.name
+        self.double = item?.total
+    }
     
     func save(value: String, name: String) {
         let doubleValue = Double(value) ?? 0.0
+        
         if doubleValue != 0.0 {
-             repoExpenses.addFixedExpense(value: doubleValue, name: name)
+            if let item = repoExpenses.getFixedExpense(id: self.id) {
+                repoExpenses.updateFixedExpense(id: item.id,value: doubleValue, name: name)
+                
+            }else {
+                repoExpenses.addFixedExpense(value: doubleValue, name: name)
+            }
         }
+        
     }
-
+    
 }
 
 struct ManageFixedExpenses: View {
@@ -25,7 +46,15 @@ struct ManageFixedExpenses: View {
     @State var value2: String = ""
     @Environment(\.presentationMode) var presentation
     @ObservedObject var viewModel: ManageFixedExpensesViewModel
- 
+    @State var id: String = ""
+    
+    init(id: String) {
+        self.viewModel = ManageFixedExpensesViewModel()
+        self.id = id
+        self.viewModel.setId(id: id)
+        self.viewModel.initValues()
+    }
+    
     var body: some View {
         VStack {
             Form {
@@ -49,13 +78,16 @@ struct ManageFixedExpenses: View {
             }
             
             
-        }.navigationBarTitle("Manage Fixed Expenses")
-            .listStyle(GroupedListStyle())
+        }.navigationBarTitle("Manage")
+            .listStyle(GroupedListStyle()).onAppear {
+                self.value1 = self.viewModel.name ?? ""
+                self.value2 = self.viewModel.double?.description ?? ""
+        }
     }
 }
 
 struct ManageFixedExpenses_Previews: PreviewProvider {
     static var previews: some View {
-        ManageFixedExpenses(viewModel: ManageFixedExpensesViewModel())
+        ManageFixedExpenses(id: "0")
     }
 }

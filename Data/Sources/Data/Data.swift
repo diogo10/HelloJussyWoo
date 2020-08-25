@@ -103,6 +103,8 @@ public struct WooRepository:WooService {
 protocol ExpensesService {
     func getFixedExpense(result: @escaping ([FixedExpense]) -> Void)
     func addFixedExpense(value: Double, name: String)
+    func updateFixedExpense(id: String, value: Double, name: String)
+    func getFixedExpense(id: String) -> FixedExpense?
     func total() -> Double
     func addTax(value: Double)
     func impactInEachProduct() -> Double
@@ -125,6 +127,30 @@ public struct ExpensesServiceRepository: ExpensesService {
             try defaults.setObject(list, forKey: "FixedExpenseList")
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    public func updateFixedExpense(id: String, value: Double, name: String) {
+        var list = getFixedExpense()
+        guard let index = list.firstIndex(where: {$0.id == id }) else { return }
+        list[index].name = name
+        list[index].total = value
+        do {
+            try defaults.setObject(list, forKey: "FixedExpenseList")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    public func getFixedExpense(id: String) -> FixedExpense? {
+        do {
+            let it = try defaults.getObject(forKey: "FixedExpenseList", castTo: [FixedExpense].self)
+            return it.first { item in
+                item.id == id
+            }
+        } catch {
+            print(error.localizedDescription)
+           return nil
         }
     }
     
@@ -227,7 +253,7 @@ extension UserDefaults: ObjectSavable {
 //MARK: MODELS
 
 public struct FixedExpense : Identifiable, Codable {
-    public var id = UUID()
+    public var id = UUID().uuidString
     public var name: String
     public var total: Double
     public var color: String = "#EEEEEE"
