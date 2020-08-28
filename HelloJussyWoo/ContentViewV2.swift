@@ -9,18 +9,18 @@
 import SwiftUI
 
 struct ContentViewV2: View {
-    @State private var selection = 1
-    @State private var options = ["Finance", "Settings"]
+    @State private var selection = 0
+    @State private var options = ["Prodution", "Settings"]
     
     var body: some View {
         
             NavigationView {
                 TabView(selection: self.$selection){
             
-                    FinanceView().tabItem {
+                     ProductionView().tabItem {
                         VStack {
                             Image("bag")
-                            Text("Finance")
+                            Text("Datasheets")
                         }
                         
                     }.tag(0)
