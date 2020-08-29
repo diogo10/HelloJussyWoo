@@ -11,12 +11,16 @@ import SwiftUI
 struct ContentViewV2: View {
     @State private var selection = 0
     @State private var options = ["Prodution", "Settings"]
+
+    init() {
+        UITabBar.appearance().barTintColor = .systemBlue
+    }
     
     var body: some View {
         
             NavigationView {
                 TabView(selection: self.$selection){
-            
+
                      ProductionView().tabItem {
                         VStack {
                             Image("bag")
@@ -29,16 +33,13 @@ struct ContentViewV2: View {
                         .tabItem {
                             VStack {
                                 Image("config")
-                                Text("Settings")
+                                Text("Settings").foregroundColor(.accentColor)
                             }
                     }
                     .tag(1)
                 
                 }
-                
-            }.onAppear {
-                //UITableView.appearance().separatorStyle = .none
-            }
+            }.accentColor(.white)
             
         
     }
@@ -47,22 +48,5 @@ struct ContentViewV2: View {
 struct ContentViewV2_Previews: PreviewProvider {
     static var previews: some View {
         ContentViewV2()
-    }
-}
-
-//ViewModifiers
-
-struct HiddenNavigationBar: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-        .navigationBarHidden(true)
-        .navigationBarTitle(Text(""))
-        .edgesIgnoringSafeArea([.top, .bottom])
-    }
-}
-
-extension View {
-    func hiddenNavigationBarStyle() -> some View {
-        modifier( HiddenNavigationBar() )
     }
 }
