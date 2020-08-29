@@ -100,6 +100,8 @@ public struct WooRepository:WooService {
     }
 }
 
+//MARK: Expenses
+
 protocol ExpensesService {
     func getFixedExpense(result: @escaping ([FixedExpense]) -> Void)
     func addFixedExpense(value: Double, name: String)
@@ -220,6 +222,8 @@ public struct ExpensesServiceRepository: ExpensesService {
     }
     
 }
+
+
 
 //MARK: Extension
 

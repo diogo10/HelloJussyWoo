@@ -4,6 +4,9 @@
 //
 
 import SwiftUI
+import Data
+
+
 
 struct ManageProductView: View {
 
@@ -40,21 +43,6 @@ struct ManageProductView: View {
 
                     Spacer()
 
-                    VStack(alignment: .trailing) {
-
-                        NavigationLink(destination: EmptyView()) {
-
-                            Image(systemName: "save")
-                                    .resizable()
-                                    .padding(6)
-                                    .frame(width: 28, height: 28)
-                                    .background(Color.white)
-                                    .clipShape(Circle())
-                                    .foregroundColor(.pink)
-                        }
-                        Spacer()
-
-                    }.padding(.trailing, 20).padding(.top, 40)
                 }.edgesIgnoringSafeArea(.all)
             }
 
@@ -63,48 +51,55 @@ struct ManageProductView: View {
                 Spacer()
             }
         }
-
-
-        .background(Color.gray)
     }
 }
 
 struct ManageProductViewForm: View {
     @Environment(\.presentationMode) var presentation
+    @State var name: String = ""
     @State var value1: String = ""
     @State var value2: String = ""
     @State var value3: String = ""
     @State var value4: String = ""
 
     @State private var unitIndex = 0
-    private var unitOptions: [String] = ["KG", "LT"]
+    private var unitOptions: [String] = ["Kg=quilo", "Lt=litro",
+                                         "Mç=maço", "Us=unidade", "Co=consumo de óleo",
+                                         "Dz=dúzia", "Qb=quanto baste"]
+    
+    private let viewModel = ManageProductViewModel()
 
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("General")) {
-                    TextField("Name", text: self.$value1).keyboardType(.default)
+                Section(header: Text("General").fontWeight(.bold)) {
+                    TextField("Name", text: self.$name).keyboardType(.default).accentColor(.blue)
 
                     Picker(selection: self.$unitIndex, label: Text("Unit")) {
-                        ForEach(0 ..< self.unitOptions.count) {
+                        ForEach(0..<self.unitOptions.count) {
                             Text(self.unitOptions[$0])
                         }
                     }
                 }
 
-                Section(header: Text("Quantity in the purchased package")) {
-                    TextField("Type in", text: self.$value2).keyboardType(.numberPad)
+                Section(header: Text("Quantity in the purchased package").fontWeight(.bold)) {
+                    TextField("Type in", text: self.$value1).keyboardType(.numbersAndPunctuation).accentColor(.blue)
                 }
-
-                Section(header: Text("Amount Paid in each product")) {
-                    TextField("Type in", text: self.$value2).keyboardType(.numberPad)
+                Section(header: Text("Amount Paid in each product").fontWeight(.bold)) {
+                    TextField("Type in", text: self.$value2).keyboardType(.numbersAndPunctuation).accentColor(.blue)
                 }
-                Section(header: Text("Amount used in the recipe")) {
-                    TextField("Type in", text: self.$value4).keyboardType(.numberPad)
+                Section(header: Text("Amount used in the recipe").fontWeight(.bold)) {
+                    TextField("Type in", text: self.$value3).keyboardType(.numbersAndPunctuation).accentColor(.blue)
+                }
+                Section(header: Text("Gross Cost").fontWeight(.bold)) {
+                    TextField("Type in", text: self.$value4).keyboardType(.numbersAndPunctuation).accentColor(.blue)
                 }
 
                 Section {
                     Button(action: {
+                        let unit = self.unitOptions[self.unitIndex]
+                        
+                        self.viewModel.save(name: self.name, unit: unit, value1: self.value1, value2: self.value2, value3: self.value3, value4: self.value4)
                         self.presentation.wrappedValue.dismiss()
                     }) {
                         Text("Save changes").foregroundColor(.blue)
@@ -115,4 +110,15 @@ struct ManageProductViewForm: View {
         }
 
     }
+}
+
+
+class ManageProductViewModel {
+
+    func save(name: String, unit: String,value1: String, value2: String, value3: String, value4: String) {
+        
+    let ok = ingredientsServiceRepository.add(value1: name, value2: unit, value3: value1, value4: value2, value5: value3, value6: value4)
+        print("save: \(ok)")
+    }
+
 }

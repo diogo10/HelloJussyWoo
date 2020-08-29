@@ -3,18 +3,29 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:github" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="128d330b-6980-4d43-ad65-b018e648e4be" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/HelloJussyWoo/Assets.xcassets/save.imageset/Contents.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HelloJussyWoo/Assets.xcassets/save.imageset/save.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HelloJussyWoo/UI/Production/ManageProductView.swift" afterDir="false" />
+    <list default="true" id="128d330b-6980-4d43-ad65-b018e648e4be" name="Default Changelist" comment="working on ProductionView.swift">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HelloJussyWoo.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/HelloJussyWoo.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HelloJussyWoo/ContentViewV2.swift" beforeDir="false" afterPath="$PROJECT_DIR$/HelloJussyWoo/ContentViewV2.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HelloJussyWoo/SceneDelegate.swift" beforeDir="false" afterPath="$PROJECT_DIR$/HelloJussyWoo/SceneDelegate.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HelloJussyWoo/UI/Production/ManageProductionView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/HelloJussyWoo/UI/Production/ManageProductionView.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HelloJussyWoo/UI/Production/ProductionView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/HelloJussyWoo/UI/Production/ProductionView.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HelloJussyWoo/UI/ProfileView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/HelloJussyWoo/UI/ProfileView.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Sources/Data/Data.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Sources/Data/Data.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HelloJussyWoo/UI/Production/ManageProductView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/HelloJussyWoo/UI/Production/ManageProductView.swift" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,38 +78,69 @@
       <workItem from="1598283189737" duration="43000" />
       <workItem from="1598283264495" duration="317000" />
       <workItem from="1598699850947" duration="25000" />
-      <workItem from="1598699897101" duration="7584000" />
+      <workItem from="1598699897101" duration="8803000" />
     </task>
+    <task id="LOCAL-00001" summary="working on ProductionView.swift">
+      <created>1598708007738</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1598708007738</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="working on ProductionView.swift" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on ProductionView.swift" />
+  </component>
   <component name="WindowStateProjectService">
-    <state width="1383" height="290" key="GridCell.Tab.0.bottom" timestamp="1598707831969">
+    <state x="310" y="73" width="1007" height="903" key="CommitChangelistDialog2" timestamp="1598707877951">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1383" height="290" key="GridCell.Tab.0.bottom/0.23.1920.1057@0.23.1920.1057" timestamp="1598707831969" />
+    <state x="310" y="73" width="1007" height="903" key="CommitChangelistDialog2/0.23.1920.1057@0.23.1920.1057" timestamp="1598707877951" />
+    <state width="1383" height="290" key="GridCell.Tab.0.bottom" timestamp="1598709091007">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1383" height="290" key="GridCell.Tab.0.bottom/0.23.1920.1057@0.23.1920.1057" timestamp="1598709091007" />
     <state width="1878" height="290" key="GridCell.Tab.0.bottom/1920.23.1080.1897/0.23.1920.1057@0.23.1920.1057" timestamp="1598092155794" />
-    <state width="1383" height="290" key="GridCell.Tab.0.center" timestamp="1598707831968">
+    <state width="1383" height="290" key="GridCell.Tab.0.center" timestamp="1598709091007">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1383" height="290" key="GridCell.Tab.0.center/0.23.1920.1057@0.23.1920.1057" timestamp="1598707831968" />
+    <state width="1383" height="290" key="GridCell.Tab.0.center/0.23.1920.1057@0.23.1920.1057" timestamp="1598709091007" />
     <state width="1878" height="290" key="GridCell.Tab.0.center/1920.23.1080.1897/0.23.1920.1057@0.23.1920.1057" timestamp="1598092155794" />
-    <state width="1383" height="290" key="GridCell.Tab.0.left" timestamp="1598707831968">
+    <state width="1383" height="290" key="GridCell.Tab.0.left" timestamp="1598709091006">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1383" height="290" key="GridCell.Tab.0.left/0.23.1920.1057@0.23.1920.1057" timestamp="1598707831968" />
+    <state width="1383" height="290" key="GridCell.Tab.0.left/0.23.1920.1057@0.23.1920.1057" timestamp="1598709091006" />
     <state width="1878" height="290" key="GridCell.Tab.0.left/1920.23.1080.1897/0.23.1920.1057@0.23.1920.1057" timestamp="1598092155794" />
-    <state width="1383" height="290" key="GridCell.Tab.0.right" timestamp="1598707831968">
+    <state width="1383" height="290" key="GridCell.Tab.0.right" timestamp="1598709091007">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state width="1383" height="290" key="GridCell.Tab.0.right/0.23.1920.1057@0.23.1920.1057" timestamp="1598707831968" />
+    <state width="1383" height="290" key="GridCell.Tab.0.right/0.23.1920.1057@0.23.1920.1057" timestamp="1598709091007" />
     <state width="1878" height="290" key="GridCell.Tab.0.right/1920.23.1080.1897/0.23.1920.1057@0.23.1920.1057" timestamp="1598092155794" />
-    <state x="419" y="140" width="944" height="822" key="find.popup" timestamp="1598705489522">
+    <state x="312" y="278" key="Vcs.Push.Dialog.v2" timestamp="1598708010003">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="419" y="140" width="944" height="822" key="find.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1598705489522" />
-    <state x="360" y="202" width="670" height="676" key="search.everywhere.popup" timestamp="1598283447837">
+    <state x="312" y="278" key="Vcs.Push.Dialog.v2/0.23.1920.1057@0.23.1920.1057" timestamp="1598708010003" />
+    <state x="419" y="140" width="944" height="822" key="find.popup" timestamp="1598708366409">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="360" y="202" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1598283447837" />
+    <state x="419" y="140" width="944" height="822" key="find.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1598708366409" />
+    <state x="360" y="202" width="670" height="676" key="search.everywhere.popup" timestamp="1598708693948">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="360" y="202" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1598708693948" />
   </component>
 </project>
