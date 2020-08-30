@@ -12,7 +12,7 @@ public let ingredientsServiceRepository = IngredientsServiceRepository()
 
 //MARK: MODELS
 
-public struct Ingredient : Identifiable, Codable {
+public struct Ingredient : Identifiable, Hashable, Codable {
     public var id = UUID().uuidString
     public var name: String
     public var unit: String
@@ -49,14 +49,18 @@ public struct IngredientsServiceRepository: IngredientsService {
         return save(it: value)
     }
     
-    func get(id: String) -> Ingredient? {
+    public func get(id: String) -> Ingredient? {
         return getList().first { item in
             item.id == id
         }
     }
     
     public func update(value: Ingredient) -> Bool {
-        return false
+        
+        var list = getList()
+        guard let index = list.firstIndex(where: {$0.id == value.id }) else { return false }
+        list[index] = value
+        return setList(list)
     }
     
     private func getList() -> [Ingredient] {
@@ -73,6 +77,10 @@ public struct IngredientsServiceRepository: IngredientsService {
     private func save(it: Ingredient) -> Bool {
         var list = getList()
         list.append(it)
+        return setList(list)
+    }
+    
+    private func setList(_ list: [Ingredient]) -> Bool{
         do {
             try defaults.setObject(list, forKey: "Ingredients")
             return true

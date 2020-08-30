@@ -8,6 +8,13 @@
 import Foundation
 
 
+extension Array {
+    public func chunks(_ size: Int) -> [[Element]] {
+        stride(from: 0, to: self.count, by: size).map { ($0 ..< Swift.min($0 + size, self.count)).map { self[$0] } }
+    }
+}
+
+
 extension String {
     
     mutating func formatDate(){

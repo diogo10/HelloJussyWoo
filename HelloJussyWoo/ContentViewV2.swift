@@ -9,8 +9,7 @@
 import SwiftUI
 
 struct ContentViewV2: View {
-    @State private var selection = 0
-    @State private var options = ["Prodution", "Settings"]
+    @State private var selection = 1
 
     init() {
         UITabBar.appearance().barTintColor = .systemBlue
@@ -29,6 +28,14 @@ struct ContentViewV2: View {
                         
                     }.tag(0)
                     
+                    IngredientsView().tabItem {
+                        VStack {
+                            Image("baking")
+                            Text("Ingredients")
+                        }
+                        
+                    }.tag(1)
+                    
                     ProfileView()
                         .tabItem {
                             VStack {
@@ -36,7 +43,7 @@ struct ContentViewV2: View {
                                 Text("Settings").foregroundColor(.accentColor)
                             }
                     }
-                    .tag(1)
+                    .tag(2)
                 
                 }
             }.accentColor(.white)

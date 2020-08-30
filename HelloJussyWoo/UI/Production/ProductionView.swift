@@ -91,7 +91,7 @@ struct ProductionViewItems: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            NavigationLink(destination: ManageProductView()) {
+            NavigationLink(destination: ManageIngredientView(itemId: "")) {
                 HStack{
                     Text("Ingredients")
                         .font(.title)
@@ -128,19 +128,19 @@ struct ProductionViewItems: View {
                                     .font(.caption)
                                 
                                 Text("* \(section.amountPaidEachProduct.format()) per product")
-                                .foregroundColor(.white)
-                                .font(.caption)
+                                    .foregroundColor(.white)
+                                    .font(.caption)
                                 
                                 Text("* R$ \(section.grossCost.format()) gross amout")
                                     .foregroundColor(.white)
                                     .font(.caption)
                             }
                             
-                              Spacer()
+                            Spacer()
                             
                             
                             
-                    }.frame(width: 200, height: 200).background(Color.blue).cornerRadius(4)
+                        }.frame(width: 200, height: 200).background(Color.blue).cornerRadius(4)
                         
                         
                         

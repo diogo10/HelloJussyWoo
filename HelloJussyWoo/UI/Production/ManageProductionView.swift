@@ -65,10 +65,7 @@ struct ManageProductionView: View {
 
             }
 
-            VStack {
-                ManageProductionViewForm().padding(.leading, 20).padding(.top, 10)
-                ManageProductionViewList().padding(.top, 40)
-            }
+            
         }
 
     }
