@@ -4,9 +4,11 @@ import Data
 struct ProfileView: View {
     
     var body: some View {
-        VStack {
-            ProfileHeader(viewModel: ProfileViewModel())
-        }
+       TabBgIconView(content: {
+            VStack(alignment: .leading) {
+                ProfileHeader(viewModel: ProfileViewModel())
+            }
+       },title: "Settings", imageIcon: "person")
     }
 }
 
@@ -32,43 +34,15 @@ class ProfileViewModel : FixedExpensesViewModel {
     func getTargetSales() -> String {
         return String(format: "\(repoExpenses.getCurrency()) %.2f", repoExpenses.getTargetSales())
     }
-
+    
 }
 
 
 struct ProfileHeader: View {
-    let gradient = Gradient(colors: [.blue, .purple])
     @ObservedObject var viewModel: ProfileViewModel
     
     var body: some View {
         VStack {
-            HStack {
-                
-                HStack() {
-                    Image("avatar")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 50, height: 50)
-                        .clipShape(Circle())
-                        .clipped()
-                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                        .padding(.top, 44)
-                    
-                    VStack(alignment: .leading) {
-                        Text("Hello Jussy").font(.system(size: 18)).bold().foregroundColor(.white)
-                            .padding(.top, 50)
-                        
-                        Text("diogjp10@gmail.com").font(.system(size: 16)).foregroundColor(.white)
-                            .padding(.top, 2)
-                    }.padding(EdgeInsets.init(top: 0, leading: 10, bottom: 0, trailing: 0))
-                    
-                    
-                }.padding(EdgeInsets.init(top: 0, leading: 15, bottom: 0, trailing: 0))
-                
-                Spacer()
-            }
-            
-            
             List {
                 
                 NavigationLink(destination: CountryFormView()) {
@@ -89,13 +63,10 @@ struct ProfileHeader: View {
                 
                 TotalItem(viewModel: self.viewModel)
                 
-            }.padding(.top, 20)
+            }
             
             
-        }
-        .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
-        .edgesIgnoringSafeArea(.all)
-        .onAppear {
+        }.onAppear {
             self.viewModel.load()
         }
     }
@@ -124,11 +95,11 @@ private struct CountryItem: View {
         VStack {
             HStack {
                 Image(viewModel.getCurrencyFlagName())
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 24, height: 24)
-                .clipShape(Circle())
-                .clipped()
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 24, height: 24)
+                    .clipShape(Circle())
+                    .clipped()
                 
                 Text("Currency").bold().font(.subheadline)
                 Spacer()
@@ -156,7 +127,7 @@ private struct TargetInputItem: View {
 
 private struct TaxInputItem: View {
     @ObservedObject var viewModel: ProfileViewModel
-
+    
     var body: some View {
         VStack {
             HStack {
@@ -174,8 +145,8 @@ private struct TaxInputItem: View {
 
 private struct TotalItem: View {
     
-     @ObservedObject var viewModel: ProfileViewModel
-
+    @ObservedObject var viewModel: ProfileViewModel
+    
     var body: some View {
         VStack {
             HStack {
@@ -188,12 +159,5 @@ private struct TotalItem: View {
                 Spacer()
             }.padding()
         }
-    }
-}
-
-struct ProfileView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        ProfileView()
     }
 }

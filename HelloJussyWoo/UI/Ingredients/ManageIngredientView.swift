@@ -38,12 +38,7 @@ struct ManageProductViewForm: View {
     private let viewModel = ManageProductViewModel()
     var itemId: String
     @State var isShowing: Bool
-    
-    
-    //init(itemId: String) {
-    //  self.itemId = itemId
-    //viewModel.load(id: itemId)
-    //}
+
     
     var body: some View {
         VStack {
@@ -86,8 +81,7 @@ struct ManageProductViewForm: View {
                         Text("Save changes").foregroundColor(.blue)
                     }
                 }
-            }
-            
+            }.foregroundColor(Color.black).background(Color.white)
         }.onAppear {
             if self.hasEdited == false {
                 self.viewModel.load(id: self.itemId)
