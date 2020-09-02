@@ -8,12 +8,10 @@
 
 import SwiftUI
 
+//https://developer.apple.com/design/human-interface-guidelines/sf-symbols/overview/
+
 struct ContentViewV2: View {
     @State private var selection = 1
-
-    init() {
-        UITabBar.appearance().barTintColor = .systemBlue
-    }
     
     var body: some View {
         
@@ -22,7 +20,7 @@ struct ContentViewV2: View {
 
                      ProductionView().tabItem {
                         VStack {
-                            Image("bag")
+                            Image(systemName: "list.dash")
                             Text("Home")
                         }
                         
@@ -30,7 +28,7 @@ struct ContentViewV2: View {
                     
                     IngredientsView().tabItem {
                         VStack {
-                            Image("baking")
+                            Image(systemName: "square.and.pencil")
                             Text("Ingredients")
                         }
                         
@@ -39,14 +37,14 @@ struct ContentViewV2: View {
                     ProfileView()
                         .tabItem {
                             VStack {
-                                Image("config")
+                                Image(systemName: "arkit")
                                 Text("Settings").foregroundColor(.accentColor)
                             }
                     }
                     .tag(2)
                 
                 }
-            }.accentColor(.white)
+            }.accentColor(.blue)
             
         
     }
