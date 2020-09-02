@@ -13,6 +13,11 @@ import SwiftUI
 struct ContentViewV2: View {
     @State private var selection = 1
     
+    
+    init() {
+        UITabBar.appearance().barTintColor = .systemPink
+    }
+    
     var body: some View {
         
             NavigationView {
@@ -44,7 +49,7 @@ struct ContentViewV2: View {
                     .tag(2)
                 
                 }
-            }.accentColor(.blue)
+            }.accentColor(.white)
             
         
     }

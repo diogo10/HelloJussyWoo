@@ -2,9 +2,7 @@ import SwiftUI
 
 
 extension TabBgView {
-    mutating func changeTitle(title: String) {
-        self.title = title
-    }
+
 }
 
 struct TabBgView<Content>: View where Content: View {
@@ -74,14 +72,7 @@ struct TabBgView<Content>: View where Content: View {
 
 struct NoIconBgView<Content>: View where Content: View {
    
-    //private let content: Content
     var content: () -> Content
-    //var title: () -> String
-    
-    //public init(@ViewBuilder content: () -> Content, title: String, isShowing: Bool) {
-      //  self.content = content()
-      //  self.title = title
-   // }
     
     var title: String = "Datasheet"
     let bgColor: Color = .blue
