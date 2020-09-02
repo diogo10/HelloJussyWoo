@@ -8,14 +8,18 @@ import Data
 
 struct ManageIngredientView: View {
     var itemId: String
+    @State var isShowing: Bool = false
+    
     
     var body: some View {
-        TabBgView(content: {
-            VStack(alignment: .leading) {
-                ManageProductViewForm(itemId: self.itemId)
-                Spacer()
-            }
-        }, title: "Ingredient")
+        LoadingView(isShowing: $isShowing ) {
+            NoIconBgView( content: {
+                VStack(alignment: .leading) {
+                    ManageProductViewForm(itemId: self.itemId, isShowing: self.isShowing)
+                    Spacer()
+                }
+            }, title: "Ingredient")
+        }
     }
 }
 
@@ -28,18 +32,18 @@ struct ManageProductViewForm: View {
     @State var value2: String = ""
     @State var value3: String = ""
     @State var value4: String = ""
-    
     @State private var unitIndex = 0
-    
+    @State private var hasEdited = false
     
     private let viewModel = ManageProductViewModel()
+    var itemId: String
+    @State var isShowing: Bool
     
-    private var itemId: String
     
-    init(itemId: String) {
-        self.itemId = itemId
-        viewModel.load(id: itemId)
-    }
+    //init(itemId: String) {
+    //  self.itemId = itemId
+    //viewModel.load(id: itemId)
+    //}
     
     var body: some View {
         VStack {
@@ -69,10 +73,15 @@ struct ManageProductViewForm: View {
                 
                 Section {
                     Button(action: {
+                        
+                        
                         let unit = self.viewModel.unitOptions[self.unitIndex]
                         
                         self.viewModel.save(name: self.name, unit: unit, value1: self.value1, value2: self.value2, value3: self.value3, value4: self.value4)
+                        
                         self.presentation.wrappedValue.dismiss()
+                        
+                        
                     }) {
                         Text("Save changes").foregroundColor(.blue)
                     }
@@ -80,22 +89,20 @@ struct ManageProductViewForm: View {
             }
             
         }.onAppear {
-            self.name = self.viewModel.ingredient?.name ?? ""
-            self.unitIndex = self.viewModel.getUnit()
-            self.value1 = self.viewModel.ingredient?.packageQty.description ?? ""
-            self.value2 = self.viewModel.ingredient?.amountPaidEachProduct.format() ?? ""
-            self.value3 = self.viewModel.ingredient?.amountUsedInTheRecipe.format() ?? ""
-            self.value4 = self.viewModel.ingredient?.grossCost.format() ?? ""
-        }.onDisappear {
-            self.name = self.viewModel.ingredient?.name ?? ""
-            self.unitIndex = self.viewModel.getUnit()
-            self.value1 = self.viewModel.ingredient?.packageQty.description ?? ""
-            self.value2 = self.viewModel.ingredient?.amountPaidEachProduct.format() ?? ""
-            self.value3 = self.viewModel.ingredient?.amountUsedInTheRecipe.format() ?? ""
-            self.value4 = self.viewModel.ingredient?.grossCost.format() ?? ""
+            if self.hasEdited == false {
+                self.viewModel.load(id: self.itemId)
+                self.name = self.viewModel.ingredient?.name ?? ""
+                self.unitIndex = self.viewModel.getUnit()
+                self.value1 = self.viewModel.ingredient?.packageQty.description ?? ""
+                self.value2 = self.viewModel.ingredient?.amountPaidEachProduct.format() ?? ""
+                self.value3 = self.viewModel.ingredient?.amountUsedInTheRecipe.format() ?? ""
+                self.value4 = self.viewModel.ingredient?.grossCost.format() ?? ""
+                self.hasEdited = true
+            }
+            
         }
-        
     }
+    
 }
 
 

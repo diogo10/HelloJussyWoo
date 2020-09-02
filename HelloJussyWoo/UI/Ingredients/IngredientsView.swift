@@ -22,6 +22,10 @@ class IngredientsListViewModel {
     func load() -> [Ingredient] {
         ingredientsServiceRepository.getAll()
     }
+    
+    func getCurrency() -> String {
+        repoExpenses.getCurrency()
+    }
 }
 
 struct IngredientsListView: View {
@@ -31,16 +35,16 @@ struct IngredientsListView: View {
     var body: some View {
         ASCollectionView(data: viewModel.load(), dataID: \.self) { item, _ in
             
-            NavigationLink(destination: ManageIngredientView(itemId: item.id)) {
-                IngredientsListItemView(section: item)
+            NavigationLink(destination: ManageIngredientView(itemId: item.id, isShowing: false)) {
+                IngredientsListItemView(section: item, currency: self.viewModel.getCurrency())
             }.frame(width: 0)
             
             
         }
         .layout {
             .grid(layoutMode: .adaptive(withMinItemSize: 180),
-                  itemSpacing: 2,
-                  lineSpacing: 2,
+                  itemSpacing: 0,
+                  lineSpacing: 0,
                   itemSize: .absolute(180))
         }
     }
@@ -48,7 +52,7 @@ struct IngredientsListView: View {
 
 struct IngredientsListItemView: View {
     var section:Ingredient
-    
+    var currency = ""
     var body: some View {
         VStack {
             
@@ -58,7 +62,7 @@ struct IngredientsListItemView: View {
             
             Spacer()
             
-            Text("R$ \(section.grossCost.format())")
+            Text("\(currency) \(section.grossCost.format())")
                 .foregroundColor(.white)
                 .font(.title).padding(.top,10)
             

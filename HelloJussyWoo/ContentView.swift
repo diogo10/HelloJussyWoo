@@ -17,7 +17,7 @@ struct ContentView: View {
     
     var body: some View {
         
-        LoadingView(isShowing: .constant(self.viewModel.isLoading)) {
+        LoadingView(isShowing: .constant(true) ) {
             NavigationView {
                 TabView(selection: self.$selection){
                     List(self.viewModel.list){ i in

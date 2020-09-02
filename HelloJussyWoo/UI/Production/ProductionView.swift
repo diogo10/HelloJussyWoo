@@ -8,85 +8,37 @@
 
 import SwiftUI
 import Data
+import Combine
 
 struct ProductionView: View {
-    let title: String = "Datasheets"
-    let subTitle: String = "Good morning"
+    let subTitle: String = ""
     var bgColor: Color = .blue
     var body: some View {
-        
-        GeometryReader { geometry in
-            ZStack {
-                Ellipse()
-                    .fill(self.bgColor)
-                    .frame(width: geometry.size.width * 1.4, height: geometry.size.height * 0.33)
-                    .position(x: geometry.size.width / 2.35, y: geometry.size.height * 0.1)
-                    .shadow(radius: 3)
-                    .edgesIgnoringSafeArea(.all)
-                
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(self.title)
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(Color.white)
-                        
-                        Text(self.subTitle)
-                            .font(.subheadline)
-                            .fontWeight(.regular)
-                            .foregroundColor(Color.white)
-                        
-                        Spacer()
-                        
-                    }
-                    .padding(.leading, 25).padding(.top, 40)
-                    
-                    Spacer()
-                    
-                    VStack(alignment: .trailing) {
-                        
-                        NavigationLink(destination: EmptyView()) {
-                            
-                            Image(systemName: "linechart")
-                                .resizable()
-                                .padding(6)
-                                .frame(width: 28, height: 28)
-                                .background(Color.blue)
-                                .clipShape(Circle())
-                                .foregroundColor(.white)
-                        }
-                        Spacer()
-                        
-                    }.padding(.trailing, 20).padding(.top, 40)
-                    
-                    
-                }.edgesIgnoringSafeArea(.all)
-                
-                
-            }
-            
+       TabBgView(content: {
             VStack(alignment: .leading) {
-                ProductionViewItems().padding(.top, 30)
+                ProductionViewItems()
                 Spacer()
             }
-            
-            
-            
-        }
+        }, title: "Datasheets")
         
     }
     
 }
 
 
-class ProductionViewItemsViewModel {
-    func loadAll() -> [Ingredient] {
-        return ingredientsServiceRepository.getAll()
+
+
+
+class ProductionViewItemsViewModel: ObservableObject {
+    @Published var list = [Ingredient]()
+    
+    func loadAll() {
+        self.list = ingredientsServiceRepository.getAll().reversed()
     }
 }
 
 struct ProductionViewItems: View {
-    private let viewModel = ProductionViewItemsViewModel()
+    @ObservedObject var viewModel = ProductionViewItemsViewModel()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -111,7 +63,7 @@ struct ProductionViewItems: View {
             
             ScrollView(.horizontal) {
                 HStack(spacing: 20) {
-                    ForEach(viewModel.loadAll()) { section in
+                    ForEach(viewModel.list) { section in
                         
                         VStack {
                             
@@ -148,7 +100,9 @@ struct ProductionViewItems: View {
                 }
             }
             
-        }.padding(EdgeInsets.init(top: 0, leading: 10, bottom: 0, trailing: 0))
+        }.padding(EdgeInsets.init(top: 0, leading: 10, bottom: 0, trailing: 0)).onAppear {
+            self.viewModel.loadAll()
+        }
         
     }
 }

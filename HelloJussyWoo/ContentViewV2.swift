@@ -23,7 +23,7 @@ struct ContentViewV2: View {
                      ProductionView().tabItem {
                         VStack {
                             Image("bag")
-                            Text("Datasheets")
+                            Text("Home")
                         }
                         
                     }.tag(0)
