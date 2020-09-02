@@ -11,7 +11,7 @@ import SwiftUI
 //https://developer.apple.com/design/human-interface-guidelines/sf-symbols/overview/
 
 struct ContentViewV2: View {
-    @State private var selection = 1
+    @State private var selection = 2
     
     
     init() {
@@ -40,6 +40,14 @@ struct ContentViewV2: View {
                         
                     }.tag(1)
                     
+                    PricingView().tabItem {
+                        VStack {
+                            Image(systemName: "creditcard")
+                            Text("Pricing")
+                        }
+                        
+                    }.tag(2)
+                    
                     ProfileView()
                         .tabItem {
                             VStack {
@@ -47,7 +55,7 @@ struct ContentViewV2: View {
                                 Text("Settings").foregroundColor(.accentColor)
                             }
                     }
-                    .tag(2)
+                    .tag(3)
                 
                 }
             }.accentColor(.white)

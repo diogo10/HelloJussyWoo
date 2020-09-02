@@ -22,6 +22,7 @@
 		D9663B7524FBB0E000EFCCD5 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9663B7424FBB0E000EFCCD5 /* BaseView.swift */; };
 		D9663B7824FBBB7400EFCCD5 /* ASCollectionView in Frameworks */ = {isa = PBXBuildFile; productRef = D9663B7724FBBB7400EFCCD5 /* ASCollectionView */; };
 		D9874DA3247A766D0018B243 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9874DA2247A766D0018B243 /* ViewExtensions.swift */; };
+		D999767825003962004C9767 /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D999767725003962004C9767 /* PricingView.swift */; };
 		D9ABB30B247A95E500107707 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB30A247A95E500107707 /* ActivityIndicator.swift */; };
 		D9ABB30F247AAD7900107707 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB30E247AAD7900107707 /* ConfigurationView.swift */; };
 		D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB310247AB0AD00107707 /* ConfigurationViewModel.swift */; };
@@ -50,6 +51,7 @@
 		D9663B7124FBADD100EFCCD5 /* IngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsView.swift; sourceTree = "<group>"; };
 		D9663B7424FBB0E000EFCCD5 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		D9874DA2247A766D0018B243 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		D999767725003962004C9767 /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		D9ABB30A247A95E500107707 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		D9ABB30E247AAD7900107707 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		D9ABB310247AB0AD00107707 /* ConfigurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewModel.swift; sourceTree = "<group>"; };
@@ -109,6 +111,14 @@
 			path = Ingredients;
 			sourceTree = "<group>";
 		};
+		D999767925003967004C9767 /* Pricing */ = {
+			isa = PBXGroup;
+			children = (
+				D999767725003962004C9767 /* PricingView.swift */,
+			);
+			path = Pricing;
+			sourceTree = "<group>";
+		};
 		D9ABB30C247A964E00107707 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +134,7 @@
 				D961E34024F98DE100AB46DB /* Production */,
 				D9663B7324FBB04600EFCCD5 /* Ingredients */,
 				D9663B7424FBB0E000EFCCD5 /* BaseView.swift */,
+				D999767925003967004C9767 /* Pricing */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -278,6 +289,7 @@
 				D9B6A8C224F11FA8005437D9 /* SettingsView.swift in Sources */,
 				D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */,
 				D9ABB30B247A95E500107707 /* ActivityIndicator.swift in Sources */,
+				D999767825003962004C9767 /* PricingView.swift in Sources */,
 				D950894F24D5568800D30648 /* ContentViewV2.swift in Sources */,
 				D962EA5C24F53DA400D4F521 /* ManageFixedExpenses.swift in Sources */,
 				D9663B7224FBADD100EFCCD5 /* IngredientsView.swift in Sources */,
