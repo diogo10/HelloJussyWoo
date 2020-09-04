@@ -1,8 +1,28 @@
 import SwiftUI
 
 
-extension TabBgView {
-    
+extension View {
+    public func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+
+        if ((cString.count) != 6) {
+            return UIColor.gray
+        }
+
+        var rgbValue:UInt32 = 0
+        Scanner(string: cString).scanHexInt32(&rgbValue)
+
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
 }
 
 struct TabBgView<Content>: View where Content: View {
@@ -15,7 +35,9 @@ struct TabBgView<Content>: View where Content: View {
     }
     
     var title: String = "Datasheet"
-    let bgColor: Color = .blue
+    var bgColor: Color {
+        return Color(hexStringToUIColor(hex: "#009af9"))
+    }
     
     var body : some View {
         GeometryReader { geometry in
@@ -69,7 +91,6 @@ struct TabBgView<Content>: View where Content: View {
     }
 }
 
-
 struct TabBgIconView<Content>: View where Content: View {
     
     private let content: Content
@@ -82,9 +103,12 @@ struct TabBgIconView<Content>: View where Content: View {
     
     var title: String = "Datasheet"
     var imageIcon: String = "avatar"
-    let bgColor: Color = .blue
+    var bgColor: Color {
+        return Color(hexStringToUIColor(hex: "#009af9"))
+    }
     
     var body : some View {
+        
         GeometryReader { geometry in
             ZStack {
                 Ellipse()
@@ -139,7 +163,9 @@ struct NoIconBgView<Content>: View where Content: View {
     var content: () -> Content
     
     var title: String = "Datasheet"
-    let bgColor: Color = .blue
+    var bgColor: Color {
+        return Color(hexStringToUIColor(hex: "#009af9"))
+    }
     
     var body : some View {
         GeometryReader { geometry in
@@ -178,3 +204,6 @@ struct NoIconBgView<Content>: View where Content: View {
         }
     }
 }
+
+
+

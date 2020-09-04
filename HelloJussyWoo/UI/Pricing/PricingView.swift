@@ -34,7 +34,7 @@ struct PricingListView: View {
     var body: some View {
         ASCollectionView(data: viewModel.load(), dataID: \.self) { item, _ in
             
-            NavigationLink(destination: ManageIngredientView(itemId: item.id, isShowing: false)) {
+            NavigationLink(destination: ManagePricingItemView(itemId: item.id)) {
                 PricingListItemView(section: item, currency: self.viewModel.getCurrency())
             }.frame(width: 0)
             

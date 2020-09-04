@@ -15,7 +15,7 @@ struct ContentViewV2: View {
     
     
     init() {
-        UITabBar.appearance().barTintColor = .systemPink
+        UITabBar.appearance().barTintColor = hexStringToUIColor(hex: "#009af9")
         UITableView.appearance().backgroundColor = .clear
     }
     

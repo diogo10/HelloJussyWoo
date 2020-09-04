@@ -36,6 +36,7 @@
 		D9C59D612470762100569FC8 /* OrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D602470762100569FC8 /* OrdersViewModel.swift */; };
 		D9C59D632470885100569FC8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D9C59D622470885100569FC8 /* README.md */; };
 		D9C59D652470889200569FC8 /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D642470889200569FC8 /* OrderView.swift */; };
+		D9DE6C142502A38700C6A728 /* ManagePricingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DE6C132502A38700C6A728 /* ManagePricingItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		D9C59D602470762100569FC8 /* OrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewModel.swift; sourceTree = "<group>"; };
 		D9C59D622470885100569FC8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D9C59D642470889200569FC8 /* OrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
+		D9DE6C132502A38700C6A728 /* ManagePricingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagePricingItemView.swift; sourceTree = "<group>"; };
 		D9F8D6EF247179C0004F43FF /* Data */ = {isa = PBXFileReference; lastKnownFileType = text; path = Data; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				D999767725003962004C9767 /* PricingView.swift */,
+				D9DE6C132502A38700C6A728 /* ManagePricingItemView.swift */,
 			);
 			path = Pricing;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				D9C59D4A2470717F00569FC8 /* SceneDelegate.swift in Sources */,
 				D961E33F24F98DDC00AB46DB /* ProductionView.swift in Sources */,
 				D9C59D652470889200569FC8 /* OrderView.swift in Sources */,
+				D9DE6C142502A38700C6A728 /* ManagePricingItemView.swift in Sources */,
 				D9C59D4C2470717F00569FC8 /* ContentView.swift in Sources */,
 				D9B6A8C224F11FA8005437D9 /* SettingsView.swift in Sources */,
 				D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */,
