@@ -64,7 +64,6 @@ struct TabBgView<Content>: View where Content: View {
                     Spacer()
                     
                     VStack(alignment: .trailing) {
-                        
                         NavigationLink(destination: EmptyView()) {
                             
                             Image(systemName: "plus")
@@ -80,6 +79,7 @@ struct TabBgView<Content>: View where Content: View {
                         Spacer()
                         
                     }.padding(.trailing, 20).padding(.top, 40)
+                        
                     
                 }.edgesIgnoringSafeArea(.all)
                 
@@ -161,7 +161,6 @@ struct TabBgIconView<Content>: View where Content: View {
 struct NoIconBgView<Content>: View where Content: View {
     
     var content: () -> Content
-    
     var title: String = "Datasheet"
     var bgColor: Color {
         return Color(hexStringToUIColor(hex: "#009af9"))

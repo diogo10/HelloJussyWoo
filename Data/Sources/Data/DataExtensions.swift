@@ -7,10 +7,23 @@
 
 import Foundation
 
+public extension Double {
+    public func format() -> String {
+        return String(format: "%.2f", self)
+    }
+}
 
 extension Array {
     public func chunks(_ size: Int) -> [[Element]] {
         stride(from: 0, to: self.count, by: size).map { ($0 ..< Swift.min($0 + size, self.count)).map { self[$0] } }
+    }
+    
+    public var toPrint: String  {
+        var str = ""
+        for element in self {
+            str += "\(element) "
+        }
+        return str
     }
 }
 

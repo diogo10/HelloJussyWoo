@@ -22,6 +22,10 @@
 		D9663B7524FBB0E000EFCCD5 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9663B7424FBB0E000EFCCD5 /* BaseView.swift */; };
 		D9663B7824FBBB7400EFCCD5 /* ASCollectionView in Frameworks */ = {isa = PBXBuildFile; productRef = D9663B7724FBBB7400EFCCD5 /* ASCollectionView */; };
 		D9874DA3247A766D0018B243 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9874DA2247A766D0018B243 /* ViewExtensions.swift */; };
+		D9904F9425039EF4005159CD /* ProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9904F9325039EF4005159CD /* ProductsView.swift */; };
+		D9904F972503A5AA005159CD /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9904F962503A5AA005159CD /* BaseViewModel.swift */; };
+		D9904F992503A8A5005159CD /* ManageProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9904F982503A8A5005159CD /* ManageProductView.swift */; };
+		D9904F9B2503A903005159CD /* PickersProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9904F9A2503A903005159CD /* PickersProviders.swift */; };
 		D999767825003962004C9767 /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D999767725003962004C9767 /* PricingView.swift */; };
 		D9ABB30B247A95E500107707 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB30A247A95E500107707 /* ActivityIndicator.swift */; };
 		D9ABB30F247AAD7900107707 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB30E247AAD7900107707 /* ConfigurationView.swift */; };
@@ -52,6 +56,10 @@
 		D9663B7124FBADD100EFCCD5 /* IngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsView.swift; sourceTree = "<group>"; };
 		D9663B7424FBB0E000EFCCD5 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		D9874DA2247A766D0018B243 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		D9904F9325039EF4005159CD /* ProductsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsView.swift; sourceTree = "<group>"; };
+		D9904F962503A5AA005159CD /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		D9904F982503A8A5005159CD /* ManageProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageProductView.swift; sourceTree = "<group>"; };
+		D9904F9A2503A903005159CD /* PickersProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickersProviders.swift; sourceTree = "<group>"; };
 		D999767725003962004C9767 /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		D9ABB30A247A95E500107707 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		D9ABB30E247AAD7900107707 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
@@ -113,6 +121,15 @@
 			path = Ingredients;
 			sourceTree = "<group>";
 		};
+		D9904F9525039EF9005159CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9904F9325039EF4005159CD /* ProductsView.swift */,
+				D9904F982503A8A5005159CD /* ManageProductView.swift */,
+			);
+			path = Products;
+			sourceTree = "<group>";
+		};
 		D999767925003967004C9767 /* Pricing */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +142,7 @@
 		D9ABB30C247A964E00107707 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				D9663B7424FBB0E000EFCCD5 /* BaseView.swift */,
 				D9C59D642470889200569FC8 /* OrderView.swift */,
 				D9874DA2247A766D0018B243 /* ViewExtensions.swift */,
 				D9ABB30A247A95E500107707 /* ActivityIndicator.swift */,
@@ -136,8 +154,9 @@
 				D92A82C324F1601200ED30BF /* BaseFormView.swift */,
 				D961E34024F98DE100AB46DB /* Production */,
 				D9663B7324FBB04600EFCCD5 /* Ingredients */,
-				D9663B7424FBB0E000EFCCD5 /* BaseView.swift */,
 				D999767925003967004C9767 /* Pricing */,
+				D9904F9525039EF9005159CD /* Products */,
+				D9904F9A2503A903005159CD /* PickersProviders.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -147,6 +166,7 @@
 			children = (
 				D9C59D602470762100569FC8 /* OrdersViewModel.swift */,
 				D9ABB310247AB0AD00107707 /* ConfigurationViewModel.swift */,
+				D9904F962503A5AA005159CD /* BaseViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -289,6 +309,7 @@
 				D961E33F24F98DDC00AB46DB /* ProductionView.swift in Sources */,
 				D9C59D652470889200569FC8 /* OrderView.swift in Sources */,
 				D9DE6C142502A38700C6A728 /* ManagePricingItemView.swift in Sources */,
+				D9904F972503A5AA005159CD /* BaseViewModel.swift in Sources */,
 				D9C59D4C2470717F00569FC8 /* ContentView.swift in Sources */,
 				D9B6A8C224F11FA8005437D9 /* SettingsView.swift in Sources */,
 				D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */,
@@ -303,7 +324,10 @@
 				D9874DA3247A766D0018B243 /* ViewExtensions.swift in Sources */,
 				D9C59D612470762100569FC8 /* OrdersViewModel.swift in Sources */,
 				D92A82C224F145A800ED30BF /* ProfileView.swift in Sources */,
+				D9904F9425039EF4005159CD /* ProductsView.swift in Sources */,
 				D9663B7524FBB0E000EFCCD5 /* BaseView.swift in Sources */,
+				D9904F992503A8A5005159CD /* ManageProductView.swift in Sources */,
+				D9904F9B2503A903005159CD /* PickersProviders.swift in Sources */,
 				5B2963FAC60AE40E9FCC6EBE /* FixedExpensesView.swift in Sources */,
 				5B2961E0CA496B08B76DE793 /* ManageIngredientView.swift in Sources */,
 			);

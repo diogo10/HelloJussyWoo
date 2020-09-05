@@ -163,9 +163,3 @@ struct SimpleFormView_Previews: PreviewProvider {
         BaseFormView(value: .tax)
     }
 }
-
-public extension Double {
-    func format() -> String {
-        return String(format: "%.2f", self)
-    }
-}

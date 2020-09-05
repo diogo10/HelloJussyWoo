@@ -37,20 +37,6 @@ class ManagePricingItemViewModel  {
     
 }
 
-class IngredientsProvider: ObservableObject {
-    
-    var list: [String] = []
-    @Published var values: [String] = []
-    
-    init(list: [String]) {
-        self.list = list
-    }
-    
-    func load(selections: [String]) {
-        self.values = selections
-    }
-}
-
 struct NextView: View {
     @ObservedObject var provider: IngredientsProvider
     

@@ -11,7 +11,7 @@ import SwiftUI
 //https://developer.apple.com/design/human-interface-guidelines/sf-symbols/overview/
 
 struct ContentViewV2: View {
-    @State private var selection = 2
+    @State private var selection = 0
     
     
     init() {
@@ -24,10 +24,10 @@ struct ContentViewV2: View {
             NavigationView {
                 TabView(selection: self.$selection){
 
-                     ProductionView().tabItem {
+                     ProductsView().tabItem {
                         VStack {
-                            Image(systemName: "list.dash")
-                            Text("Home")
+                            Image(systemName: "cart")
+                            Text("Products")
                         }
                         
                     }.tag(0)

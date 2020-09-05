@@ -154,7 +154,7 @@ public struct ExpensesServiceRepository: ExpensesService {
             }
         } catch {
             print(error.localizedDescription)
-           return nil
+            return nil
         }
     }
     
@@ -346,13 +346,6 @@ public struct OrderData : Identifiable,Decodable{
     
 }
 
-
-public struct Product: Codable {
-    let name: String
-    let price: Double
-    let quantity: Int
-}
-
 public enum OrderStatus: String {
     
     case ONHOLD = "on-hold"
@@ -361,4 +354,104 @@ public enum OrderStatus: String {
     case ANY = "any"
     case PROCESSING = "processing"
     case REFUNDED = "refunded"
+}
+
+//MARK: Products
+
+public struct Product: Codable,Identifiable {
+    public var id = UUID().uuidString
+    public var name: String
+    public var price: Double
+    var quantity: Int = 1
+    public var unit: String
+    
+    public var priceLabel: String {
+        get {
+            return "\(price.format())"
+        }
+        set (newArea){
+          priceLabel = newArea
+        }
+    }
+}
+
+protocol ProductsService {
+    func getAll() -> [Product]
+    func add(name: String, price: Double, unit: String) -> Bool
+    func update(product: Product) -> Bool
+    func get(id: String) -> Product?
+}
+
+
+public let productsRepository = ProductsRepository()
+
+public class ProductsRepository: BaseRepo<Product>, ProductsService  {
+    
+    override init() {
+        super.init()
+        self.table = "Products"
+    }
+    
+    public func getAll() -> [Product] {
+        return getList()
+    }
+    
+    public func add(name: String, price: Double, unit: String) -> Bool {
+        var list = getList()
+        list.append(Product(name: name, price: price, unit: unit))
+        return setList(list)
+    }
+    
+    public func update(product: Product) -> Bool {
+        var list = getList()
+        guard let index = list.firstIndex(where: { $0.id == product.id }) else { return false }
+        list[index].name = product.name
+        list[index].price = product.price
+        list[index].unit = product.unit
+        return setList(list)
+    }
+    
+    public func get(id: String) -> Product? {
+        return getList().first { item in
+            item.id == id
+        }
+    }
+    
+    public func emptyProduct() -> Product {
+        return Product(name: "Add one product", price: 0, unit: "")
+    }
+}
+
+
+public class BaseRepo<T: Codable> {
+    
+    private var defaults = UserDefaults.standard
+    var table = ""
+    
+    
+    public init() {}
+    
+    func setList(_ list: [T]) -> Bool {
+        do {
+            try defaults.setObject(list, forKey: table)
+            return true
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
+    }
+    
+    func getList() -> [T] {
+        var list : [T] = []
+        do {
+            let it = try defaults.getObject(forKey: table, castTo: [T].self)
+            list.append(contentsOf: it)
+        } catch {
+            print(error.localizedDescription)
+        }
+        return list
+    }
+    
+    
+    
 }

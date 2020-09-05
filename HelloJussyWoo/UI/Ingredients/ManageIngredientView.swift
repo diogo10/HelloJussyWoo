@@ -35,7 +35,7 @@ struct ManageProductViewForm: View {
     @State private var unitIndex = 0
     @State private var hasEdited = false
     
-    private let viewModel = ManageProductViewModel()
+    private let viewModel = ManageProductFormViewModel()
     var itemId: String
     @State var isShowing: Bool
 
@@ -100,7 +100,7 @@ struct ManageProductViewForm: View {
 }
 
 
-class ManageProductViewModel {
+class ManageProductFormViewModel {
     
     var unitOptions: [String] = ["Kg=quilo", "Lt=litro",
                                  "Mç=maço", "Us=unidade", "Co=consumo de óleo",
