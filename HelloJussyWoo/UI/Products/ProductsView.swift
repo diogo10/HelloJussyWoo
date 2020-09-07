@@ -28,6 +28,12 @@ class ProductsViewModel : BaseViewModel {
         
     }
     
+    
+    func delete(index: [Int]) {
+        productsRepository.delete(index: index)
+        load()
+    }
+    
 }
 
 
@@ -75,10 +81,9 @@ struct ProductsView: View {
     }
     
     private func deleteItem(at indexSet: IndexSet) {
-        //self.viewModel.delete(index: indexSet.map({ it in
-        //   it
-        // }))
-        
+        self.viewModel.delete(index: indexSet.map({ it in
+            it
+        }))
     }
 }
 

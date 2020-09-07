@@ -443,6 +443,19 @@ public class BaseRepo<T: Codable> {
         return list
     }
     
+    public func delete(index: [Int]) {
+           var list = getList()
+           index.forEach { item in
+               list.remove(at: item)
+           }
+           
+           do {
+               try defaults.setObject(list, forKey: table)
+           } catch {
+               print(error.localizedDescription)
+           }
+       }
+    
     
     
 }
