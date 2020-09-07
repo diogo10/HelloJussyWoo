@@ -10,7 +10,7 @@ import SwiftUI
 import Data
 import SwiftUIRefresh
 
-class ProductsViewModel : BaseViewModel {
+class ProductsViewModel : BaseViewModel,ObservableObject {
     
     @Published var list: [Product] = []
     
@@ -24,10 +24,9 @@ class ProductsViewModel : BaseViewModel {
         if values.isEmpty {
             values.append(productsRepository.emptyProduct())
         }
-        self.list = values
         
+       self.list = values
     }
-    
     
     func delete(index: [Int]) {
         productsRepository.delete(index: index)
@@ -41,9 +40,9 @@ struct ProductsView: View {
     
     @ObservedObject var viewModel = ProductsViewModel()
     @State private var isShowing = false
+    
     var body: some View {
         TabBgView(content: {
-            
             
             List {
                 ForEach(viewModel.list) { section in
@@ -68,7 +67,6 @@ struct ProductsView: View {
                 
                 
             }.onAppear {
-                print("ProductsView: load")
                 self.viewModel.load()
             }.pullToRefresh(isShowing: $isShowing) {
                 self.viewModel.load()

@@ -9,7 +9,7 @@
 import Foundation
 import Data
 
-class BaseViewModel : ObservableObject {
+class BaseViewModel {
     var isEditing: Bool = false
     
     func getCurrency() -> String {
