@@ -20,6 +20,10 @@ class ManageProductViewModel: BaseViewModel {
         }
     }
     
+    func load(product: Product?) {
+        self.model = product
+    }
+    
     func save(name: String, price: String, unit: String) -> Bool {
         
         if var item = model {
@@ -37,11 +41,12 @@ struct ManageProductView: View {
     @Environment(\.presentationMode) var presentation
     @State var name: String = ""
     @State var price: String = ""
-    @State var product: Product
+    @State private var unitIndex = 0
+    @State private var state = 0
+    @State var product: Product?
     
     private let viewModel = ManageProductViewModel()
     private let unitProvider: UnitProvider = UnitProvider(list: units)
-    @State private var unitIndex = 0
     
     var body: some View {
         NoIconBgView( content: {
@@ -49,15 +54,12 @@ struct ManageProductView: View {
                 Form {
                     Section(header: Text("General").fontWeight(.bold)) {
                         TextField("Type in the name", text: self.$name).keyboardType(.default).accentColor(.blue)
-                        
-                        Picker(selection: self.$unitIndex, label: Text("Select")) {
+                        Picker(selection: self.$unitIndex, label: Text("")) {
                             ForEach(0 ..< units.count) {
                                 Text(units[$0])
                             }
-                        }
-                        
+                        }.pickerStyle(SegmentedPickerStyle())
                     }
-                    
                     
                     Section(header: Text("Price").fontWeight(.bold)) {
                         TextField("Type in the price", text: self.$price).keyboardType(.numberPad).accentColor(.blue)
@@ -78,16 +80,16 @@ struct ManageProductView: View {
                         }
                     }
                 }.foregroundColor(Color.black).background(Color.white)
-            }.onAppear {
-                //self.viewModel.load(id: self.itemId)
                 
-                //if self.viewModel.isEditing == false {
-                //  self.name = self.viewModel.model?.name ?? ""
-                //  self.price = self.viewModel.model?.price.format() ?? ""
-                //  self.unit = self.viewModel.model?.unit ?? self.unitProvider.prettyValues()
-                //self.unitProvider.load(selections: [self.viewModel.model?.unit ?? ""])
-                //  self.viewModel.isEditing = true
-                // }
+                
+                
+                
+            }.onAppear {
+                print("onAppear")
+                self.viewModel.load(product: self.product)
+                self.name = self.product?.name ?? ""
+                self.price = self.product?.price.format() ?? ""
+                
             }
             
         }, title: "Product")

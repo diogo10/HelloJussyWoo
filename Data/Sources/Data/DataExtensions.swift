@@ -7,8 +7,10 @@
 
 import Foundation
 
+public let units: [String] = ["Kg", "Lt", "Mç", "Us", "Co", "Dz", "Qb"]
+
 public extension Double {
-    public func format() -> String {
+    func format() -> String {
         return String(format: "%.2f", self)
     }
 }
@@ -41,6 +43,10 @@ extension String {
     
     mutating func appedingEuro() {
         self = self + " €"
+    }
+    
+    public func getUnitIndex() -> Int {
+        return units.firstIndex(of: self) ?? 0
     }
 }
 

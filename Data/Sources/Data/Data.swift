@@ -358,8 +358,8 @@ public enum OrderStatus: String {
 
 //MARK: Products
 
-public struct Product: Codable,Identifiable {
-    public var id = UUID().uuidString
+public struct Product: Codable,Identifiable, Hashable {
+    public var id = UUID()
     public var name: String
     public var price: Double
     var quantity: Int = 1
@@ -368,9 +368,6 @@ public struct Product: Codable,Identifiable {
     public var priceLabel: String {
         get {
             return "\(price.format())"
-        }
-        set (newArea){
-          priceLabel = newArea
         }
     }
 }
@@ -413,7 +410,7 @@ public class ProductsRepository: BaseRepo<Product>, ProductsService  {
     
     public func get(id: String) -> Product? {
         return getList().first { item in
-            item.id == id
+            item.id.uuidString == id
         }
     }
     

@@ -35,30 +35,31 @@ struct ProductsView: View {
     
     var body: some View {
         TabBgView(content: {
-            List {
-                ForEach(viewModel.list) { section in
+            VStack(alignment: .leading) {
+                ForEach(viewModel.list.reversed(), id: \.self) { section in
                     
                     NavigationLink(destination: ManageProductView(product: section) ) {
                         VStack {
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text("\(section.name)").bold().font(.subheadline)
-                                    Text("\(section.unit)").font(.caption)
+                                    Text("\(section.name)").bold().font(.subheadline).foregroundColor(.black)
+                                    Text("\(section.unit)").foregroundColor(.black).font(.caption)
                                 }
                                 
                                 Spacer()
-                                Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.price))").bold().font(.subheadline)
+                                Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.price))").bold().font(.subheadline).foregroundColor(.black)
+                               
                             }.padding()
+                            Divider()
                         }
                     }
-                    
-                    
                 }
-                
-                
             }.onAppear {
                 self.viewModel.load()
             }
+            
+            
+            
         }, title: "Products")
     }
 }

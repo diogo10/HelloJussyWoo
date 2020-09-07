@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-let units: [String] = ["Kg=quilo", "Lt=litro", "Mç=maço", "Us=unidade", "Co=consumo de óleo", "Dz=dúzia", "Qb=quanto baste"]
+
 
 public class IngredientsProvider: ObservableObject {
     
@@ -35,7 +35,7 @@ public class UnitProvider: BaseSimpleProvider {
 }
 
 public class BaseSimpleProvider: ObservableObject {
-    var list: [String] = units
+    var list: [String] = []
     @Published var values: [String] = []
     
     init(list: [String]) {
