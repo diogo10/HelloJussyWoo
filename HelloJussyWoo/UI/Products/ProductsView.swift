@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Data
+import SwiftUIRefresh
 
 class ProductsViewModel : BaseViewModel {
     
@@ -15,7 +16,7 @@ class ProductsViewModel : BaseViewModel {
     
     override init() {
         super.init()
-        self.load()
+        self.list =  productsRepository.getAll()
     }
     
     func load()  {
@@ -23,7 +24,8 @@ class ProductsViewModel : BaseViewModel {
         if values.isEmpty {
             values.append(productsRepository.emptyProduct())
         }
-        self.list.append(contentsOf: values)
+        self.list = values
+        
     }
     
 }
@@ -31,12 +33,14 @@ class ProductsViewModel : BaseViewModel {
 
 struct ProductsView: View {
     
-    private let viewModel = ProductsViewModel()
-    
+    @ObservedObject var viewModel = ProductsViewModel()
+    @State private var isShowing = false
     var body: some View {
         TabBgView(content: {
-            VStack(alignment: .leading) {
-                ForEach(viewModel.list.reversed(), id: \.self) { section in
+            
+            
+            List {
+                ForEach(viewModel.list) { section in
                     
                     NavigationLink(destination: ManageProductView(product: section) ) {
                         VStack {
@@ -48,19 +52,33 @@ struct ProductsView: View {
                                 
                                 Spacer()
                                 Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.price))").bold().font(.subheadline).foregroundColor(.black)
-                               
+                                
                             }.padding()
-                            Divider()
                         }
                     }
-                }
+                    
+                    
+                }.onDelete(perform: self.deleteItem)
+                
+                
             }.onAppear {
+                print("ProductsView: load")
                 self.viewModel.load()
+            }.pullToRefresh(isShowing: $isShowing) {
+                self.viewModel.load()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.isShowing = false
+                }
             }
             
-            
-            
         }, title: "Products")
+    }
+    
+    private func deleteItem(at indexSet: IndexSet) {
+        //self.viewModel.delete(index: indexSet.map({ it in
+        //   it
+        // }))
+        
     }
 }
 

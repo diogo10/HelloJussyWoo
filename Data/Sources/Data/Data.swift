@@ -358,18 +358,12 @@ public enum OrderStatus: String {
 
 //MARK: Products
 
-public struct Product: Codable,Identifiable, Hashable {
+public struct Product: Codable,Identifiable {
     public var id = UUID()
     public var name: String
     public var price: Double
     var quantity: Int = 1
     public var unit: String
-    
-    public var priceLabel: String {
-        get {
-            return "\(price.format())"
-        }
-    }
 }
 
 protocol ProductsService {

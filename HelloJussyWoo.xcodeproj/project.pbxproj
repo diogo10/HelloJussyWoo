@@ -11,6 +11,7 @@
 		5B2963FAC60AE40E9FCC6EBE /* FixedExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B29606CC2FD27C3A633913B /* FixedExpensesView.swift */; };
 		D92A82C224F145A800ED30BF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A82C124F145A800ED30BF /* ProfileView.swift */; };
 		D92A82C424F1601200ED30BF /* BaseFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A82C324F1601200ED30BF /* BaseFormView.swift */; };
+		D93257432506982100FA311E /* SwiftUIRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = D93257422506982100FA311E /* SwiftUIRefresh */; };
 		D950894F24D5568800D30648 /* ContentViewV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D950894E24D5568800D30648 /* ContentViewV2.swift */; };
 		D950895124D5570000D30648 /* FinanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D950895024D5570000D30648 /* FinanceView.swift */; };
 		D961E33F24F98DDC00AB46DB /* ProductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D961E33E24F98DDC00AB46DB /* ProductionView.swift */; };
@@ -85,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D93257432506982100FA311E /* SwiftUIRefresh in Frameworks */,
 				D9663B7024FBADA400EFCCD5 /* Data in Frameworks */,
 				D9663B7824FBBB7400EFCCD5 /* ASCollectionView in Frameworks */,
 				D9663B6F24FBADA400EFCCD5 /* Alamofire in Frameworks */,
@@ -242,6 +244,7 @@
 				D9C59D5E2470728000569FC8 /* Alamofire */,
 				D9F8D6F0247179E6004F43FF /* Data */,
 				D9663B7724FBBB7400EFCCD5 /* ASCollectionView */,
+				D93257422506982100FA311E /* SwiftUIRefresh */,
 			);
 			productName = HelloJussyWoo;
 			productReference = D9C59D442470717F00569FC8 /* HelloJussyWoo.app */;
@@ -274,6 +277,7 @@
 			packageReferences = (
 				D9C59D5D2470728000569FC8 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				D9663B7624FBBB7400EFCCD5 /* XCRemoteSwiftPackageReference "ASCollectionView" */,
+				D93257412506982100FA311E /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */,
 			);
 			productRefGroup = D9C59D452470717F00569FC8 /* Products */;
 			projectDirPath = "";
@@ -525,6 +529,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D93257412506982100FA311E /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/timbersoftware/SwiftUIRefresh.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.3;
+			};
+		};
 		D9663B7624FBBB7400EFCCD5 /* XCRemoteSwiftPackageReference "ASCollectionView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apptekstudios/ASCollectionView";
@@ -544,6 +556,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D93257422506982100FA311E /* SwiftUIRefresh */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D93257412506982100FA311E /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */;
+			productName = SwiftUIRefresh;
+		};
 		D9663B7724FBBB7400EFCCD5 /* ASCollectionView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D9663B7624FBBB7400EFCCD5 /* XCRemoteSwiftPackageReference "ASCollectionView" */;
