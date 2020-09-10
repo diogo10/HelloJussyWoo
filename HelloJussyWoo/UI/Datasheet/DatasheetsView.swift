@@ -10,11 +10,11 @@ import SwiftUI
 import Data
 import ASCollectionView
 
-struct IngredientsView: View {
+struct DatasheetsView: View {
     var body: some View {
         TabBgView(content: {
             IngredientsListView()
-        }, title: "Ingredients")
+        }, title: "Datasheets")
     }
 }
 
@@ -35,7 +35,7 @@ struct IngredientsListView: View {
     var body: some View {
         ASCollectionView(data: viewModel.load(), dataID: \.self) { item, _ in
             
-            NavigationLink(destination: ManageIngredientView(itemId: item.id, isShowing: false)) {
+            NavigationLink(destination: ManageDatasheetView(itemId: item.id, isShowing: false)) {
                 IngredientsListItemView(section: item, currency: self.viewModel.getCurrency())
             }.frame(width: 0)
             
@@ -79,11 +79,5 @@ struct IngredientsListItemView: View {
             Spacer()
             
         }.frame(width: 150, height: 150).background(Color.blue).cornerRadius(4)
-    }
-}
-
-struct IngredientsView_Previews: PreviewProvider {
-    static var previews: some View {
-        IngredientsView()
     }
 }

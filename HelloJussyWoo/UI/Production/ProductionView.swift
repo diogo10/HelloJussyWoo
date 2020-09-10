@@ -43,7 +43,7 @@ struct ProductionViewItems: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            NavigationLink(destination: ManageIngredientView(itemId: "")) {
+            NavigationLink(destination: ManageDatasheetView(itemId: "")) {
                 HStack{
                     Text("Ingredients")
                         .font(.title)

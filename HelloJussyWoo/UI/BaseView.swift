@@ -186,7 +186,7 @@ struct NoIconBgView<Content>: View where Content: View {
                         
                         Spacer()
                         
-                    }.padding(.leading, 25).padding(.top, 50)
+                    }.padding(.leading, 25).padding(.top, 60)
                     
                     Spacer()
                     
