@@ -53,9 +53,69 @@ struct ContentViewV2: View {
                 }
             }, title: self.selectionTitle[self.selection])
             
+            .navigationBarItems(trailing: iconView())
+            
             
         }.accentColor(.white)
         
         
+        
+    }
+    
+    @State var isLinkActive = false
+    
+    private func iconView() -> some View {
+        
+        return NavigationLink(destination:  defineDestination() , isActive: $isLinkActive) {
+            Button(action: {
+                print("clicked on plus")
+                self.isLinkActive = true
+            }) {
+                Image(systemName: "plus")
+                    .resizable()
+                    .padding(6)
+                    .frame(width: 28, height: 28)
+                    .background(Color.pink)
+                    .clipShape(Circle())
+                    .foregroundColor(.white)
+            }
+        }
+        
+        
+    }
+    
+    private func defineDestination() -> AnyView {
+        if self.selection == 0 {
+            return AnyView(ManageProductView())
+        }else if self.selection == 1 {
+            return AnyView(ManageDatasheetView())
+        } else {
+             return AnyView(ProfileView())
+        }
+    }
+    
+    
+    
+    
+}
+
+struct PrimaryLabel: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .background(Color.red)
+            .foregroundColor(Color.white)
+            .font(.largeTitle)
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func `if`<Content: View>(_ conditional: Bool, content: (Self) -> Content) -> some View {
+        if conditional {
+            content(self)
+        } else {
+            self
+        }
     }
 }

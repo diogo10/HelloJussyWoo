@@ -40,7 +40,7 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
 }
 
 struct ManageDatasheetView: View {
-    var itemId: String
+    var itemId: String = ""
     @ObservedObject var viewModel = ManageDatasheetViewModel()
     
     var body: some View {

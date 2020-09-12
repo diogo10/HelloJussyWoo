@@ -40,6 +40,7 @@ struct TabBgView<Content>: View where Content: View {
         return Color(hexStringToUIColor(hex: "#009af9"))
     }
     
+    
     var body : some View {
         GeometryReader { geometry in
             ZStack {
@@ -64,27 +65,27 @@ struct TabBgView<Content>: View where Content: View {
                     
                     Spacer()
                     
-                    VStack(alignment: .trailing) {
-                        
-                        NavigationLink(destination: EmptyView(), isActive: self.$isLinkActive) {
-                            Button(action: {
-                                print("clicked on plus")
-                                self.isLinkActive = true
-                            }) {
-                                Image(systemName: "plus")
-                                    .resizable()
-                                    .padding(6)
-                                    .frame(width: 28, height: 28)
-                                    .background(Color.white)
-                                    .clipShape(Circle())
-                                    .foregroundColor(.pink)
-                            }
-                        }
-                        
-                        
-                        Spacer()
-                        
-                    }.padding(.trailing, 20).padding(.top, 40)
+//                    VStack(alignment: .trailing) {
+//                        
+//                        NavigationLink(destination: EmptyView(), isActive: self.$isLinkActive) {
+//                            Button(action: {
+//                                print("clicked on plus")
+//                                self.isLinkActive = true
+//                            }) {
+//                                Image(systemName: "plus")
+//                                    .resizable()
+//                                    .padding(6)
+//                                    .frame(width: 36, height: 36)
+//                                    .background(Color.pink)
+//                                    .clipShape(Circle())
+//                                    .foregroundColor(.white)
+//                            }
+//                        }
+//                        
+//                        
+//                        Spacer()
+//                        
+//                    }.padding(.trailing, 20).padding(.top, 100)
                     
                     
                 }.edgesIgnoringSafeArea(.all)
@@ -92,7 +93,7 @@ struct TabBgView<Content>: View where Content: View {
             }
             
             //body here
-            self.content.padding(.top, 40)
+            self.content.padding(.top, 30)
         }
     }
 }

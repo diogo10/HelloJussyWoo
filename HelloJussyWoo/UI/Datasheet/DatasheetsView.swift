@@ -14,6 +14,7 @@ struct DatasheetsView: View {
     var body: some View {
         IngredientsListView()
     }
+
 }
 
 class IngredientsListViewModel {
