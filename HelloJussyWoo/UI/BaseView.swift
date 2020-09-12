@@ -4,18 +4,18 @@ import SwiftUI
 extension View {
     public func hexStringToUIColor (hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
+        
         if (cString.hasPrefix("#")) {
             cString.remove(at: cString.startIndex)
         }
-
+        
         if ((cString.count) != 6) {
             return UIColor.gray
         }
-
+        
         var rgbValue:UInt32 = 0
         Scanner(string: cString).scanHexInt32(&rgbValue)
-
+        
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
@@ -28,6 +28,7 @@ extension View {
 struct TabBgView<Content>: View where Content: View {
     
     private let content: Content
+    @State var isLinkActive = false
     
     public init(@ViewBuilder content: () -> Content, title: String) {
         self.content = content()
@@ -64,22 +65,27 @@ struct TabBgView<Content>: View where Content: View {
                     Spacer()
                     
                     VStack(alignment: .trailing) {
-                        NavigationLink(destination: EmptyView()) {
-                            
-                            Image(systemName: "plus")
-                                .resizable()
-                                .padding(6)
-                                .frame(width: 28, height: 28)
-                                .background(Color.white)
-                                .clipShape(Circle())
-                                .foregroundColor(.pink)
+                        
+                        NavigationLink(destination: EmptyView(), isActive: self.$isLinkActive) {
+                            Button(action: {
+                                print("clicked on plus")
+                                self.isLinkActive = true
+                            }) {
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .padding(6)
+                                    .frame(width: 28, height: 28)
+                                    .background(Color.white)
+                                    .clipShape(Circle())
+                                    .foregroundColor(.pink)
+                            }
                         }
                         
                         
                         Spacer()
                         
                     }.padding(.trailing, 20).padding(.top, 40)
-                        
+                    
                     
                 }.edgesIgnoringSafeArea(.all)
                 
@@ -136,12 +142,12 @@ struct TabBgIconView<Content>: View where Content: View {
                         NavigationLink(destination: EmptyView()) {
                             
                             Image(systemName: self.imageIcon)
-                            .resizable()
-                            .padding(6)
-                            .frame(width: 28, height: 28)
-                            .background(Color.white)
-                            .clipShape(Circle())
-                            .foregroundColor(.pink)
+                                .resizable()
+                                .padding(6)
+                                .frame(width: 28, height: 28)
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                .foregroundColor(.pink)
                         }
                         
                         Spacer()

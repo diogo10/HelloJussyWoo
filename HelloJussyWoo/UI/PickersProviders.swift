@@ -7,8 +7,7 @@
 //
 
 import SwiftUI
-
-
+import Data
 
 public class IngredientsProvider: ObservableObject {
     
@@ -24,14 +23,26 @@ public class IngredientsProvider: ObservableObject {
     }
 }
 
+public class ProductProvider: ObservableObject {
+    
+     var list: [String] = []
+     @Published var values: [String] = []
+     
+     init(list: [String]) {
+         self.list = list
+     }
+     
+     func load(selections: [String]) {
+         self.values = selections
+     }
+}
+
 
 public class UnitProvider: BaseSimpleProvider {
     
     override init(list: [String]) {
         super.init(list: list)
     }
-
-    
 }
 
 public class BaseSimpleProvider: ObservableObject {
@@ -91,9 +102,7 @@ struct MultiSelectionViewProvider: View {
     
     @State var items: [String] = []
     @State var selections: [String] = []
-    
-    var title = ""
-    
+    @State var title: String = "Selecione"
     
     var body: some View {
         
@@ -114,10 +123,8 @@ struct MultiSelectionViewProvider: View {
                 
             }.onAppear {
                 self.items = self.provider.list
-            }
+           }
         }, title: title)
-        
-        
         
     }
 }

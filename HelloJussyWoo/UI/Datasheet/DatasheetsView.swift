@@ -35,7 +35,7 @@ struct IngredientsListView: View {
     var body: some View {
         ASCollectionView(data: viewModel.load(), dataID: \.self) { item, _ in
             
-            NavigationLink(destination: ManageDatasheetView(itemId: item.id, isShowing: false)) {
+            NavigationLink(destination: ManageDatasheetView(itemId: item.id)) {
                 IngredientsListItemView(section: item, currency: self.viewModel.getCurrency())
             }.frame(width: 0)
             

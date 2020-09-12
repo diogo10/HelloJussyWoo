@@ -6,27 +6,62 @@
 import SwiftUI
 import Data
 
+
+class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
+    
+    @Published var list: [Product] = []
+    @Published var selectedProducts: [Product] = []
+    private var provider:BaseSimpleProvider?
+    
+    func load()  {
+        self.list =  productsRepository.getAll()
+        setUpProvider()
+        self.selectedProducts = getProductSelection()
+    }
+    
+    func productsNames() -> [String]  {
+        return self.list.map { $0.name }
+    }
+    
+    func provideProductSelection() -> BaseSimpleProvider {
+        return self.provider!
+    }
+    
+    private func setUpProvider() {
+        if provider == nil {
+            self.provider = BaseSimpleProvider(list: productsNames())
+        }
+    }
+
+    private func getProductSelection() -> [Product] {
+        let selection = provider?.list ?? []
+        return self.list.filter { selection.contains($0.name) }
+    }
+}
+
 struct ManageDatasheetView: View {
     var itemId: String
-    @State var isShowing: Bool = false
-    
+    @ObservedObject var viewModel = ManageDatasheetViewModel()
     
     var body: some View {
-        LoadingView(isShowing: $isShowing ) {
-            NoIconBgView( content: {
-                VStack(alignment: .leading) {
+        NoIconBgView( content: {
+            VStack(alignment: .leading) {
+                
+                List { Section(header: Header(viewModel: self.viewModel)) {
                     
-                    List { Section(header: Header(),footer: SummaryView()) {
-                        Item()
-                        Item()
-                        }
-                    }.listStyle(GroupedListStyle())
-                    
-                    
-                    Spacer()
+                    ForEach(self.viewModel.selectedProducts) { section in
+                        Item(product: section)
+                    }
+                    }
+                }.listStyle(GroupedListStyle()).onAppear {
+                    self.viewModel.load()
                 }
-            }, title: "Datasheet")
-        }
+                
+                
+                Spacer()
+            }
+        }, title: "Datasheet")
+        
     }
     
     private func deleteItem(at indexSet: IndexSet) {
@@ -42,14 +77,19 @@ struct ManageDatasheetView: View {
 private struct Header: View {
     
     @State var yourBindingHere = ""
+    @State var isLinkActive = false
+    @State var viewModel: ManageDatasheetViewModel
     
     var body: some View {
         HStack{
             Text("Products").foregroundColor(.black).font(.headline)
-            Button(action: {
-                print("asas")
-            }) {
-                Text("Add").foregroundColor(.blue).padding(.trailing,20).font(.headline)
+            NavigationLink(destination: MultiSelectionViewProvider(provider: viewModel.provideProductSelection()), isActive: $isLinkActive) {
+                Button(action: {
+                    print("asas")
+                    self.isLinkActive = true
+                }) {
+                    Text("Add").foregroundColor(.blue).padding(.trailing,20).font(.headline)
+                }
             }
         }
     }
@@ -60,14 +100,14 @@ private struct Header: View {
 private struct Item: View {
     
     @State var yourBindingHere = ""
+    @State var product: Product
     
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Manteiga").bold().font(.subheadline)
-                    Text("KG / R$ 45.00").font(.caption)
-                    Text("Custo bruto: R$ 0,93").font(.caption)
+                    Text("\(product.name)").bold().font(.subheadline)
+                    Text("\(product.unit) / \(product.price.format())").font(.caption)
                 }
                 
                 Spacer()
