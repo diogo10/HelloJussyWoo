@@ -4,11 +4,9 @@ import Data
 struct ProfileView: View {
     
     var body: some View {
-       TabBgIconView(content: {
-            VStack(alignment: .leading) {
-                ProfileHeader(viewModel: ProfileViewModel())
-            }
-       },title: "Settings", imageIcon: "person")
+        VStack(alignment: .leading) {
+            ProfileHeader(viewModel: ProfileViewModel())
+        }
     }
 }
 

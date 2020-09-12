@@ -12,9 +12,7 @@ import ASCollectionView
 
 struct DatasheetsView: View {
     var body: some View {
-        TabBgView(content: {
-            IngredientsListView()
-        }, title: "Datasheets")
+        IngredientsListView()
     }
 }
 

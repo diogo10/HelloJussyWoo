@@ -12,7 +12,7 @@ import SwiftUI
 
 struct ContentViewV2: View {
     @State private var selection = 1
-    
+    @State private var selectionTitle = ["Products","Datasheet", "Settings"]
     
     init() {
         UITabBar.appearance().barTintColor = hexStringToUIColor(hex: "#009af9")
@@ -21,10 +21,11 @@ struct ContentViewV2: View {
     
     var body: some View {
         
-            NavigationView {
+        NavigationView {
+            TabBgView(content: {
                 TabView(selection: self.$selection){
-
-                     ProductsView().tabItem {
+                    
+                    ProductsView().tabItem {
                         VStack {
                             Image(systemName: "cart")
                             Text("Products")
@@ -40,14 +41,6 @@ struct ContentViewV2: View {
                         
                     }.tag(1)
                     
-                    PricingView().tabItem {
-                        VStack {
-                            Image(systemName: "creditcard")
-                            Text("Pricing")
-                        }
-                        
-                    }.tag(2)
-                    
                     ProfileView()
                         .tabItem {
                             VStack {
@@ -55,17 +48,14 @@ struct ContentViewV2: View {
                                 Text("Settings").foregroundColor(.accentColor)
                             }
                     }
-                    .tag(3)
-                
+                    .tag(2)
+                    
                 }
-            }.accentColor(.white)
+            }, title: self.selectionTitle[self.selection])
             
+            
+        }.accentColor(.white)
         
-    }
-}
-
-struct ContentViewV2_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentViewV2()
+        
     }
 }

@@ -25,7 +25,7 @@ class ProductsViewModel : BaseViewModel,ObservableObject {
             values.append(productsRepository.emptyProduct())
         }
         
-       self.list = values
+        self.list = values
     }
     
     func delete(index: [Int]) {
@@ -42,40 +42,37 @@ struct ProductsView: View {
     @State private var isShowing = false
     
     var body: some View {
-        TabBgView(content: {
-            
-            List {
-                ForEach(viewModel.list) { section in
-                    
-                    NavigationLink(destination: ManageProductView(product: section) ) {
-                        VStack {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text("\(section.name)").bold().font(.subheadline).foregroundColor(.black)
-                                    Text("\(section.unit)").foregroundColor(.black).font(.caption)
-                                }
-                                
-                                Spacer()
-                                Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.price))").bold().font(.subheadline).foregroundColor(.black)
-                                
-                            }.padding()
-                        }
+        
+        List {
+            ForEach(viewModel.list) { section in
+                
+                NavigationLink(destination: ManageProductView(product: section) ) {
+                    VStack {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("\(section.name)").bold().font(.subheadline).foregroundColor(.black)
+                                Text("\(section.unit)").foregroundColor(.black).font(.caption)
+                            }
+                            
+                            Spacer()
+                            Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.price))").bold().font(.subheadline).foregroundColor(.black)
+                            
+                        }.padding()
                     }
-                    
-                    
-                }.onDelete(perform: self.deleteItem)
-                
-                
-            }.onAppear {
-                self.viewModel.load()
-            }.pullToRefresh(isShowing: $isShowing) {
-                self.viewModel.load()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.isShowing = false
                 }
-            }
+                
+                
+            }.onDelete(perform: self.deleteItem)
             
-        }, title: "Products")
+            
+        }.onAppear {
+            self.viewModel.load()
+        }.pullToRefresh(isShowing: $isShowing) {
+            self.viewModel.load()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.isShowing = false
+            }
+        }
     }
     
     private func deleteItem(at indexSet: IndexSet) {
