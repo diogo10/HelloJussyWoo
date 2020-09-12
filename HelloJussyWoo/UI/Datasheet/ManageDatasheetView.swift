@@ -5,6 +5,7 @@
 
 import SwiftUI
 import Data
+import Combine
 
 
 class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
@@ -12,6 +13,13 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     @Published var list: [Product] = []
     @Published var selectedProducts: [Product] = []
     private var provider:BaseSimpleProvider?
+    
+    @Published var productQt = "" {
+        didSet {
+            print("set")
+            //do whatever you want
+        }
+    }
     
     func load()  {
         self.list =  productsRepository.getAll()
@@ -32,7 +40,7 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
             self.provider = BaseSimpleProvider(list: productsNames())
         }
     }
-
+    
     private func getProductSelection() -> [Product] {
         let selection = provider?.list ?? []
         return self.list.filter { selection.contains($0.name) }
@@ -44,23 +52,21 @@ struct ManageDatasheetView: View {
     @ObservedObject var viewModel = ManageDatasheetViewModel()
     
     var body: some View {
-        NoIconBgView( content: {
-            VStack(alignment: .leading) {
+        VStack(alignment: .leading) {
+            
+            List { Section(header: Header(viewModel: self.viewModel)) {
                 
-                List { Section(header: Header(viewModel: self.viewModel)) {
-                    
-                    ForEach(self.viewModel.selectedProducts) { section in
-                        Item(product: section)
-                    }
-                    }
-                }.listStyle(GroupedListStyle()).onAppear {
-                    self.viewModel.load()
+                ForEach(self.viewModel.selectedProducts) { section in
+                    Item(product: section)
                 }
-                
-                
-                Spacer()
+                }
+            }.listStyle(GroupedListStyle()).onAppear {
+                self.viewModel.load()
             }
-        }, title: "Datasheet")
+            
+            
+            Spacer()
+        }.navigationBarTitle(Text("Datasheet"))
         
     }
     
@@ -85,7 +91,6 @@ private struct Header: View {
             Text("Products").foregroundColor(.black).font(.headline)
             NavigationLink(destination: MultiSelectionViewProvider(provider: viewModel.provideProductSelection()), isActive: $isLinkActive) {
                 Button(action: {
-                    print("asas")
                     self.isLinkActive = true
                 }) {
                     Text("Add").foregroundColor(.blue).padding(.trailing,20).font(.headline)
@@ -96,6 +101,7 @@ private struct Header: View {
     
     
 }
+
 
 private struct Item: View {
     
@@ -113,7 +119,9 @@ private struct Item: View {
                 Spacer()
                 
                 VStack {
-                    TextField("Qt usada", text: $yourBindingHere).textFieldStyle(RoundedBorderTextFieldStyle()).frame(width: 100)
+                    TextField("Qt usada", text: $yourBindingHere).keyboardType(.numberPad).textFieldStyle(RoundedBorderTextFieldStyle()).frame(width: 100).onReceive(Just(yourBindingHere)) { location in
+                         print(location)
+                    }
                 }.padding(.leading,50).accentColor(.blue)
                 
             }.padding()

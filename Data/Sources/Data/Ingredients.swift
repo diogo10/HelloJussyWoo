@@ -38,7 +38,7 @@ public struct IngredientsServiceRepository: IngredientsService {
     public init() {}
     
     public func getAll() -> [Ingredient] {
-        return [Ingredient(name: "Tesrt", unit: "KG", packageQty: 1, amountPaidEachProduct: 0.0, amountUsedInTheRecipe: 0.0, grossCost: 0.0)]
+        return getList()
     }
     
     public func add(value1: String,value2: String,value3: String,value4: String, value5: String,

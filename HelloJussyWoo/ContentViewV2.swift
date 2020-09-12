@@ -15,8 +15,8 @@ struct ContentViewV2: View {
     @State private var selectionTitle = ["Products","Datasheet", "Settings"]
     
     init() {
-        UITabBar.appearance().barTintColor = hexStringToUIColor(hex: "#009af9")
-        UITableView.appearance().backgroundColor = .clear
+        //UITabBar.appearance().barTintColor = hexStringToUIColor(hex: "#009af9")
+        UITableView.appearance().backgroundColor = .white
     }
     
     var body: some View {
@@ -56,7 +56,7 @@ struct ContentViewV2: View {
             .navigationBarItems(trailing: iconView())
             
             
-        }.accentColor(.white)
+        }
         
         
         
