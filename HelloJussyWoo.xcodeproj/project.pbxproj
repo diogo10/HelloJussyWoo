@@ -32,6 +32,7 @@
 		D9ABB30F247AAD7900107707 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB30E247AAD7900107707 /* ConfigurationView.swift */; };
 		D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB310247AB0AD00107707 /* ConfigurationViewModel.swift */; };
 		D9B6A8C224F11FA8005437D9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B6A8C124F11FA8005437D9 /* SettingsView.swift */; };
+		D9B799A62516C50D00707EC6 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B799A52516C50D00707EC6 /* MoreView.swift */; };
 		D9C59D482470717F00569FC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D472470717F00569FC8 /* AppDelegate.swift */; };
 		D9C59D4A2470717F00569FC8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D492470717F00569FC8 /* SceneDelegate.swift */; };
 		D9C59D4C2470717F00569FC8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D4B2470717F00569FC8 /* ContentView.swift */; };
@@ -66,6 +67,7 @@
 		D9ABB30E247AAD7900107707 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		D9ABB310247AB0AD00107707 /* ConfigurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewModel.swift; sourceTree = "<group>"; };
 		D9B6A8C124F11FA8005437D9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D9B799A52516C50D00707EC6 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		D9C59D442470717F00569FC8 /* HelloJussyWoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloJussyWoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9C59D472470717F00569FC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9C59D492470717F00569FC8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -144,21 +146,16 @@
 		D9ABB30C247A964E00107707 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				D9663B7424FBB0E000EFCCD5 /* BaseView.swift */,
-				D9C59D642470889200569FC8 /* OrderView.swift */,
-				D9874DA2247A766D0018B243 /* ViewExtensions.swift */,
-				D9ABB30A247A95E500107707 /* ActivityIndicator.swift */,
-				D9ABB30E247AAD7900107707 /* ConfigurationView.swift */,
-				D950895024D5570000D30648 /* FinanceView.swift */,
-				D9B6A8C124F11FA8005437D9 /* SettingsView.swift */,
+				D9B799A82516C52900707EC6 /* Base */,
+				D9B799B02516C58A00707EC6 /* Woo */,
+				D9B799AA2516C53900707EC6 /* Finance */,
 				D962EA5D24F5451B00D4F521 /* FixedExpenses */,
-				D92A82C124F145A800ED30BF /* ProfileView.swift */,
-				D92A82C324F1601200ED30BF /* BaseFormView.swift */,
+				D9B799AC2516C55600707EC6 /* Settings */,
 				D961E34024F98DE100AB46DB /* Production */,
 				D9663B7324FBB04600EFCCD5 /* Datasheet */,
 				D999767925003967004C9767 /* Pricing */,
 				D9904F9525039EF9005159CD /* Products */,
-				D9904F9A2503A903005159CD /* PickersProviders.swift */,
+				D9B799A52516C50D00707EC6 /* MoreView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -171,6 +168,52 @@
 				D9904F962503A5AA005159CD /* BaseViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D9B799A82516C52900707EC6 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				D9B799AE2516C56C00707EC6 /* Pickers */,
+				D9874DA2247A766D0018B243 /* ViewExtensions.swift */,
+				D9ABB30A247A95E500107707 /* ActivityIndicator.swift */,
+				D9663B7424FBB0E000EFCCD5 /* BaseView.swift */,
+				D92A82C324F1601200ED30BF /* BaseFormView.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		D9B799AA2516C53900707EC6 /* Finance */ = {
+			isa = PBXGroup;
+			children = (
+				D950895024D5570000D30648 /* FinanceView.swift */,
+			);
+			path = Finance;
+			sourceTree = "<group>";
+		};
+		D9B799AC2516C55600707EC6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D9B6A8C124F11FA8005437D9 /* SettingsView.swift */,
+				D92A82C124F145A800ED30BF /* ProfileView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D9B799AE2516C56C00707EC6 /* Pickers */ = {
+			isa = PBXGroup;
+			children = (
+				D9904F9A2503A903005159CD /* PickersProviders.swift */,
+			);
+			path = Pickers;
+			sourceTree = "<group>";
+		};
+		D9B799B02516C58A00707EC6 /* Woo */ = {
+			isa = PBXGroup;
+			children = (
+				D9C59D642470889200569FC8 /* OrderView.swift */,
+				D9ABB30E247AAD7900107707 /* ConfigurationView.swift */,
+			);
+			path = Woo;
 			sourceTree = "<group>";
 		};
 		D9C59D3B2470717F00569FC8 = {
@@ -314,6 +357,7 @@
 				D9C59D652470889200569FC8 /* OrderView.swift in Sources */,
 				D9DE6C142502A38700C6A728 /* ManagePricingItemView.swift in Sources */,
 				D9904F972503A5AA005159CD /* BaseViewModel.swift in Sources */,
+				D9B799A62516C50D00707EC6 /* MoreView.swift in Sources */,
 				D9C59D4C2470717F00569FC8 /* ContentView.swift in Sources */,
 				D9B6A8C224F11FA8005437D9 /* SettingsView.swift in Sources */,
 				D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */,

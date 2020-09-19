@@ -71,7 +71,7 @@ struct ContentViewV2: View {
                 print("clicked on plus")
                 self.isLinkActive = true
             }) {
-                Image(systemName: "plus")
+                Image(systemName: defineIconName())
                     .resizable()
                     .padding(6)
                     .frame(width: 28, height: 28)
@@ -81,7 +81,6 @@ struct ContentViewV2: View {
             }
         }
         
-        
     }
     
     private func defineDestination() -> AnyView {
@@ -90,11 +89,19 @@ struct ContentViewV2: View {
         }else if self.selection == 1 {
             return AnyView(ManageDatasheetView())
         } else {
-             return AnyView(ProfileView())
+             return AnyView(MoreView())
         }
     }
     
-    
+    private func defineIconName() -> String {
+        if self.selection == 0 {
+            return "plus"
+        }else if self.selection == 1 {
+            return "plus"
+        } else {
+             return "person"
+        }
+    }
     
     
 }
