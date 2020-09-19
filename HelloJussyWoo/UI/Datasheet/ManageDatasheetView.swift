@@ -184,10 +184,11 @@ private struct Header: View {
                 Button(action: {
                     self.isLinkActive = true
                 }) {
-                    Text("Add").foregroundColor(.blue).padding(.trailing,20).font(.headline)
+                    Image(systemName: "plus").foregroundColor(.blue)
                 }
             }
         }
+        
     }
     
     
