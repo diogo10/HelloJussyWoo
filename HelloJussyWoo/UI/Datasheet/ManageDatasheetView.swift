@@ -87,7 +87,12 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
         
         self.custoTotalSemImposto = calCustoTotal()
         self.valorKilo =  self.custoTotalSemImposto / pesoTotal
-        self.custoTotalComImposto = (tax * self.custoTotalSemImposto) / 100
+        
+        
+        let impactInEachProduct = repoExpenses.impactInEachProduct() - 1
+        let per = (self.custoTotalSemImposto / impactInEachProduct)
+        self.custoTotalComImposto = self.custoTotalSemImposto + per
+                                      
         self.pesoTotal = (totalKilos / 1000)
     
         let markup = 30

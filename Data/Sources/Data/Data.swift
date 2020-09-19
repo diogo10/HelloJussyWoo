@@ -206,7 +206,10 @@ public struct ExpensesServiceRepository: ExpensesService {
     }
     
     public func impactInEachProduct() -> Double {
-        return 23.0
+        let fixed = total()
+        let target = getTargetSales()
+        let total = (fixed / target) * 100
+        return total.rounded()
     }
     
     public func setCurrency(value: String) {
