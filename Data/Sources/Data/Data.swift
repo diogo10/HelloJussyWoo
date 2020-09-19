@@ -13,6 +13,10 @@ private let session: Session = {
     return Session(configuration: configuration, serverTrustManager: manager)
 }()
 
+
+public let repoExpenses = ExpensesServiceRepository()
+
+
 //MARK: DOMAIN
 
 protocol WooService {

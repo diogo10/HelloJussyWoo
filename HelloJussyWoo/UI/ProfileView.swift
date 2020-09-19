@@ -14,7 +14,7 @@ struct ProfileView: View {
 class ProfileViewModel : FixedExpensesViewModel {
     
     func getTax() -> String {
-        return String(format: "\(repoExpenses.getCurrency()) %.2f", repoExpenses.getTax())
+        return repoExpenses.getTax().format() + " %"
     }
     
     func getImpact() -> String {

@@ -14,17 +14,28 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     @Published var selectedProducts: [Product] = []
     private var provider:BaseSimpleProvider?
     
-    @Published var productQt = "" {
-        didSet {
-            print("set")
-            //do whatever you want
-        }
-    }
+    @Published var margemLucro: Double = 0.0
+    @Published var margemLucroPer: String = "0%"
+    @Published var lucro: Double = 0.0
+    @Published var pesoTotal: Double = 0.0
+    @Published var valorKilo: Double = 0.0
+    
+    @Published var custoTotalComImposto: Double = 0.0
+    @Published var custoTotalKiloComImposto: Double = 0.0
+    
+    @Published var custoTotalSemImposto: Double = 0.0
+    @Published var custoTotalKiloSemImposto: Double = 0.0
+    
+    var values = ["" : 0.0]
+    var tax = 0.0
+    
+    
     
     func load()  {
         self.list =  productsRepository.getAll()
         setUpProvider()
         self.selectedProducts = getProductSelection()
+        self.tax = repoExpenses.getTax()
     }
     
     func productsNames() -> [String]  {
@@ -35,6 +46,65 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
         return self.provider!
     }
     
+    func calCustoBruto(product: Product, qtUsada: String) -> Double {
+        
+        if let qt = Double(qtUsada) {
+            return calculateCustoBruto(price: product.price, qtUsada: qt)
+        }else{
+            return 0.0
+        }
+        
+    }
+    
+    private func calculateCustoBruto(price: Double,qtUsada: Double ) -> Double {
+        let fator = 1000.0
+        return (price * (qtUsada * 1000) ) / fator
+    }
+    
+    func calculate(product: Product, value: String) {
+        updateValues(productId: product.id.uuidString, value: value)
+        
+        
+        let kilos = getKiloProductsIds()
+        
+        
+        var totalKilos = 0.0
+        values.forEach { (key, value) in
+            
+            if kilos.contains(key){
+                totalKilos = totalKilos + (value * 1000)
+            }
+            
+        }
+        
+        
+        self.custoTotalSemImposto = calCustoTotal()
+        self.valorKilo =  self.custoTotalSemImposto / pesoTotal
+        self.custoTotalComImposto = (tax * self.custoTotalSemImposto) / 100
+        self.pesoTotal = (totalKilos / 1000)
+        
+        
+    }
+    
+    private func calCustoTotal() -> Double {
+        var total = 0.0
+        self.selectedProducts.forEach { item in
+           
+            if let real = values[item.id.uuidString] {
+                total = total + calculateCustoBruto(price: item.price, qtUsada: real)
+            }
+        }
+        
+        return total
+    }
+    
+    private func getKiloProductsIds() -> [String] {
+        self.selectedProducts.filter { item in
+            item.unit.uppercased() == "KG"
+        }.map { $0.id.uuidString }
+    }
+    
+    
     private func setUpProvider() {
         if provider == nil {
             self.provider = BaseSimpleProvider(list: productsNames())
@@ -42,8 +112,14 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     }
     
     private func getProductSelection() -> [Product] {
-        let selection = provider?.list ?? []
+        let selection = provider?.values ?? []
         return self.list.filter { selection.contains($0.name) }
+    }
+    
+    private func updateValues(productId: String ,value: String){
+        if let real = Double(value) {
+            values[productId] = real
+        }
     }
 }
 
@@ -54,10 +130,10 @@ struct ManageDatasheetView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            List { Section(header: Header(viewModel: self.viewModel)) {
+            List { Section(header: Header(viewModel: self.viewModel), footer: SummaryView(viewModel: self.viewModel)) {
                 
                 ForEach(self.viewModel.selectedProducts) { section in
-                    Item(product: section)
+                    Item(product: section, viewModel: self.viewModel)
                 }
                 }
             }.listStyle(GroupedListStyle()).onAppear {
@@ -107,6 +183,7 @@ private struct Item: View {
     
     @State var yourBindingHere = ""
     @State var product: Product
+    @State var viewModel: ManageDatasheetViewModel
     
     var body: some View {
         VStack {
@@ -114,13 +191,16 @@ private struct Item: View {
                 VStack(alignment: .leading) {
                     Text("\(product.name)").bold().font(.subheadline)
                     Text("\(product.unit) / \(product.price.format())").font(.caption)
+                    Text("Custo Bruto: \(self.viewModel.calCustoBruto(product: product, qtUsada: yourBindingHere ).format())").font(.caption)
                 }
                 
                 Spacer()
                 
                 VStack {
-                    TextField("Qt usada", text: $yourBindingHere).keyboardType(.numberPad).textFieldStyle(RoundedBorderTextFieldStyle()).frame(width: 100).onReceive(Just(yourBindingHere)) { location in
-                         print(location)
+                    TextField("Qt usada", text: $yourBindingHere).keyboardType(.numberPad).textFieldStyle(RoundedBorderTextFieldStyle()).frame(width: 100).onReceive(Just(yourBindingHere)) { value in
+                        print(value)
+                        self.viewModel.calculate(product: self.product, value: value)
+                        
                     }
                 }.padding(.leading,50).accentColor(.blue)
                 
@@ -132,170 +212,162 @@ private struct Item: View {
 }
 
 private struct SummaryView: View {
+    @ObservedObject var viewModel: ManageDatasheetViewModel
+    @State var yourBindingHere = ""
+    
     var body: some View {
-        VStack(alignment: .leading) {
+        
+        VStack{
+            
             
             HStack {
-                VStack (alignment: .leading) {
-                    Text("Preço de venda").bold().font(.subheadline).foregroundColor(.black)
-                    Text("78% de margem de lucro").font(.caption)
-                    Text("R$ 8.50 de lucro").font(.caption)
-                }
-                
+                Text("Peso final").bold().font(.subheadline).padding(.leading,20)
                 Spacer()
-                VStack{
-                    Text("R$ 45.00").bold().font(.title).foregroundColor(.blue)
-                }
-            }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
+                Text("\(self.viewModel.pesoTotal.description)").font(.subheadline).padding(.trailing,20)
+            }.opacity(self.viewModel.selectedProducts.isEmpty ? 0 : 1)
             
-            Text("Custos com imposto").bold().foregroundColor(.black).font(.subheadline).padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
             
-            VStack {
-                HStack {
-                    Text("Peso Total da Receita").bold().font(.subheadline)
-                    Spacer()
-                    Text("1,00 kg").bold().font(.subheadline)
-                }.padding(.top,10)
+            VStack(alignment: .leading) {
+                
+                Text("Resumo").bold().foregroundColor(.black).font(.subheadline).padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                
+                VStack {
+                    
+                    HStack {
+                        Text("Custo Total Bruto").bold().font(.subheadline)
+                        Spacer()
+                        Text("\(self.viewModel.getCurrency()) \(self.viewModel.custoTotalSemImposto.format())").bold().font(.subheadline)
+                    }
+                    
+                    HStack {
+                        Text("Custo Total com Imposto").bold().font(.subheadline)
+                        Spacer()
+                        Text("\(self.viewModel.getCurrency()) \(self.viewModel.custoTotalComImposto.format())").bold().font(.subheadline)
+                    }
+                    
+                    
+                    HStack {
+                        Text("Valor do (KG)").bold().font(.subheadline)
+                        Spacer()
+                        Text("\(self.viewModel.valorKilo.format())").bold().font(.subheadline)
+                    }.padding(.top,10)
+                    
+                }.padding(.bottom,20)
                 
                 HStack {
-                    Text("Custo Total").bold().font(.subheadline)
+                    VStack (alignment: .leading) {
+                        Text("Preço de venda").bold().font(.subheadline).foregroundColor(.black).padding(.bottom,20)
+                        Text("Margem de lucro").bold().font(.subheadline).foregroundColor(.black).padding(.top,20)
+                        Text("Lucro").bold().font(.subheadline).foregroundColor(.black)
+                    }.padding()
+                    
                     Spacer()
-                    Text("R$ 8.18").bold().font(.subheadline)
+                    VStack(alignment: .trailing){
+                        
+                        HStack{
+                            TextField("\(self.viewModel.lucro.format())", text: $yourBindingHere)
+                                .keyboardType(.numberPad).frame(width: 80).foregroundColor(.blue).font(.title)
+                                .multilineTextAlignment(.trailing)
+                        }.padding(.bottom,30)
+                        
+              
+                        Text("\(self.viewModel.margemLucroPer)").font(.headline)
+                        Text("\(self.viewModel.getCurrency()) \(self.viewModel.margemLucro.format())").font(.headline)
+                    }.padding()
+                        
+                    
+                    
+                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                    .background(Color.green).cornerRadius(6)
+                
+                
+                Button(action: {
+                    print("save")
+                }) {
+                    Text("Save").padding(.trailing,20).font(.title) .foregroundColor(.blue)
                 }
                 
-                HStack {
-                    Text("Custo/Kg").bold().font(.subheadline)
-                    Spacer()
-                    Text("R$ 8.18").bold().font(.subheadline)
-                }
+                
+                //            Text("Custos sem imposto").bold().foregroundColor(.black).font(.subheadline).padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                //
+                //            VStack {
+                //                HStack {
+                //                    Text("Custo Total").bold().font(.subheadline)
+                //                    Spacer()
+                //                    Text("R$ \(self.viewModel.custoTotalSemImposto.format())").bold().font(.subheadline)
+                //                }
+                //
+                //                HStack {
+                //                    Text("Custo/Kg").bold().font(.subheadline)
+                //                    Spacer()
+                //                    Text("R$ \(self.viewModel.custoTotalKiloSemImposto.format())").bold().font(.subheadline)
+                //                }
+                //            }
+                
+                
+                //            Text("Simulação de Lucro").bold().foregroundColor(.black).font(.subheadline).padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                //
+                //            HStack{
+                //                VStack {
+                //
+                //                    Button(action: { }) {
+                //                        Text("R$ 4.18").bold().font(.subheadline).frame(width: 70, height: 50)
+                //                    }
+                //                    .background(RoundedRectangle(cornerRadius: 6.0)
+                //                    .foregroundColor(.green))
+                //
+                //                    Text("10%").font(.caption)
+                //
+                //                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
+                //
+                //
+                //                VStack {
+                //
+                //                    Button(action: { }) {
+                //                        Text("R$ 5.18").bold().font(.subheadline).frame(width: 70, height: 50)
+                //                    }
+                //                    .background(RoundedRectangle(cornerRadius: 6.0)
+                //                    .foregroundColor(.green))
+                //
+                //                    Text("20%").font(.caption)
+                //
+                //                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
+                //
+                //                VStack {
+                //
+                //                    Button(action: { }) {
+                //                        Text("R$ 6.18").bold().font(.subheadline).frame(width: 70, height: 50)
+                //                    }
+                //                    .background(RoundedRectangle(cornerRadius: 6.0)
+                //                    .foregroundColor(.green))
+                //
+                //                    Text("30%").font(.caption)
+                //
+                //                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
+                //
+                //                VStack {
+                //
+                //                    Button(action: { }) {
+                //                        Text("R$ 7.18").bold().font(.subheadline).frame(width: 70, height: 50)
+                //                    }
+                //                    .background(RoundedRectangle(cornerRadius: 6.0)
+                //                    .foregroundColor(.green))
+                //
+                //                    Text("40%").font(.caption)
+                //
+                //                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
+                //
+                //
+                //            }
+                
+                
             }
             
-            
-            Text("Custos sem imposto").bold().foregroundColor(.black).font(.subheadline).padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-            
-            VStack {
-                HStack {
-                    Text("Custo Total").bold().font(.subheadline)
-                    Spacer()
-                    Text("R$ 2.18").bold().font(.subheadline)
-                }
-                
-                HStack {
-                    Text("Custo/Kg").bold().font(.subheadline)
-                    Spacer()
-                    Text("R$ 4.18").bold().font(.subheadline)
-                }
-            }
-            
-            
-            Text("Simulação de Lucro").bold().foregroundColor(.black).font(.subheadline).padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-            
-            HStack{
-                VStack {
-                    
-                    Button(action: { }) {
-                        Text("R$ 4.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.green))
-                    
-                    Text("10%").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                
-                
-                VStack {
-                    
-                    Button(action: { }) {
-                        Text("R$ 5.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.green))
-                    
-                    Text("20%").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                
-                VStack {
-                    
-                    Button(action: { }) {
-                        Text("R$ 6.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.green))
-                    
-                    Text("30%").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                
-                VStack {
-                    
-                    Button(action: { }) {
-                        Text("R$ 7.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.green))
-                    
-                    Text("40%").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                
-                
-            }
-            
-            HStack{
-                
-                
-                VStack {
-                    
-                    Button(action: { }) {
-                        Text("R$ 8.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.green))
-                    
-                    Text("50%").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                
-                VStack {
-                    
-                    Button(action: { }) {
-                        Text("R$ 9.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.green))
-                    
-                    Text("60%").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                
-                VStack {
-                    
-                    Button(action: { }) {
-                        Text("R$ 10.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.green))
-                    
-                    Text("70%").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                
-                VStack {
-                    
-                    Button(action: { }) {
-                        Text("R$ 11.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.green))
-                    
-                    Text("80%").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                
-            }
+            .opacity(self.viewModel.selectedProducts.isEmpty ? 0 : 1)
         }
+        
+        
+        
     }
 }
 

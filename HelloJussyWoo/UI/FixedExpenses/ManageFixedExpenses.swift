@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import Data
 
 class ManageFixedExpensesViewModel : FixedExpensesViewModel {
     private var id: String = ""

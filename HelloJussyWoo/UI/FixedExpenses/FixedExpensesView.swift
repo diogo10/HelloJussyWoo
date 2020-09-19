@@ -11,7 +11,7 @@ import Foundation
 import Combine
 import Data
 
-var repoExpenses = ExpensesServiceRepository()
+
 
 class FixedExpensesViewModel : ObservableObject{
     
