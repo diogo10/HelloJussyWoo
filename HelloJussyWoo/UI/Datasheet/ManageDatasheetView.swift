@@ -29,8 +29,6 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     var values = ["" : 0.0]
     var tax = 0.0
     
-    
-    
     func load()  {
         self.list =  productsRepository.getAll()
         setUpProvider()
@@ -61,6 +59,16 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
         return (price * (qtUsada * 1000) ) / fator
     }
     
+    func calculateLucro(valueString: String) {
+    
+        if let value = Double(valueString) {
+            let per = ((value / self.custoTotalSemImposto) - 1) * 100
+            self.margemLucroPer = "\(per.format())%"
+            self.margemLucro = value - self.custoTotalSemImposto
+        }
+        
+    }
+    
     func calculate(product: Product, value: String) {
         updateValues(productId: product.id.uuidString, value: value)
         
@@ -77,12 +85,14 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
             
         }
         
-        
         self.custoTotalSemImposto = calCustoTotal()
         self.valorKilo =  self.custoTotalSemImposto / pesoTotal
         self.custoTotalComImposto = (tax * self.custoTotalSemImposto) / 100
         self.pesoTotal = (totalKilos / 1000)
-        
+    
+        let markup = 30
+        self.lucro = self.custoTotalSemImposto + Double(markup)*custoTotalSemImposto/100;
+        calculateLucro(valueString: "\(lucro)")
         
     }
     
@@ -200,8 +210,8 @@ private struct Item: View {
                     TextField("Qt usada", text: $yourBindingHere).keyboardType(.numberPad).textFieldStyle(RoundedBorderTextFieldStyle()).frame(width: 100).onReceive(Just(yourBindingHere)) { value in
                         print(value)
                         self.viewModel.calculate(product: self.product, value: value)
-                        
-                    }
+                    }.multilineTextAlignment(.center)
+                    
                 }.padding(.leading,50).accentColor(.blue)
                 
             }.padding()
@@ -213,7 +223,7 @@ private struct Item: View {
 
 private struct SummaryView: View {
     @ObservedObject var viewModel: ManageDatasheetViewModel
-    @State var yourBindingHere = ""
+    @State var yourPrice = ""
     
     var body: some View {
         
@@ -265,9 +275,12 @@ private struct SummaryView: View {
                     VStack(alignment: .trailing){
                         
                         HStack{
-                            TextField("\(self.viewModel.lucro.format())", text: $yourBindingHere)
+                            TextField("\(self.viewModel.lucro.format())", text: $yourPrice)
                                 .keyboardType(.numberPad).frame(width: 80).foregroundColor(.blue).font(.title)
-                                .multilineTextAlignment(.trailing)
+                                .multilineTextAlignment(.trailing).onReceive(Just(yourPrice)) { value in
+                                    print(value)
+                                    self.viewModel.calculateLucro(valueString: value)
+                                }
                         }.padding(.bottom,30)
                         
               
