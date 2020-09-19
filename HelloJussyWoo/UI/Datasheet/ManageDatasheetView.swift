@@ -280,14 +280,15 @@ private struct SummaryView: View {
                     VStack(alignment: .trailing){
                         
                         HStack{
-                            TextField("\(self.viewModel.lucro.format())", text: $yourPrice)
-                                .keyboardType(.numberPad).frame(width: 80).foregroundColor(.blue).font(.title)
-                                .multilineTextAlignment(.trailing).onReceive(Just(yourPrice)) { value in
-                                    print(value)
-                                    self.viewModel.calculateLucro(valueString: value)
-                                }
+                            
+                            TextField("\(self.viewModel.lucro.format())", text: $yourPrice, onCommit: {
+                                print(yourPrice)
+                                self.viewModel.calculateLucro(valueString: yourPrice)
+                            }).keyboardType(.numberPad).frame(width: 80).foregroundColor(.blue).font(.title)
+                            .multilineTextAlignment(.trailing)
+                            
+                            
                         }.padding(.bottom,30)
-                        
               
                         Text("\(self.viewModel.margemLucroPer)").font(.headline)
                         Text("\(self.viewModel.getCurrency()) \(self.viewModel.margemLucro.format())").font(.headline)
@@ -305,79 +306,7 @@ private struct SummaryView: View {
                     Text("Save").padding(.trailing,20).font(.title) .foregroundColor(.blue)
                 }
                 
-                
-                //            Text("Custos sem imposto").bold().foregroundColor(.black).font(.subheadline).padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-                //
-                //            VStack {
-                //                HStack {
-                //                    Text("Custo Total").bold().font(.subheadline)
-                //                    Spacer()
-                //                    Text("R$ \(self.viewModel.custoTotalSemImposto.format())").bold().font(.subheadline)
-                //                }
-                //
-                //                HStack {
-                //                    Text("Custo/Kg").bold().font(.subheadline)
-                //                    Spacer()
-                //                    Text("R$ \(self.viewModel.custoTotalKiloSemImposto.format())").bold().font(.subheadline)
-                //                }
-                //            }
-                
-                
-                //            Text("Simulação de Lucro").bold().foregroundColor(.black).font(.subheadline).padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-                //
-                //            HStack{
-                //                VStack {
-                //
-                //                    Button(action: { }) {
-                //                        Text("R$ 4.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                //                    }
-                //                    .background(RoundedRectangle(cornerRadius: 6.0)
-                //                    .foregroundColor(.green))
-                //
-                //                    Text("10%").font(.caption)
-                //
-                //                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                //
-                //
-                //                VStack {
-                //
-                //                    Button(action: { }) {
-                //                        Text("R$ 5.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                //                    }
-                //                    .background(RoundedRectangle(cornerRadius: 6.0)
-                //                    .foregroundColor(.green))
-                //
-                //                    Text("20%").font(.caption)
-                //
-                //                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                //
-                //                VStack {
-                //
-                //                    Button(action: { }) {
-                //                        Text("R$ 6.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                //                    }
-                //                    .background(RoundedRectangle(cornerRadius: 6.0)
-                //                    .foregroundColor(.green))
-                //
-                //                    Text("30%").font(.caption)
-                //
-                //                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                //
-                //                VStack {
-                //
-                //                    Button(action: { }) {
-                //                        Text("R$ 7.18").bold().font(.subheadline).frame(width: 70, height: 50)
-                //                    }
-                //                    .background(RoundedRectangle(cornerRadius: 6.0)
-                //                    .foregroundColor(.green))
-                //
-                //                    Text("40%").font(.caption)
-                //
-                //                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10))
-                //
-                //
-                //            }
-                
+            
                 
             }
             
@@ -385,7 +314,7 @@ private struct SummaryView: View {
         }
         
         
-        
+        .modifier(DismissingKeyboard())
     }
 }
 
@@ -425,4 +354,27 @@ class ManageProductFormViewModel {
         
     }
     
+}
+
+
+struct DismissingKeyboard: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .onTapGesture {
+                let keyWindow = UIApplication.shared.connectedScenes
+                        .filter({$0.activationState == .foregroundActive})
+                        .map({$0 as? UIWindowScene})
+                        .compactMap({$0})
+                        .first?.windows
+                        .filter({$0.isKeyWindow}).first
+                keyWindow?.endEditing(true)
+        }
+    }
+}
+
+// extension for keyboard to dismiss
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }
