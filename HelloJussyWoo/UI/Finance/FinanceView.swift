@@ -59,21 +59,27 @@ private struct ListHeader: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            //Image("avatar").resizable().frame(width: 50, height: 50)
-            //  .clipShape(Circle())
-            //  .shadow(radius: 10)
-            
             HStack {
-                VStack (alignment: .leading) {
-                    Text("Current Balance").bold().font(.subheadline)
-                    Text("February").font(.caption)
+                HStack {
+                    Button(action: { }) {
+                        Image(systemName: "arrow.left")
+                    }
+                    
+                    VStack{
+                        Text("February").font(.caption)
+                        Text("2020").font(.caption)
+                    }
+                    
+                    Button(action: { }) {
+                        Image(systemName: "arrow.right")
+                    }
                 }
                 
                 Spacer()
                 VStack{
-                    Text("$ 51254.00").bold().font(.title).foregroundColor(.blue)
+                    Text("R$ 254.00").bold().font(.title).foregroundColor(.blue)
                 }
-            }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
+            }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             
             HStack {
                 
@@ -128,7 +134,7 @@ private struct ListHeader: View {
                     }
                 }
                 
-            }.padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+            }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             
         }
     }

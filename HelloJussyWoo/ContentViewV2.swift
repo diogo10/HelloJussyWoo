@@ -12,7 +12,7 @@ import SwiftUI
 
 struct ContentViewV2: View {
     @State private var selection = 1
-    @State private var selectionTitle = ["Products","Datasheet", "Settings"]
+    @State private var selectionTitle = ["Products","Datasheet", "Settings", "Finance"]
     
     init() {
         //UITabBar.appearance().barTintColor = hexStringToUIColor(hex: "#009af9")
@@ -49,6 +49,15 @@ struct ContentViewV2: View {
                             }
                     }
                     .tag(2)
+                    
+                    FinanceView()
+                        .tabItem {
+                            VStack {
+                                Image(systemName: "creditcard")
+                                Text("Finance").foregroundColor(.accentColor)
+                            }
+                    }
+                    .tag(3)
                     
                 }
             }, title: self.selectionTitle[self.selection])
@@ -98,8 +107,10 @@ struct ContentViewV2: View {
             return "plus"
         }else if self.selection == 1 {
             return "plus"
+        }else if self.selection == 2 {
+            return "person"
         } else {
-             return "person"
+             return "plus"
         }
     }
     
