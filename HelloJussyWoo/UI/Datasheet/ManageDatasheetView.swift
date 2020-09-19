@@ -160,13 +160,6 @@ struct ManageDatasheetView: View {
         }.navigationBarTitle(Text("Datasheet"))
         
     }
-    
-    private func deleteItem(at indexSet: IndexSet) {
-        //self.viewModel.delete(index: indexSet.map({ it in
-        //it
-        //}))
-        
-    }
 }
 
 // - MARK:
@@ -235,6 +228,10 @@ private struct SummaryView: View {
         
         VStack{
             
+            if viewModel.selectedProducts.isEmpty {
+                Image("lost").padding(.top,50)
+                Text("Add products clicking on plus button").padding()
+            }
             
             HStack {
                 Text("Peso final").bold().font(.subheadline).padding(.leading,20)
