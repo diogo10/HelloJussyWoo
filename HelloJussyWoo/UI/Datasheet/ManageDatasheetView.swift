@@ -281,7 +281,12 @@ private struct SummaryView: View {
                         
                         HStack{
                             
-                            TextField("\(self.viewModel.lucro.format())", text: $yourPrice, onCommit: {
+                            TextField("\(self.viewModel.lucro.format())", text: $yourPrice, onEditingChanged: { (editingChanged) in
+                                if !editingChanged {
+                                    print("TextField lost focus")
+                                    self.viewModel.calculateLucro(valueString: yourPrice)
+                                }
+                            }, onCommit: {
                                 print(yourPrice)
                                 self.viewModel.calculateLucro(valueString: yourPrice)
                             }).keyboardType(.numberPad).frame(width: 80).foregroundColor(.blue).font(.title)
