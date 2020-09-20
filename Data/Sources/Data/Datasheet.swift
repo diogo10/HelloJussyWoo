@@ -46,9 +46,17 @@ public class DatasheetRepository: BaseRepo<Datasheet>,DatasheetService {
     
     public func add(value: Datasheet) {
         var list = getList()
-        list.append(value)
+        
+        if let index = list.firstIndex(where: {$0.id.uuidString == value.id.uuidString }) {
+            list[index] = value
+            print("DatasheetRepository update")
+        }else {
+            list.append(value)
+            print("DatasheetRepository add")
+        }
+        
         let result = setList(list)
-        print("DatasheetRepository saved: \(result)")
+        print("DatasheetRepository result> \(result)")
     }
     
     func delete(values: [Int]) {

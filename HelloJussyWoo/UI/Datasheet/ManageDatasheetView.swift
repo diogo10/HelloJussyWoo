@@ -32,6 +32,7 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     @Published var showBanner: Bool = false
     @Published var bannerData: BannerModifier.BannerData = BannerModifier.BannerData(title: "", detail: "", type: .Info)
     
+    var id: UUID = UUID()
     var values = ["" : 0.0]
     
     func updateState(value: Int) {
@@ -83,7 +84,7 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
         
         
         do {
-            let dictionary = ["id" : UUID(),"name": name, "price": finalPrice,"products": finalProds] as [String : Any]
+            let dictionary = ["id" : id,"name": name, "price": finalPrice,"products": finalProds] as [String : Any]
             let datasheet = try Datasheet(from: dictionary)
             datasheetRepository.add(value: datasheet)
             return true
@@ -233,6 +234,7 @@ struct ManageDatasheetView: View {
             if self.viewModel.state == 0 {
                 self.nameBinding = self.data?.name ?? ""
                 self.viewModel.updateProductsFromData(list: self.data?.produtcs ?? [])
+                self.viewModel.id = self.data?.id ?? UUID()
             }
            
         }
