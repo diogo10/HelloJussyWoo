@@ -390,20 +390,30 @@ private struct SummaryView: View {
                     .background(Color.green).cornerRadius(6)
                 
        
-                
-                Button(action: {
-                    print("save")
-                    if self.viewModel.save(yourPrice: yourPrice) {
-                        self.presentation.wrappedValue.dismiss()
+               
+                //Save button
+                VStack {
+                    Button(action: {
+                        print("save")
+                        if self.viewModel.save(yourPrice: yourPrice) {
+                            self.presentation.wrappedValue.dismiss()
+                        }
+                        
+                    }) {
+                        Text("Save")
+                            .padding()
+                            .foregroundColor(.white)
+                            .font(.title).frame(maxWidth: .infinity)
                     }
-                    
-                }) {
-                    Text("Save").padding(.trailing,20).font(.title) .foregroundColor(.blue)
                 }
+                .frame(maxWidth: .infinity)
+                .background(Color.blue)
+                .cornerRadius(6)
+                .padding(.top,50)
                 
             
                 
-            }
+            }.frame(maxWidth: .infinity)
             
             .opacity(self.viewModel.selectedProducts.isEmpty ? 0 : 1)
         }
