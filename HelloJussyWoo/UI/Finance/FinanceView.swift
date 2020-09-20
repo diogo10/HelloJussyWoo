@@ -85,7 +85,13 @@ struct FinanceView: View {
                 
                 NavigationLink(destination: ManageFinanceView(data: section) ) {
                     VStack {
+                        
                         HStack {
+                            
+                            Circle()
+                                .fill(self.circleColorBy(type: section.type))
+                                .frame(width: 14, height: 14)
+                            
                             VStack(alignment: .leading) {
                                 Text("\(section.name)").bold().font(.subheadline).foregroundColor(.black)
                                 Text("\(section.date.simpleFormat())").foregroundColor(.black).font(.caption)
@@ -120,6 +126,14 @@ struct FinanceView: View {
         self.viewModel.delete(index: indexSet.map({ it in
             it
         }))
+    }
+    
+    private func circleColorBy(type: Int) -> Color {
+        if type == 1 {
+            return Color.red
+        } else {
+            return Color.green
+        }
     }
 }
 

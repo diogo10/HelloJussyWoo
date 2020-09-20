@@ -8,11 +8,9 @@
 
 import SwiftUI
 
-
 extension OrderView {
     
     func cornerView() -> some View {
         self.body.cornerRadius(7).shadow(radius: 10)
     }
 }
-
