@@ -8,75 +8,70 @@
 
 import SwiftUI
 import Data
-import ASCollectionView
+import SwiftUIRefresh
 
 struct DatasheetsView: View {
-    var body: some View {
-        IngredientsListView()
-    }
-
-}
-
-class IngredientsListViewModel {
-    func load() -> [Ingredient] {
-        ingredientsServiceRepository.getAll()
-    }
-    
-    func getCurrency() -> String {
-        repoExpenses.getCurrency()
-    }
-}
-
-struct IngredientsListView: View {
-    
-    private let viewModel = IngredientsListViewModel()
+    @ObservedObject var viewModel = DatasheetsListViewModel()
+    @State private var isShowing = false
     
     var body: some View {
-        ASCollectionView(data: viewModel.load(), dataID: \.self) { item, _ in
-            
-            NavigationLink(destination: ManageDatasheetView(itemId: item.id)) {
-                IngredientsListItemView(section: item, currency: self.viewModel.getCurrency())
-            }.frame(width: 0)
-            
-            
-        }
-        .layout {
-            .grid(layoutMode: .adaptive(withMinItemSize: 180),
-                  itemSpacing: 0,
-                  lineSpacing: 0,
-                  itemSize: .absolute(180))
-        }
-    }
-}
-
-struct IngredientsListItemView: View {
-    var section:Ingredient
-    var currency = ""
-    var body: some View {
-        VStack {
-            
-            Text("\(section.name)")
-                .foregroundColor(.white)
-                .font(.caption).padding(.top,10)
-            
-            Spacer()
-            
-            Text("\(currency) \(section.grossCost.format())")
-                .foregroundColor(.white)
-                .font(.title).padding(.top,10)
-            
-            Spacer()
-            
-            VStack (alignment: .leading) {
+        
+        List {
+            ForEach(viewModel.list) { section in
                 
-                Text("\(section.unit)")
-                    .foregroundColor(.white)
-                    .font(.caption)
+                NavigationLink(destination: ManageDatasheetView() ) {
+                    VStack {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("\(section.name)").bold().font(.subheadline).foregroundColor(.black)
+                                Text("\(section.produtcs.count) products").foregroundColor(.black).font(.caption)
+                            }
+                            
+                            Spacer()
+                            Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.price))").bold().font(.subheadline).foregroundColor(.black)
+                            
+                        }.padding()
+                    }
+                }
                 
+                
+            }.onDelete(perform: self.deleteItem)
+            
+            
+        }.onAppear {
+            self.viewModel.load()
+        }.pullToRefresh(isShowing: $isShowing) {
+            self.viewModel.load()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.isShowing = false
             }
-            
-            Spacer()
-            
-        }.frame(width: 150, height: 150).background(Color.blue).cornerRadius(4)
+        }
     }
+    
+    private func deleteItem(at indexSet: IndexSet) {
+        self.viewModel.delete(index: indexSet.map({ it in
+            it
+        }))
+    }
+
+}
+
+class DatasheetsListViewModel : BaseViewModel,ObservableObject {
+    
+    @Published var list: [Datasheet] = []
+    
+    override init() {
+        super.init()
+        self.list =  datasheetRepository.getAll()
+    }
+    
+    func load()  {
+        self.list = datasheetRepository.getAll()
+    }
+    
+    func delete(index: [Int]) {
+        datasheetRepository.delete(index: index)
+        load()
+    }
+    
 }

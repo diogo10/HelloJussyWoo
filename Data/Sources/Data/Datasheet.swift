@@ -14,26 +14,20 @@ public let datasheetRepository = DatasheetRepository()
 
 
 extension Datasheet {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(UUID.self, forKey: .id)
-    }
-    
     public init(from: Any) throws {
         let data = from as! Dictionary<String, Any>
         id = data["id"] as? UUID ?? UUID()
         name = data["name"] as? String ?? ""
         price = data["price"] as? Double ?? 0.0
         produtcs = data["products"] as? [Product] ?? []
-        
     }
 }
 
 public struct Datasheet : Identifiable, Codable {
     public var id = UUID()
-    public var name: String = ""
-    public var price: Double = 0.0
-    public var produtcs: [Product] = []
+    public var name: String
+    public var price: Double
+    public var produtcs: [Product] =  []
 }
 
 //MARK: SERVICE
@@ -41,6 +35,7 @@ public struct Datasheet : Identifiable, Codable {
 protocol DatasheetService {
     func getAll() -> [Datasheet]
     func add(value: Datasheet)
+    func delete(values: [Int])
 }
 
 public class DatasheetRepository: BaseRepo<Datasheet>,DatasheetService {
@@ -52,8 +47,12 @@ public class DatasheetRepository: BaseRepo<Datasheet>,DatasheetService {
     public func add(value: Datasheet) {
         var list = getList()
         list.append(value)
-        print("DatasheetRepository saved: \(setList(list))")
+        let result = setList(list)
+        print("DatasheetRepository saved: \(result)")
     }
     
+    func delete(values: [Int]) {
+        self.delete(index: values)
+    }
     
 }
