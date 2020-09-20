@@ -8,6 +8,7 @@
 import Foundation
 
 public let units: [String] = ["Kg", "Lt", "Mç", "Us", "Co", "Dz", "Qb"]
+public let moneyEntryTypes: [String] = ["Expense", "Income"]
 
 public extension Double {
     func format() -> String {
@@ -29,6 +30,17 @@ extension Array {
     }
 }
 
+public extension Date {
+   func getFormattedDate(format: String) -> String {
+        let dateformat = DateFormatter()
+        dateformat.dateFormat = format
+        return dateformat.string(from: self)
+    }
+    
+    func simpleFormat() -> String {
+        getFormattedDate(format: "dd, MMM yyyy HH:mm")
+     }
+}
 
 extension String {
     

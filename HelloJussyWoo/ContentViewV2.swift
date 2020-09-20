@@ -11,7 +11,7 @@ import SwiftUI
 //https://developer.apple.com/design/human-interface-guidelines/sf-symbols/overview/
 
 struct ContentViewV2: View {
-    @State private var selection = 1
+    @State private var selection = 3
     @State private var selectionTitle = ["Products","Datasheet", "Settings", "Finance"]
     
     init() {
@@ -97,6 +97,8 @@ struct ContentViewV2: View {
             return AnyView(ManageProductView())
         }else if self.selection == 1 {
             return AnyView(ManageDatasheetView(data: nil))
+        }else if self.selection == 3 {
+            return AnyView(ManageFinanceView(data: nil))
         } else {
              return AnyView(MoreView())
         }

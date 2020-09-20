@@ -9,75 +9,151 @@
 import SwiftUI
 import Data
 
+
+class FinanceViewModel: BaseViewModel, ObservableObject {
+    
+    @Published var month = ""
+    @Published var year = ""
+    @Published var total = ""
+    @Published var list: [MoneyEntry] = []
+    
+    var calendar = Calendar.current
+    var currentDate = Date()
+    
+    
+    override init() {
+        super.init()
+        updateTime()
+        self.list =  moneyEntryRepository.getAll()
+        updateTotal()
+    }
+    
+    func load()  {
+        updateTime()
+        self.list =  moneyEntryRepository.getAll()
+        updateTotal()
+    }
+    
+    func back()  {
+        manageTime(month: -1)
+        updateTime()
+    }
+    
+    func next()  {
+        manageTime(month: 1)
+        updateTime()
+    }
+    
+    func delete(index: [Int]) {
+        moneyEntryRepository.delete(index: index)
+        load()
+    }
+    
+    //MARK: --
+    
+    private func manageTime(month: Int){
+        var dateComponent = DateComponents()
+        dateComponent.month = month
+        currentDate = calendar.date(byAdding: dateComponent, to: currentDate) ?? Date()
+    }
+    
+    private func updateTime(){
+        if let monthInt = calendar.dateComponents([.month], from: currentDate).month {
+            self.month = calendar.monthSymbols[monthInt-1]
+        }
+        
+        if let year = calendar.dateComponents([.year], from: currentDate).year {
+            self.year = year.description
+        }
+    }
+    
+    private func updateTotal(){
+        let value = self.list.map({$0.total}).reduce(0, +)
+        total = getCurrency() + " \(value.format())"
+    }
+    
+}
+
 struct FinanceView: View {
+    @ObservedObject var viewModel = FinanceViewModel()
+    @State private var isShowing = false
     
     var body: some View {
         
-        List { Section(header: ListHeader().padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)), footer: ListFooter()) {
-            Item()
-            Item()
-            Item()
-            Item()
-            Item()
+        List { Section(header: ListHeader(viewModel: viewModel).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))) {
+            ForEach(viewModel.list) { section in
+                
+                NavigationLink(destination: ManageFinanceView(data: section) ) {
+                    VStack {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("\(section.name)").bold().font(.subheadline).foregroundColor(.black)
+                                Text("\(section.date.simpleFormat())").foregroundColor(.black).font(.caption)
+                            }
+                            
+                            Spacer()
+                            Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.total))").bold().font(.subheadline).foregroundColor(.black)
+                            
+                        }.padding()
+                    }
+                }
+                
+            }.onDelete(perform: self.deleteItem)
+            
+            
+        }.onAppear {
+            self.viewModel.load()
+        }.pullToRefresh(isShowing: $isShowing) {
+            self.viewModel.load()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.isShowing = false
             }
+        }
+        
+        
         }.listStyle(GroupedListStyle())
         
         
     }
-}
-
-struct Finance_Previews: PreviewProvider {
     
-    static var previews: some View {
-        FinanceView()
+    private func deleteItem(at indexSet: IndexSet) {
+        self.viewModel.delete(index: indexSet.map({ it in
+            it
+        }))
     }
 }
-
 
 // - MARK:
 
-private struct Item: View {
-    
-    var body: some View {
-        VStack {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Payment").bold().font(.subheadline)
-                    Text("14/07/2020").font(.caption)
-                }
-                
-                Spacer()
-                Text("R$ 45.00").bold().font(.subheadline)
-            }.padding()
-        }
-    }
-    
-    
-}
-
 private struct ListHeader: View {
+    @ObservedObject var viewModel: FinanceViewModel
+    
     var body: some View {
         VStack(alignment: .leading) {
             
             HStack {
                 HStack {
-                    Button(action: { }) {
+                    Button(action: {
+                        viewModel.back()
+                    }) {
                         Image(systemName: "arrow.left")
                     }
                     
                     VStack{
-                        Text("February").font(.caption)
-                        Text("2020").font(.caption)
-                    }
+                        Text("\(viewModel.month)").font(.caption)
+                        Text("\(viewModel.year)").font(.caption)
+                    }.frame(width: 80)
                     
-                    Button(action: { }) {
+                    Button(action: {
+                        viewModel.next()
+                    }) {
                         Image(systemName: "arrow.right")
                     }
                 }
                 
                 Spacer()
                 VStack{
-                    Text("R$ 254.00").bold().font(.title).foregroundColor(.blue)
+                    Text("\(viewModel.total)").bold().font(.title).foregroundColor(.blue)
                 }
             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             
@@ -86,36 +162,10 @@ private struct ListHeader: View {
                 VStack {
                     
                     Button(action: { }) {
-                        Image("currency").frame(width: 50, height: 50)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.red))
-                    
-                    Text("Expense").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                
-                
-                VStack {
-                    
-                    Button(action: { }) {
-                        Image("finance").frame(width: 50, height: 50)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.green))
-                    
-                    Text("Income").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                
-                
-                VStack {
-                    
-                    Button(action: { }) {
                         Image("linechart").frame(width: 50, height: 50)
                     }
                     .background(RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.orange))
+                                    .foregroundColor(.orange))
                     
                     Text("Graph").font(.caption)
                     
@@ -137,11 +187,5 @@ private struct ListHeader: View {
             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             
         }
-    }
-}
-
-struct ListFooter: View {
-    var body: some View {
-        Text("Total: R$ 45.00")
     }
 }

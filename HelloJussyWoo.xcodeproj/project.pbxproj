@@ -41,6 +41,7 @@
 		D9C59D612470762100569FC8 /* OrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D602470762100569FC8 /* OrdersViewModel.swift */; };
 		D9C59D632470885100569FC8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D9C59D622470885100569FC8 /* README.md */; };
 		D9C59D652470889200569FC8 /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D642470889200569FC8 /* OrderView.swift */; };
+		D9C6319225179FF200A7300F /* ManageFinanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C6319125179FF200A7300F /* ManageFinanceView.swift */; };
 		D9DE6C142502A38700C6A728 /* ManagePricingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DE6C132502A38700C6A728 /* ManagePricingItemView.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		D9C59D602470762100569FC8 /* OrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewModel.swift; sourceTree = "<group>"; };
 		D9C59D622470885100569FC8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D9C59D642470889200569FC8 /* OrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
+		D9C6319125179FF200A7300F /* ManageFinanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFinanceView.swift; sourceTree = "<group>"; };
 		D9DE6C132502A38700C6A728 /* ManagePricingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagePricingItemView.swift; sourceTree = "<group>"; };
 		D9F8D6EF247179C0004F43FF /* Data */ = {isa = PBXFileReference; lastKnownFileType = text; path = Data; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				D950895024D5570000D30648 /* FinanceView.swift */,
+				D9C6319125179FF200A7300F /* ManageFinanceView.swift */,
 			);
 			path = Finance;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				D92A82C224F145A800ED30BF /* ProfileView.swift in Sources */,
 				D954AC1E25178D0200CE6A02 /* Banner.swift in Sources */,
 				D9904F9425039EF4005159CD /* ProductsView.swift in Sources */,
+				D9C6319225179FF200A7300F /* ManageFinanceView.swift in Sources */,
 				D9663B7524FBB0E000EFCCD5 /* BaseView.swift in Sources */,
 				D9904F992503A8A5005159CD /* ManageProductView.swift in Sources */,
 				D9904F9B2503A903005159CD /* PickersProviders.swift in Sources */,
