@@ -96,7 +96,7 @@ struct ContentViewV2: View {
         if self.selection == 0 {
             return AnyView(ManageProductView())
         }else if self.selection == 1 {
-            return AnyView(ManageDatasheetView())
+            return AnyView(ManageDatasheetView(data: nil))
         } else {
              return AnyView(MoreView())
         }

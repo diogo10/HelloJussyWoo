@@ -27,7 +27,25 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     @Published var custoTotalSemImposto: Double = 0.0
     @Published var custoTotalKiloSemImposto: Double = 0.0
     
+    @Published var state: Int = 0
+    
+    @Published var showBanner: Bool = false
+    @Published var bannerData: BannerModifier.BannerData = BannerModifier.BannerData(title: "", detail: "", type: .Info)
+    
     var values = ["" : 0.0]
+    
+    func updateState(value: Int) {
+        print("updateState: \(value)")
+        self.state = value
+    }
+    
+    func updateProductsFromData(list: [Product]) {
+        self.selectedProducts = list
+        list.forEach { item in
+            calculate(product: item, value: item.quantity.description)
+        }
+        
+    }
     
     func load()  {
         self.list =  productsRepository.getAll()
@@ -35,10 +53,27 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
         self.selectedProducts = getProductSelection()
     }
     
-    func save(yourPrice: String) {
+    func save(yourPrice: String) -> Bool {
+        let finalPrice = Double(yourPrice) ?? self.lucro
+        
+        if name.isEmpty {
+            bannerData.title = "Error"
+            bannerData.detail = "Name can not be empty"
+            bannerData.type = .Error
+            showBanner = true
+            return false
+        }
+        
+        if finalPrice == 0.0 {
+            bannerData.title = "Error"
+            bannerData.detail = "Price can not be zero"
+            bannerData.type = .Error
+            showBanner = true
+            return false
+        }
+        
         
         var finalProds: [Product] = []
-        
         values.forEach { item in
             if var prod = selectedProducts.first(where: {$0.id.uuidString == item.key }) {
                 prod.quantity = item.value
@@ -46,12 +81,15 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
             }
         }
         
+        
         do {
-            let dictionary = ["id" : UUID(),"name": name, "price": Double(yourPrice) ?? 0.0,"products": finalProds] as [String : Any]
+            let dictionary = ["id" : UUID(),"name": name, "price": finalPrice,"products": finalProds] as [String : Any]
             let datasheet = try Datasheet(from: dictionary)
             datasheetRepository.add(value: datasheet)
+            return true
         } catch {
             print("Error: \(error)")
+            return false
         }
         
     }
@@ -65,13 +103,13 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     }
     
     func calCustoBruto(product: Product, qtUsada: String) -> Double {
+        var result = 0.0
         
         if let qt = Double(qtUsada) {
-            return calculateCustoBruto(price: product.price, qtUsada: qt)
-        }else{
-            return 0.0
+            result = calculateCustoBruto(price: product.price, qtUsada: qt)
         }
         
+        return result
     }
     
     private func calculateCustoBruto(price: Double,qtUsada: Double ) -> Double {
@@ -95,7 +133,6 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     
     func calculate(product: Product, value: String) {
         updateValues(productId: product.id.uuidString, value: value)
-        
         
         let kilos = getKiloProductsIds()
         
@@ -163,9 +200,10 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
 }
 
 struct ManageDatasheetView: View {
-    var itemId: String = ""
+    @State var data: Datasheet?
     @ObservedObject var viewModel = ManageDatasheetViewModel()
     @State var nameBinding: String = ""
+    
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -190,7 +228,15 @@ struct ManageDatasheetView: View {
             
             Spacer()
         }.navigationBarTitle(Text("Datasheet"))
-        
+        .onAppear {
+            
+            if self.viewModel.state == 0 {
+                self.nameBinding = self.data?.name ?? ""
+                self.viewModel.updateProductsFromData(list: self.data?.produtcs ?? [])
+            }
+           
+        }
+        .banner(data: $viewModel.bannerData, show: $viewModel.showBanner)
     }
 }
 
@@ -208,6 +254,7 @@ private struct Header: View {
             NavigationLink(destination: MultiSelectionViewProvider(provider: viewModel.provideProductSelection()), isActive: $isLinkActive) {
                 Button(action: {
                     self.isLinkActive = true
+                    self.viewModel.updateState(value: 1)
                 }) {
                     Image(systemName: "plus").foregroundColor(.blue)
                 }
@@ -247,6 +294,13 @@ private struct Item: View {
                 
             }.padding()
         }
+        .onAppear {
+            
+            if self.viewModel.state == 0 {
+                self.yourBindingHere = self.product.quantity.description
+            }
+            
+        }
     }
     
     
@@ -255,6 +309,7 @@ private struct Item: View {
 private struct SummaryView: View {
     @ObservedObject var viewModel: ManageDatasheetViewModel
     @State var yourPrice = ""
+    @Environment(\.presentationMode) var presentation
     
     var body: some View {
         
@@ -338,7 +393,10 @@ private struct SummaryView: View {
                 
                 Button(action: {
                     print("save")
-                    self.viewModel.save(yourPrice: yourPrice)
+                    if self.viewModel.save(yourPrice: yourPrice) {
+                        self.presentation.wrappedValue.dismiss()
+                    }
+                    
                 }) {
                     Text("Save").padding(.trailing,20).font(.title) .foregroundColor(.blue)
                 }

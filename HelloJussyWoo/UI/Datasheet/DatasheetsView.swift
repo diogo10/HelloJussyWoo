@@ -19,7 +19,7 @@ struct DatasheetsView: View {
         List {
             ForEach(viewModel.list) { section in
                 
-                NavigationLink(destination: ManageDatasheetView() ) {
+                NavigationLink(destination: ManageDatasheetView(data: section) ) {
                     VStack {
                         HStack {
                             VStack(alignment: .leading) {
