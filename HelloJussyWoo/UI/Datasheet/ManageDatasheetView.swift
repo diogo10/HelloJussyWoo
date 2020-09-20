@@ -14,6 +14,7 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     @Published var selectedProducts: [Product] = []
     private var provider:BaseSimpleProvider?
     
+    @Published var name: String = ""
     @Published var margemLucro: Double = 0.0
     @Published var margemLucroPer: String = "0%"
     @Published var lucro: Double = 0.0
@@ -27,13 +28,32 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     @Published var custoTotalKiloSemImposto: Double = 0.0
     
     var values = ["" : 0.0]
-    var tax = 0.0
     
     func load()  {
         self.list =  productsRepository.getAll()
         setUpProvider()
         self.selectedProducts = getProductSelection()
-        self.tax = repoExpenses.getTax()
+    }
+    
+    func save(yourPrice: String) {
+        
+        var finalProds: [Product] = []
+        
+        values.forEach { item in
+            if var prod = selectedProducts.first(where: {$0.id.uuidString == item.key }) {
+                prod.quantity = item.value
+                finalProds.append(prod)
+            }
+        }
+        
+        do {
+            let dictionary = ["id" : UUID(),"name": name, "price": Double(yourPrice) ?? 0.0,"products": finalProds] as [String : Any]
+            let datasheet = try Datasheet(from: dictionary)
+            datasheetRepository.add(value: datasheet)
+        } catch {
+            print("Error: \(error)")
+        }
+        
     }
     
     func productsNames() -> [String]  {
@@ -57,6 +77,10 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     private func calculateCustoBruto(price: Double,qtUsada: Double ) -> Double {
         let fator = 1000.0
         return (price * (qtUsada * 1000) ) / fator
+    }
+    
+    func updateName(value: String) {
+        self.name = value
     }
     
     func calculateLucro(valueString: String) {
@@ -141,9 +165,17 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
 struct ManageDatasheetView: View {
     var itemId: String = ""
     @ObservedObject var viewModel = ManageDatasheetViewModel()
+    @State var nameBinding: String = ""
     
     var body: some View {
         VStack(alignment: .leading) {
+            
+            
+            TextField("Type in the name", text: $nameBinding, onCommit: {
+                print(nameBinding)
+                self.viewModel.updateName(value: nameBinding)
+            }).padding().foregroundColor(.blue).font(.title)
+            
             
             List { Section(header: Header(viewModel: self.viewModel), footer: SummaryView(viewModel: self.viewModel)) {
                 
@@ -302,9 +334,11 @@ private struct SummaryView: View {
                 }.padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                     .background(Color.green).cornerRadius(6)
                 
+       
                 
                 Button(action: {
                     print("save")
+                    self.viewModel.save(yourPrice: yourPrice)
                 }) {
                     Text("Save").padding(.trailing,20).font(.title) .foregroundColor(.blue)
                 }

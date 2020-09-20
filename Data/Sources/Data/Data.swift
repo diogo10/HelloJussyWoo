@@ -369,7 +369,7 @@ public struct Product: Codable,Identifiable {
     public var id = UUID()
     public var name: String
     public var price: Double
-    var quantity: Int = 1
+    public var quantity: Double = 0.0
     public var unit: String
 }
 
