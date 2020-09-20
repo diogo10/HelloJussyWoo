@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Data
-
+import SwiftUICharts
 
 class FinanceViewModel: BaseViewModel, ObservableObject {
     
@@ -49,6 +49,57 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
         load()
     }
     
+    func pieData() -> [Double] {
+        let expenses = self.list.filter({ $0.type == 0 }).map({$0.total}).reduce(0, +)
+        let incomes = self.list.filter({ $0.type == 1 }).map({$0.total}).reduce(0, +)
+        return [expenses,incomes]
+    }
+    
+    func barData() -> ChartData {
+        var currentMonth = 0
+        var monthStr = ""
+        var chart:[(String,Double)] = []
+        
+        if let monthInt = Calendar.current.dateComponents([.month], from: Date()).month {
+            currentMonth = monthInt
+            monthStr = Calendar.current.monthSymbols[monthInt-1]
+            
+        }
+        
+        let incomes1 = self.list.filter({
+            $0.type == 0 && currentMonth == Calendar.current.dateComponents([.month], from: $0.date).month
+        }).map({$0.total}).reduce(0, +)
+        
+        chart.append((monthStr,incomes1))
+        
+        
+        currentMonth = currentMonth - 1
+        monthStr = Calendar.current.monthSymbols[currentMonth]
+        let incomes2 = self.list.filter({
+            $0.type == 0 && currentMonth == Calendar.current.dateComponents([.month], from: $0.date).month
+        }).map({$0.total}).reduce(0, +)
+        
+        chart.append((monthStr,incomes2))
+        
+        
+        currentMonth = currentMonth - 2
+        monthStr = Calendar.current.monthSymbols[currentMonth]
+        let incomes3 = self.list.filter({
+            $0.type == 0 && currentMonth == Calendar.current.dateComponents([.month], from: $0.date).month
+        }).map({$0.total}).reduce(0, +)
+        
+        chart.append((monthStr,incomes3))
+        
+        currentMonth = currentMonth - 3
+        monthStr = Calendar.current.monthSymbols[currentMonth]
+        let incomes4 = self.list.filter({
+            $0.type == 0 && currentMonth == Calendar.current.dateComponents([.month], from: $0.date).month
+        }).map({$0.total}).reduce(0, +)
+        chart.append((monthStr,incomes4))
+        
+        return ChartData(values: chart)
+    }
+    
     //MARK: --
     
     private func manageTime(month: Int){
@@ -68,7 +119,7 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
     }
     
     private func updateTotal(){
-        let value = self.list.map({$0.total}).reduce(0, +)
+        let value = self.list.filter({ $0.type == 1 }).map({$0.total}).reduce(0, +)
         total = getCurrency() + " \(value.format())"
     }
     
@@ -129,12 +180,13 @@ struct FinanceView: View {
     }
     
     private func circleColorBy(type: Int) -> Color {
-        if type == 1 {
+        if type == 0 {
             return Color.red
         } else {
             return Color.green
         }
     }
+    
 }
 
 // - MARK:
@@ -167,23 +219,18 @@ private struct ListHeader: View {
                 
                 Spacer()
                 VStack{
-                    Text("\(viewModel.total)").bold().font(.title).foregroundColor(.blue)
+                    Text("\(viewModel.total)").bold().font(.title).foregroundColor(.green)
                 }
             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             
             HStack {
                 
-                VStack {
-                    
-                    Button(action: { }) {
-                        Image("linechart").frame(width: 50, height: 50)
+                ScrollView(.horizontal) {
+                    HStack(spacing: 20) {
+                        self.createPie()
+                        self.createBar()
                     }
-                    .background(RoundedRectangle(cornerRadius: 6.0)
-                                    .foregroundColor(.orange))
-                    
-                    Text("Graph").font(.caption)
-                    
-                }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                }
                 
             }.padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 5))
             
@@ -202,4 +249,14 @@ private struct ListHeader: View {
             
         }
     }
+    
+    private func createPie() -> PieChartView {
+        return PieChartView(data: self.viewModel.pieData(), title: "Resume",  dropShadow: false)
+    }
+    
+    private func createBar() -> BarChartView {
+        
+       return BarChartView(data: self.viewModel.barData(), title: "Expenses", legend: "Quarterly", dropShadow: false) 
+    }
 }
+

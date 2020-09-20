@@ -43,8 +43,13 @@ protocol MoneyEntryService {
 
 public class MoneyEntryRepository: BaseRepo<MoneyEntry> ,MoneyEntryService {
     
+    public override init() {
+        super.init()
+        self.table = "MoneyEntry"
+    }
+    
     public func getAll() -> [MoneyEntry] {
-        return getList()
+        return getList().reversed()
     }
     
     public func add(value: MoneyEntry) {
