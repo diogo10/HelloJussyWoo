@@ -24,24 +24,27 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
     override init() {
         super.init()
         updateTime()
-        self.list =  moneyEntryRepository.getAll()
+        updateList()
         updateTotal()
     }
     
     func load()  {
         updateTime()
-        self.list =  moneyEntryRepository.getAll()
+        updateList()
         updateTotal()
     }
     
     func back()  {
         manageTime(month: -1)
         updateTime()
+        updateList()
+        
     }
     
     func next()  {
         manageTime(month: 1)
         updateTime()
+        updateList()
     }
     
     func delete(index: [Int]) {
@@ -101,6 +104,17 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
     }
     
     //MARK: --
+    
+    private func updateList(){
+        let times =  calendar.dateComponents([.month,.year ], from: currentDate)
+        let month = times.month
+        let year = times.year
+        
+        self.list = moneyEntryRepository.getAll().filter { entry -> Bool in
+            let time = Calendar.current.dateComponents([.month,.year], from: entry.date)
+            return month == time.month && year == time.year
+        }
+    }
     
     private func manageTime(month: Int){
         var dateComponent = DateComponents()
@@ -255,7 +269,6 @@ private struct ListHeader: View {
     }
     
     private func createBar() -> BarChartView {
-        
        return BarChartView(data: self.viewModel.barData(), title: "Expenses", legend: "Quarterly", dropShadow: false) 
     }
 }
