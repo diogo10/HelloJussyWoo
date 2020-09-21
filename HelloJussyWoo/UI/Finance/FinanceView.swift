@@ -38,13 +38,14 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
         manageTime(month: -1)
         updateTime()
         updateList()
-        
+        updateTotal()
     }
     
     func next()  {
         manageTime(month: 1)
         updateTime()
         updateList()
+        updateTotal()
     }
     
     func delete(index: [Int]) {
@@ -265,7 +266,7 @@ private struct ListHeader: View {
     }
     
     private func createPie() -> PieChartView {
-        return PieChartView(data: self.viewModel.pieData(), title: "Resume",  dropShadow: false)
+        return PieChartView(data: self.viewModel.pieData(), title: "Resumo",  dropShadow: false)
     }
     
     private func createBar() -> BarChartView {

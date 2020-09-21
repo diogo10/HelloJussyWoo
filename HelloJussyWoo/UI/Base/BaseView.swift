@@ -57,11 +57,9 @@ struct TabBgView<Content>: View where Content: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(self.title)
-                            .font(.title)
+                            .font(.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(Color.white)
-                        
-                        
                         Spacer()
                         
                     }.padding(.leading, 25).padding(.top, titleSpaceTop)
