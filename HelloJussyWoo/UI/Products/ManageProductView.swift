@@ -61,7 +61,7 @@ struct ManageProductView: View {
                 }
                 
                 Section(header: Text("Price").fontWeight(.bold)) {
-                    TextField("Type in the price", text: self.$price).keyboardType(.numberPad).accentColor(.blue)
+                    TextField("Type in the price", text: self.$price).keyboardType(.decimalPad).accentColor(.blue)
                 }
                 
                 

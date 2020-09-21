@@ -15,7 +15,6 @@ struct ContentViewV2: View {
     @State private var selectionTitle = ["Products","Datasheet", "Settings", "Finance"]
     
     init() {
-        //UITabBar.appearance().barTintColor = hexStringToUIColor(hex: "#009af9")
         UITableView.appearance().backgroundColor = .white
     }
     
@@ -72,6 +71,7 @@ struct ContentViewV2: View {
     }
     
     @State var isLinkActive = false
+    private var imageTopSpace = CGFloat(10)
     
     private func iconView() -> some View {
         
@@ -84,10 +84,10 @@ struct ContentViewV2: View {
                     .resizable()
                     .padding(6)
                     .frame(width: 28, height: 28)
-                    .background(Color.pink)
+                    .background(Color.green)
                     .clipShape(Circle())
                     .foregroundColor(.white)
-            }
+            }.padding(.top,imageTopSpace)
         }
         
     }

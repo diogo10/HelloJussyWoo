@@ -30,6 +30,9 @@ struct TabBgView<Content>: View where Content: View {
     private let content: Content
     @State var isLinkActive = false
     
+    private var titleSpaceTop = CGFloat(60)
+    private var contentSpaceTop = CGFloat(70)
+    
     public init(@ViewBuilder content: () -> Content, title: String) {
         self.content = content()
         self.title = title
@@ -61,39 +64,15 @@ struct TabBgView<Content>: View where Content: View {
                         
                         Spacer()
                         
-                    }.padding(.leading, 25).padding(.top, 50)
+                    }.padding(.leading, 25).padding(.top, titleSpaceTop)
                     
                     Spacer()
-                    
-//                    VStack(alignment: .trailing) {
-//                        
-//                        NavigationLink(destination: EmptyView(), isActive: self.$isLinkActive) {
-//                            Button(action: {
-//                                print("clicked on plus")
-//                                self.isLinkActive = true
-//                            }) {
-//                                Image(systemName: "plus")
-//                                    .resizable()
-//                                    .padding(6)
-//                                    .frame(width: 36, height: 36)
-//                                    .background(Color.pink)
-//                                    .clipShape(Circle())
-//                                    .foregroundColor(.white)
-//                            }
-//                        }
-//                        
-//                        
-//                        Spacer()
-//                        
-//                    }.padding(.trailing, 20).padding(.top, 100)
-                    
-                    
                 }.edgesIgnoringSafeArea(.all)
                 
             }
             
             //body here
-            self.content.padding(.top, 30)
+            self.content.padding(.top, contentSpaceTop)
         }
     }
 }
@@ -173,6 +152,9 @@ struct NoIconBgView<Content>: View where Content: View {
         return Color(hexStringToUIColor(hex: "#009af9"))
     }
     
+     var titleSpaceTop = CGFloat(60)
+     var contentSpaceTop = CGFloat(70)
+    
     var body : some View {
         GeometryReader { geometry in
             ZStack {
@@ -193,20 +175,17 @@ struct NoIconBgView<Content>: View where Content: View {
                         
                         Spacer()
                         
-                    }.padding(.leading, 25).padding(.top, 60)
+                    }.padding(.leading, 25).padding(.top, titleSpaceTop)
                     
                     Spacer()
                     
-                    VStack(alignment: .trailing) {
-                        Spacer()
-                    }.padding(.trailing, 20).padding(.top, 40)
                     
                 }.edgesIgnoringSafeArea(.all)
                 
             }
             
             //body here
-            self.content().padding(.top, 40)
+            self.content().padding(.top, contentSpaceTop)
         }
     }
 }

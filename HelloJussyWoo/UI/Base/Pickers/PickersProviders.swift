@@ -106,25 +106,24 @@ struct MultiSelectionViewProvider: View {
     
     var body: some View {
         
-        NoIconBgView(content: {
-           List {
-                ForEach(self.items, id: \.self) { item in
-                    MultipleSelectionRow(title: item, isSelected: self.selections.contains(item)) {
-                        if self.selections.contains(item) {
-                            self.selections.removeAll(where: { $0 == item })
-                        }
-                        else {
-                            self.selections.append(item)
-                        }
-                        self.provider.load(selections: self.selections)
-                    }
-                }
-                .foregroundColor(.blue)
-                
-            }.onAppear {
-                self.items = self.provider.list
-           }
-        }, title: title)
+        List {
+             ForEach(self.items, id: \.self) { item in
+                 MultipleSelectionRow(title: item, isSelected: self.selections.contains(item)) {
+                     if self.selections.contains(item) {
+                         self.selections.removeAll(where: { $0 == item })
+                     }
+                     else {
+                         self.selections.append(item)
+                     }
+                     self.provider.load(selections: self.selections)
+                 }
+             }
+             .foregroundColor(.blue)
+             
+         }.onAppear {
+             self.items = self.provider.list
+        }
+        .navigationBarTitle(Text(title))
         
     }
 }

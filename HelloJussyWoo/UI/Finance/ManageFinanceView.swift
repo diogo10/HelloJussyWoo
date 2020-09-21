@@ -84,7 +84,7 @@ struct ManageFinanceView: View {
                 }
                 
                 Section(header: Text("Value").fontWeight(.bold)) {
-                    TextField("Type in the value", text: self.$value).keyboardType(.numberPad).accentColor(.blue)
+                    TextField("Type in the value", text: self.$value).keyboardType(.decimalPad).accentColor(.blue)
                 }
                 
                 

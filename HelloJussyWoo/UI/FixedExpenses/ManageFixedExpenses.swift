@@ -64,7 +64,7 @@ struct ManageFixedExpenses: View {
                 }
                 
                 Section(header: Text("Value")) {
-                    TextField("Type in your amount", text: $value2).keyboardType(.numberPad)
+                    TextField("Type in your amount", text: $value2).keyboardType(.decimalPad)
                 }
                 
                 Section {

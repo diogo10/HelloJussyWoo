@@ -66,9 +66,9 @@ class BaseFormViewModel : FixedExpensesViewModel {
     func getInputType(type: BaseFormType) -> UIKeyboardType {
         switch type {
         case .tax:
-            return .numberPad
+            return .decimalPad
         case .targetInSales:
-            return .numberPad
+            return .decimalPad
          default:
             return .default
         }

@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Data
-import ASCollectionView
 
 struct PricingView: View {
     var body: some View {
@@ -32,20 +31,7 @@ struct PricingListView: View {
      private let viewModel = PricingViewModel()
     
     var body: some View {
-        ASCollectionView(data: viewModel.load(), dataID: \.self) { item, _ in
-            
-            NavigationLink(destination: ManagePricingItemView(itemId: item.id)) {
-                PricingListItemView(section: item, currency: self.viewModel.getCurrency())
-            }.frame(width: 0)
-            
-            
-        }
-        .layout {
-            .grid(layoutMode: .adaptive(withMinItemSize: 180),
-                  itemSpacing: 0,
-                  lineSpacing: 0,
-                  itemSize: .absolute(180))
-        }
+        Text("todo")
     }
 }
 

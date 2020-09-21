@@ -287,7 +287,7 @@ private struct Item: View {
                 Spacer()
                 
                 VStack {
-                    TextField("Qt usada", text: $yourBindingHere).keyboardType(.numberPad).textFieldStyle(RoundedBorderTextFieldStyle()).frame(width: 100).onReceive(Just(yourBindingHere)) { value in
+                    TextField("Qt usada", text: $yourBindingHere).keyboardType(.decimalPad).textFieldStyle(RoundedBorderTextFieldStyle()).frame(width: 100).onReceive(Just(yourBindingHere)) { value in
                         print(value)
                         self.viewModel.calculate(product: self.product, value: value)
                     }.multilineTextAlignment(.center)
@@ -376,7 +376,7 @@ private struct SummaryView: View {
                             }, onCommit: {
                                 print(yourPrice)
                                 self.viewModel.calculateLucro(valueString: yourPrice)
-                            }).keyboardType(.numberPad).frame(width: 80).foregroundColor(.blue).font(.title)
+                            }).keyboardType(.decimalPad).frame(width: 80).foregroundColor(.blue).font(.title)
                             .multilineTextAlignment(.trailing)
                             
                             

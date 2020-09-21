@@ -20,7 +20,6 @@
 		D9663B7024FBADA400EFCCD5 /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = D9F8D6F0247179E6004F43FF /* Data */; };
 		D9663B7224FBADD100EFCCD5 /* DatasheetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9663B7124FBADD100EFCCD5 /* DatasheetsView.swift */; };
 		D9663B7524FBB0E000EFCCD5 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9663B7424FBB0E000EFCCD5 /* BaseView.swift */; };
-		D9663B7824FBBB7400EFCCD5 /* ASCollectionView in Frameworks */ = {isa = PBXBuildFile; productRef = D9663B7724FBBB7400EFCCD5 /* ASCollectionView */; };
 		D9874DA3247A766D0018B243 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9874DA2247A766D0018B243 /* ViewExtensions.swift */; };
 		D9904F9425039EF4005159CD /* ProductsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9904F9325039EF4005159CD /* ProductsView.swift */; };
 		D9904F972503A5AA005159CD /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9904F962503A5AA005159CD /* BaseViewModel.swift */; };
@@ -91,7 +90,6 @@
 			files = (
 				D93257432506982100FA311E /* SwiftUIRefresh in Frameworks */,
 				D9663B7024FBADA400EFCCD5 /* Data in Frameworks */,
-				D9663B7824FBBB7400EFCCD5 /* ASCollectionView in Frameworks */,
 				D9663B6F24FBADA400EFCCD5 /* Alamofire in Frameworks */,
 				D9C631962517D64000A7300F /* SwiftUICharts in Frameworks */,
 			);
@@ -280,7 +278,6 @@
 			packageProductDependencies = (
 				D9C59D5E2470728000569FC8 /* Alamofire */,
 				D9F8D6F0247179E6004F43FF /* Data */,
-				D9663B7724FBBB7400EFCCD5 /* ASCollectionView */,
 				D93257422506982100FA311E /* SwiftUIRefresh */,
 				D9C631952517D64000A7300F /* SwiftUICharts */,
 			);
@@ -314,7 +311,6 @@
 			mainGroup = D9C59D3B2470717F00569FC8;
 			packageReferences = (
 				D9C59D5D2470728000569FC8 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				D9663B7624FBBB7400EFCCD5 /* XCRemoteSwiftPackageReference "ASCollectionView" */,
 				D93257412506982100FA311E /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */,
 				D9C631942517D64000A7300F /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
@@ -577,14 +573,6 @@
 				minimumVersion = 0.0.3;
 			};
 		};
-		D9663B7624FBBB7400EFCCD5 /* XCRemoteSwiftPackageReference "ASCollectionView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apptekstudios/ASCollectionView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.7.1;
-			};
-		};
 		D9C59D5D2470728000569FC8 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -608,11 +596,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D93257412506982100FA311E /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */;
 			productName = SwiftUIRefresh;
-		};
-		D9663B7724FBBB7400EFCCD5 /* ASCollectionView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D9663B7624FBBB7400EFCCD5 /* XCRemoteSwiftPackageReference "ASCollectionView" */;
-			productName = ASCollectionView;
 		};
 		D9C59D5E2470728000569FC8 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
