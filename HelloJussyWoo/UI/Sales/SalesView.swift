@@ -16,10 +16,6 @@ class SalesViewModel: ObservableObject {
     @Published var list: [Sales] = []
     @Published var hasLogged = false
     
-    init(){
-        doLogin()
-    }
-    
     private func doLogin(){
         if list.isEmpty {
             AppDependencies.shared.authRepo.signIn(email: "diogjp10@gmail.com", password: "123456") { [self]
@@ -54,8 +50,16 @@ class SalesViewModel: ObservableObject {
             print("sales total: \(values.count)")
             self.list.append(contentsOf: values)
         }
-        
-        
+    
+    }
+    
+    func getValues(result: @escaping ([Sales]) -> Void) {
+        AppDependencies.shared.authRepo.signIn(email: "diogjp10@gmail.com", password: "123456") {
+            hasLogged in
+            AppDependencies.shared.salesRepo.getAll  { values in
+                result(values)
+            }
+        }
     }
     
     func delete(index: [Int]) {
@@ -68,10 +72,11 @@ class SalesViewModel: ObservableObject {
 struct SalesView: View {
     @ObservedObject var viewModel = SalesViewModel()
     @State private var isShowing = false
+    @State private var list: [Sales] = []
     
     var body: some View {
         
-        List(viewModel.list, id: \.seq) { section in
+        List(list, id: \.seq) { section in
             
             NavigationLink(destination: EmptyView() ) {
                 VStack {
@@ -90,8 +95,10 @@ struct SalesView: View {
             }
             
             
-        }.pullToRefresh(isShowing: $isShowing) {
-            self.viewModel.load()
+        }.onAppear(perform: {
+            self.reloadValues()
+        }).pullToRefresh(isShowing: $isShowing) {
+            self.reloadValues()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.isShowing = false
             }
@@ -103,6 +110,13 @@ struct SalesView: View {
         self.viewModel.delete(index: indexSet.map({ it in
             it
         }))
+    }
+    
+    private func reloadValues() {
+        self.list.removeAll()
+        self.viewModel.getValues { values in
+            self.list = values
+        }
     }
 }
 
