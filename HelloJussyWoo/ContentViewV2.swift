@@ -7,12 +7,21 @@
 //
 
 import SwiftUI
+import Data
 
-//https://developer.apple.com/design/human-interface-guidelines/sf-symbols/overview/
+
+class ContentViewModel: BaseViewModel {
+    let authService = AuthRepository()
+
+    func load() {
+        authService.signIn(email: "diogjp10@gmail.com", password: "123456") { _ in }
+    }
+}
 
 struct ContentViewV2: View {
-    @State private var selection = 3
-    @State private var selectionTitle = ["Products","Datasheet", "Settings", "Finance"]
+    @State private var selection = 2
+    @State private var selectionTitle = ["Products","Datasheet", "Settings", "Sales" ,"Finance"]
+    private let viewModel = ContentViewModel()
     
     init() {
         UITableView.appearance().backgroundColor = .white
@@ -49,6 +58,15 @@ struct ContentViewV2: View {
                     }
                     .tag(2)
                     
+                    SalesView()
+                        .tabItem {
+                            VStack {
+                                Image(systemName: "bag")
+                                Text("Sales").foregroundColor(.accentColor)
+                            }
+                    }
+                    .tag(3)
+                    
                     FinanceView()
                         .tabItem {
                             VStack {
@@ -56,7 +74,7 @@ struct ContentViewV2: View {
                                 Text("Finance").foregroundColor(.accentColor)
                             }
                     }
-                    .tag(3)
+                    .tag(4)
                     
                 }
             }, title: self.selectionTitle[self.selection])
@@ -66,8 +84,9 @@ struct ContentViewV2: View {
             
         }
         
-        
-        
+        .onAppear {
+            viewModel.load()
+        }
     }
     
     @State var isLinkActive = false

@@ -7,7 +7,7 @@ let consumerSecret = "cs_6fe5dff60892c9062f089733bfade59d676ef774"
 var base = "https://\(ip)/index.php/wp-json/wc/v3/"
 let query = "consumer_key=\(consumerKey)&consumer_secret=\(consumerSecret)"
 
-private let session: Session = {
+let session: Session = {
     let manager = ServerTrustManager(evaluators: [ip: DisabledTrustEvaluator()])
     let configuration = URLSessionConfiguration.af.default
     return Session(configuration: configuration, serverTrustManager: manager)
