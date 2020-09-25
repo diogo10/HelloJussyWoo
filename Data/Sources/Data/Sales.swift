@@ -1,7 +1,7 @@
 import Foundation
 import Alamofire
 
-public struct Sales : Identifiable {
+public struct Sales : Identifiable, Codable {
     public var seq = UUID()
     public var id: String = ""
     public var name: String = ""
@@ -50,16 +50,17 @@ public struct SalesRepository : SalesService {
     let signInMethod = "v1/accounts:signInWithPassword"
     let getFinanceMethod = "v1/projects/diogoprojects-617e2/databases/(default)/documents/helloJussyFinance"
     
-    var authToken: String = token ?? ""
+    var authToken: String = ""
     
     public func getAll(result: @escaping ([Sales]) -> Void) {
     
         let requestURL = "\(baseGoogleFirestoreUrl)\(getFinanceMethod)?key=\(serverGoogleCloudKey)"
+        let aa = token ?? ""
         
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Authorization": "Bearer \(authToken)"
+            "Authorization": "Bearer \(aa)"
         ]
         
         sessionAuth.request(requestURL, headers: headers).validate().responseJSON { response in
@@ -89,7 +90,7 @@ public struct SalesRepository : SalesService {
             documents.forEach { item in
                 if let value = item as? NSDictionary {
                     if let fields = value["fields"] as? NSDictionary {
-                        print(fields)
+                        //print(fields)
                         do {
                             sales.append(try Sales(from: fields))
                         } catch let error as NSError {

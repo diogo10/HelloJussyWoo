@@ -9,19 +9,9 @@
 import SwiftUI
 import Data
 
-
-class ContentViewModel: BaseViewModel {
-    let authService = AuthRepository()
-
-    func load() {
-        authService.signIn(email: "diogjp10@gmail.com", password: "123456") { _ in }
-    }
-}
-
 struct ContentViewV2: View {
-    @State private var selection = 2
+    @State private var selection = 1
     @State private var selectionTitle = ["Products","Datasheet", "Settings", "Sales" ,"Finance"]
-    private let viewModel = ContentViewModel()
     
     init() {
         UITableView.appearance().backgroundColor = .white
@@ -82,10 +72,6 @@ struct ContentViewV2: View {
             .navigationBarItems(trailing: iconView())
             
             
-        }
-        
-        .onAppear {
-            viewModel.load()
         }
     }
     
