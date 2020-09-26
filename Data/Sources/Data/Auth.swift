@@ -29,11 +29,21 @@ public class AuthRepository : AuthService {
     let signInMethod = "v1/accounts:signInWithPassword"
     let getFinanceMethod = "v1/projects/diogoprojects-617e2/databases/(default)/documents/helloJussyFinance"
     
-    public init() {}
+    private var isLogged = false
+    
+    public init() {
+        print("initing AuthRepository")
+    }
     
     ///https://cloud.google.com/identity-platform/docs/use-rest-api#section-create-email-password
     
     public func signIn(email: String, password: String, result: @escaping (Bool) -> Void) {
+        print("isLogged: \(isLogged)")
+        
+        if isLogged {
+            result(true)
+            return
+        }
         
         let requestURL = "\(baseGoogleCloudUrl)\(signInMethod)?key=\(serverGoogleCloudKey)"
         
@@ -54,12 +64,14 @@ public class AuthRepository : AuthService {
                     self.changeToken(value: token)
                     result(true)
                 }else  {
+                    self.isLogged = false
                     result(false)
                 }
                 
             case .failure(let error):
                 debugPrint("Error: \(error)")
                 debugPrint(String(data: response.data!, encoding: String.Encoding.utf8)!)
+                self.isLogged = false
                 result(false)
             }
         }
@@ -68,6 +80,7 @@ public class AuthRepository : AuthService {
     
     func changeToken(value: String) {
         token = value
+        self.isLogged = true
     }
     
     

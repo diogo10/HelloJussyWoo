@@ -42,7 +42,7 @@ protocol SalesService:  BaseService {
 }
 
 
-public struct SalesRepository : SalesService {
+public class SalesRepository : SalesService {
     
     let baseGoogleCloudUrl = "https://identitytoolkit.googleapis.com/"
     let baseGoogleFirestoreUrl = "https://firestore.googleapis.com/"
@@ -50,33 +50,40 @@ public struct SalesRepository : SalesService {
     let signInMethod = "v1/accounts:signInWithPassword"
     let getFinanceMethod = "v1/projects/diogoprojects-617e2/databases/(default)/documents/helloJussyFinance"
     
-    var authToken: String = ""
+    private var list: [Sales] = []
     
     public func getAll(result: @escaping ([Sales]) -> Void) {
-    
         let requestURL = "\(baseGoogleFirestoreUrl)\(getFinanceMethod)?key=\(serverGoogleCloudKey)"
-        let aa = token ?? ""
+        let authtoken = token ?? ""
+        print("authtoken is empty: \(authtoken)")
+        
+        if authtoken.isEmpty {
+            result([])
+        }
         
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Authorization": "Bearer \(aa)"
+            "Authorization": "Bearer \(authtoken)"
         ]
         
+        print("requesting sales")
         sessionAuth.request(requestURL, headers: headers).validate().responseJSON { response in
+            self.list.removeAll()
             
             switch response.result {
             case .success(let value):
-                //print(value)
-                
                 if let jsonResult = value as? NSDictionary {
-                    result(manageResponse(dic: jsonResult))
+                    self.list.append(contentsOf: self.manageResponse(dic: jsonResult))
                 }else  {
-                    result([])
+                    self.list.removeAll()
                 }
+                
+                result(self.list)
                 
             case .failure(let error):
                 debugPrint("Error: \(error)")
+                self.list.removeAll()
                 debugPrint(String(data: response.data!, encoding: String.Encoding.utf8)!)
                 result([])
             }
