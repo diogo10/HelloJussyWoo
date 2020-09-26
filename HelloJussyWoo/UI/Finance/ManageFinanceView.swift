@@ -27,6 +27,7 @@ class ManageFinanceViewModel: BaseViewModel, ObservableObject {
             do {
                 let dictionary = ["id" : id,"name": name, "total": finalTotal,"type": type] as [String : Any]
                 let moneyEntry = try MoneyEntry(from: dictionary)
+                AppDependencies.shared.salesRepo.add(value: moneyEntry)
                 //moneyEntryRepository.add(value: moneyEntry)
                 return true
             } catch {

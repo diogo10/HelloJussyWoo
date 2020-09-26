@@ -65,13 +65,16 @@ struct ProductsView: View {
             }.onDelete(perform: self.deleteItem)
             
             
-        }.onAppear {
-            self.viewModel.load()
         }.pullToRefresh(isShowing: $isShowing) {
             self.viewModel.load()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.isShowing = false
             }
+        }
+        
+        .onAppear {
+            print("Product")
+            self.viewModel.load()
         }
     }
     

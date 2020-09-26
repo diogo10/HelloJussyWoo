@@ -38,13 +38,15 @@ struct DatasheetsView: View {
             }.onDelete(perform: self.deleteItem)
             
             
-        }.onAppear {
-            self.viewModel.load()
         }.pullToRefresh(isShowing: $isShowing) {
             self.viewModel.load()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.isShowing = false
             }
+        }
+        
+        .onAppear {
+            self.viewModel.load()
         }
     }
     

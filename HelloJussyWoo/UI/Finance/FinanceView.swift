@@ -26,6 +26,9 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
         updateTime()
         load()
     }
+    deinit {
+        print("de init")
+    }
     
     func load() {
         getValues { values in}

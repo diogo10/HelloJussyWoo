@@ -64,7 +64,10 @@ struct ProfileHeader: View {
             }
             
             
-        }.onAppear {
+        }
+        
+        .onAppear {
+            print("Seetings")
             self.viewModel.load()
         }
     }
