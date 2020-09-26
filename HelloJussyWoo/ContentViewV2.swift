@@ -10,7 +10,7 @@ import SwiftUI
 import Data
 
 struct ContentViewV2: View {
-    @State private var selection = 1
+    @State private var selection = 2
     @State private var selectionTitle = ["Products","Datasheet", "Settings", "Sales" ,"Finance"]
     
     init() {
@@ -48,7 +48,7 @@ struct ContentViewV2: View {
                     }
                     .tag(2)
                     
-                    SalesView()
+                    FinanceView()
                         .tabItem {
                             VStack {
                                 Image(systemName: "bag")
@@ -56,15 +56,6 @@ struct ContentViewV2: View {
                             }
                     }
                     .tag(3)
-                    
-                    FinanceView()
-                        .tabItem {
-                            VStack {
-                                Image(systemName: "creditcard")
-                                Text("Finance").foregroundColor(.accentColor)
-                            }
-                    }
-                    .tag(4)
                     
                 }
             }, title: self.selectionTitle[self.selection])

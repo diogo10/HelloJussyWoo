@@ -3,7 +3,7 @@ import XCTest
 
 final class SalesTests: XCTestCase {
     
-    let repo = SalesRepository()
+    let repo = MoneyEntryRepository()
     
     func testGetSuccess() {
          let e = expectation(description: "error")

@@ -17,7 +17,7 @@ class ManageFinanceViewModel: BaseViewModel, ObservableObject {
     
     
     func load(_ value: MoneyEntry?) {
-        self.id = value?.id ?? UUID()
+        self.id = value?.seq ?? UUID()
     }
     
     func save(name: String, total: String, type: Int) -> Bool {
@@ -27,7 +27,7 @@ class ManageFinanceViewModel: BaseViewModel, ObservableObject {
             do {
                 let dictionary = ["id" : id,"name": name, "total": finalTotal,"type": type] as [String : Any]
                 let moneyEntry = try MoneyEntry(from: dictionary)
-                moneyEntryRepository.add(value: moneyEntry)
+                //moneyEntryRepository.add(value: moneyEntry)
                 return true
             } catch {
                 print("Error: \(error)")
