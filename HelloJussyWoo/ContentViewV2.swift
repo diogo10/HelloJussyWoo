@@ -9,9 +9,27 @@
 import SwiftUI
 import Data
 
+
+class ContentViewV2Model {
+    @Published var list: [MoneyEntry] = []
+    
+    func getValues(result: @escaping ([MoneyEntry]) -> Void) {
+        AppDependencies.shared.authRepo.signIn(email: "diogjp10@gmail.com", password: "123456") {
+            hasLogged in
+            AppDependencies.shared.salesRepo.getAll  { values in
+                self.list = values
+            }
+        }
+    }
+    
+}
+
+
 struct ContentViewV2: View {
     @State private var selection = 2
     @State private var selectionTitle = ["Products","Datasheet", "Settings", "Sales" ,"Finance"]
+    
+    private var financeViewModel = FinanceViewModel()
     
     init() {
         UITableView.appearance().backgroundColor = .white
@@ -48,7 +66,7 @@ struct ContentViewV2: View {
                     }
                     .tag(2)
                     
-                    FinanceView()
+                    FinanceView(viewModel: financeViewModel)
                         .tabItem {
                             VStack {
                                 Image(systemName: "bag")
@@ -63,6 +81,9 @@ struct ContentViewV2: View {
             .navigationBarItems(trailing: iconView())
             
             
+        }
+        .onAppear {
+            print("on load contentview")
         }
     }
     

@@ -10,6 +10,8 @@ import SwiftUI
 import Data
 import SwiftUICharts
 
+//
+//https://github.com/ryangittings/swiftui-bugs
 class FinanceViewModel: BaseViewModel, ObservableObject {
     
     @Published var month = ""
@@ -25,10 +27,6 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
         super.init()
         updateTime()
         load()
-        //https://github.com/ryangittings/swiftui-bugs
-    }
-    deinit {
-        print("de init")
     }
     
     func load() {
@@ -38,13 +36,11 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
     func back()  {
         manageTime(month: -1)
         updateTime()
-        updateList()
     }
     
     func next()  {
         manageTime(month: 1)
         updateTime()
-        updateList()
     }
     
     func delete(index: [Int]) {
@@ -58,25 +54,22 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
         AppDependencies.shared.authRepo.signIn(email: "diogjp10@gmail.com", password: "123456") {
             hasLogged in
             AppDependencies.shared.salesRepo.getAll  { values in
-                let times =  self.calendar.dateComponents([.month,.year ], from: self.currentDate)
-                let month = (times.month ?? 9) - 1
-                let year = times.year
-                
-                self.list = values.filter { entry -> Bool in
-                    //let time = Calendar.current.dateComponents([.month,.year], from: entry.date)
-                    return month == entry.month && year == entry.year
-                }
-                let value = self.list.filter({ $0.type == 1 }).map({$0.total}).reduce(0, +)
-                
-                self.total = self.getCurrency() + " \(value.format())"
-                print("updateTotal: \(value)")
+                self.updateList(values: values)
+                self.updateTotal()
                 result(self.list)
             }
         }
     }
     
-    func updateList(){
-        getValues { values in}
+    private func updateList(values: [MoneyEntry]) {
+        let times =  self.calendar.dateComponents([.month,.year ], from: self.currentDate)
+        let month = (times.month ?? 9) - 1
+        let year = times.year
+        
+        self.list = values.filter { entry -> Bool in
+            //let time = Calendar.current.dateComponents([.month,.year], from: entry.date)
+            return month == entry.month && year == entry.year
+        }
     }
     
     private func manageTime(month: Int){
@@ -86,13 +79,24 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
     }
     
     private func updateTime(){
-        if let monthInt = calendar.dateComponents([.month], from: currentDate).month {
-            self.month = calendar.monthSymbols[monthInt-1]
-        }
         
-        if let year = calendar.dateComponents([.year], from: currentDate).year {
-            self.year = year.description
+        let times =  self.calendar.dateComponents([.month,.year ], from: self.currentDate)
+        let month = (times.month ?? 9) - 1
+        let year = times.year ?? 2020
+        
+        self.month = calendar.monthSymbols[month]
+        self.year = year.description
+        
+        AppDependencies.shared.salesRepo.getAll(month: month, year: year) { values in
+            self.list = values
+            self.updateTotal()
         }
+    }
+    
+    private func updateTotal(){
+        let value = self.list.filter({ $0.type == 1 }).map({$0.total}).reduce(0, +)
+        self.total = self.getCurrency() + " \(value.format())"
+        print("updateTotal: \(value)")
     }
     
     func pieData() -> [Double] {
@@ -148,7 +152,7 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
 }
 
 struct FinanceView: View {
-    @ObservedObject var viewModel = FinanceViewModel()
+    @ObservedObject var viewModel: FinanceViewModel
     @State private var isShowing = false
     
     @State var list: [MoneyEntry] = [] {
@@ -194,8 +198,6 @@ struct FinanceView: View {
         
         }.listStyle(GroupedListStyle()).onAppear {
             self.reloadValues()
-        }.onDisappear {
-            print("onDisappear")
         }
         
         

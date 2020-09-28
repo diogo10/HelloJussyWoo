@@ -112,8 +112,8 @@ public class MoneyEntryRepository: MoneyEntryService {
         sessionAuth.request(requestURL, method: .patch, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { response in
             
             switch response.result {
-            case .success(let value):
-                debugPrint("Success: \(value)")
+            case .success(_):
+                debugPrint("Success: addOrUpdate")
                 result(true)
             case .failure(let error):
                 debugPrint("Error: \(error)")
