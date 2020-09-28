@@ -68,15 +68,25 @@ struct ManageFinanceView: View {
     @State var data: MoneyEntry?
     @Environment(\.presentationMode) var presentation
     @State var name: String = ""
+    @State var client: String = ""
+    @State var extras: String = ""
+    @State var location: String = ""
+    @State var phone: String = ""
     @State var value: String = ""
+    @State var kg: String = ""
+    @State var entry: String = ""
     @ObservedObject var viewModel = ManageFinanceViewModel()
     @State private var pickerIndex = 0
     
     var body: some View {
-      VStack {
+        VStack {
             Form {
                 Section(header: Text("General").fontWeight(.bold)) {
+                    TextField("Client name", text: self.$client).keyboardType(.default).accentColor(.blue)
                     TextField("Type in the name", text: self.$name).keyboardType(.default).accentColor(.blue)
+                    TextField("Extras", text: self.$extras).keyboardType(.default).accentColor(.blue)
+                    TextField("Location", text: self.$location).keyboardType(.default).accentColor(.blue)
+                    TextField("Phone", text: self.$phone).keyboardType(.default).accentColor(.blue)
                     Picker(selection: self.$pickerIndex, label: Text("")) {
                         ForEach(0 ..< moneyEntryTypes.count) {
                             Text(moneyEntryTypes[$0])
@@ -84,8 +94,10 @@ struct ManageFinanceView: View {
                     }.pickerStyle(SegmentedPickerStyle())
                 }
                 
-                Section(header: Text("Value").fontWeight(.bold)) {
+                Section(header: Text("Values").fontWeight(.bold)) {
                     TextField("Type in the value", text: self.$value).keyboardType(.decimalPad).accentColor(.blue)
+                    TextField("KG", text: self.$kg).keyboardType(.decimalPad).accentColor(.blue)
+                    TextField("Entry", text: self.$entry).keyboardType(.decimalPad).accentColor(.blue)
                 }
                 
                 
@@ -102,15 +114,21 @@ struct ManageFinanceView: View {
                         Text("Save changes").foregroundColor(.blue)
                     }
                 }
-                }.foregroundColor(Color.black).background(Color.white)
+            }.foregroundColor(Color.black).background(Color.white)
             
             
-        .navigationBarTitle(Text("Entry"))
-            
+            .navigationBarTitle(Text("Entry"))
+            .modifier(DismissingKeyboard())
         }.onAppear {
             self.viewModel.load(self.data)
             self.name = self.data?.name ?? ""
             self.value = self.data?.total.description ?? ""
+            self.entry = self.data?.total.description ?? ""
+            self.kg = self.data?.kg.description ?? ""
+            self.client = self.data?.client ?? ""
+            self.location = self.data?.location ?? ""
+            self.extras = self.data?.extras ?? ""
+            self.phone = self.data?.phone ?? ""
             self.pickerIndex = self.data?.type ?? 0
         }
         

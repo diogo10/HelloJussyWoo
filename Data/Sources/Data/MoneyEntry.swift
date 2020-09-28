@@ -10,11 +10,14 @@ extension MoneyEntry {
         id = mapStringValue(data["id"] as? NSDictionary)
         name = mapStringValue(data["name"] as? NSDictionary)
         total = mapDoubleValue(data["total"] as? NSDictionary)
+        entry = mapDoubleValue(data["signal"] as? NSDictionary)
+        kg = mapDoubleValue(data["quantity"] as? NSDictionary)
         date = data["date"] as? Date ?? Date()
         type = mapIntegerValue(data["type"] as? NSDictionary)
         client =  mapStringValue(data["client"] as? NSDictionary)
         location =  mapStringValue(data["location"] as? NSDictionary)
         extras =  mapStringValue(data["extras"] as? NSDictionary)
+        phone =  mapStringValue(data["phone"] as? NSDictionary)
         month = mapIntegerValue(data["month"] as? NSDictionary)
         year = mapIntegerValue(data["year"] as? NSDictionary)
     }
@@ -43,8 +46,11 @@ public struct MoneyEntry : Identifiable, Codable {
     public var client: String = ""
     public var location: String = ""
     public var extras: String = ""
+    public var phone: String = ""
     public var month: Int = 1
     public var year: Int = 1
+    public var entry: Double = 0.0
+    public var kg: Double = 0.0
 }
 
 //MARK: SERVICE

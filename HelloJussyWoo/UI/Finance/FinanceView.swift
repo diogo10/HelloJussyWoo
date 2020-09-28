@@ -25,6 +25,7 @@ class FinanceViewModel: BaseViewModel, ObservableObject {
         super.init()
         updateTime()
         load()
+        //https://github.com/ryangittings/swiftui-bugs
     }
     deinit {
         print("de init")
