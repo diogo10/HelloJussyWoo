@@ -11,37 +11,52 @@ import Data
 
 class ManageFinanceViewModel: BaseViewModel, ObservableObject {
     
-    private var id: UUID = UUID()
+    private var id: String = ""
     @Published var showBanner: Bool = false
     @Published var bannerData: BannerModifier.BannerData = BannerModifier.BannerData(title: "", detail: "", type: .Info)
     
     
     func load(_ value: MoneyEntry?) {
-        self.id = value?.seq ?? UUID()
+        self.id = value?.id ?? ""
     }
     
-    func save(name: String, total: String, type: Int) -> Bool {
-        let finalTotal = Double(total) ?? 0.0
+    func save(dic: [String : Any], result: @escaping (Bool) -> Void) {
+        var dic = dic
+        let finalTotal = Double(dic["total"] as? String ?? "0.0") ?? 0.0
+        let flag = isValid(finalTotal: finalTotal, name: dic["name"] as! String)
         
-        if isValid(finalTotal: finalTotal, name: name) {
-            do {
-                let dictionary = ["id" : id,"name": name, "total": finalTotal,"type": type] as [String : Any]
-                let moneyEntry = try MoneyEntry(from: dictionary)
-                AppDependencies.shared.salesRepo.add(value: moneyEntry)
-                //moneyEntryRepository.add(value: moneyEntry)
-                return true
-            } catch {
-                print("Error: \(error)")
-                return false
-            }
+        if flag {
+            
+            dic["id"] = id
+            dic["total"] = finalTotal
+            dic["entry"] = Double(dic["entry"] as? String ?? "0.0") ?? 0.0
+            dic["quantity"] = Double(dic["quantity"] as? String ?? "0.0") ?? 0.0
+            
+            let date = dic["entry"] as? Date ?? Date()
+            dic = manageTime(dic: dic, date: date)
+            
+            let moneyEntry = MoneyEntry(data: dic)
+            AppDependencies.shared.salesRepo.addOrUpdate(value: moneyEntry, result: result)
+        } else {
+            result(false)
         }
         
+    }
+    
+    private func manageTime(dic: [String : Any],date: Date) -> [String : Any] {
+        var dic = dic
         
-        return false
+        let times =  Calendar.current.dateComponents([.month,.year ], from: date)
+        let month = (times.month ?? 9) - 1
+        let year = times.year
+        
+        dic["month"] = month
+        dic["year"] = year
+        
+        return dic
     }
     
     private func isValid(finalTotal: Double, name: String) -> Bool {
-        
         
         if name.isEmpty {
             bannerData.title = "Error"
@@ -98,17 +113,30 @@ struct ManageFinanceView: View {
                     TextField("Type in the value", text: self.$value).keyboardType(.decimalPad).accentColor(.blue)
                     TextField("KG", text: self.$kg).keyboardType(.decimalPad).accentColor(.blue)
                     TextField("Entry", text: self.$entry).keyboardType(.decimalPad).accentColor(.blue)
+                       .modifier(DismissingKeyboard())
                 }
                 
                 
                 Section {
                     Button(action: {
-                        if self.viewModel.save(name: self.name, total: self.value, type: self.pickerIndex) {
-                            self.presentation.wrappedValue.dismiss()
-                        } else {
-                            print("Error")
-                        }
                         
+                        var dictionary = ["name": self.name, "total": self.value,"type": self.pickerIndex] as [String : Any]
+                        dictionary.updateValue(self.extras, forKey: "extras")
+                        dictionary.updateValue(self.location, forKey: "location")
+                        dictionary.updateValue(self.phone, forKey: "phone")
+                        dictionary.updateValue(self.client, forKey: "client")
+                        dictionary.updateValue(self.entry, forKey: "entry")
+                        dictionary.updateValue(self.kg, forKey:"quantity")
+                        dictionary.updateValue(Date(), forKey:"date")
+                        
+                        self.viewModel.save(dic: dictionary) { result in
+                            
+                            if result {
+                                self.presentation.wrappedValue.dismiss()
+                            } else {
+                                print("Error")
+                            }
+                        }
                         
                     }) {
                         Text("Save changes").foregroundColor(.blue)
@@ -118,12 +146,12 @@ struct ManageFinanceView: View {
             
             
             .navigationBarTitle(Text("Entry"))
-            .modifier(DismissingKeyboard())
+           
         }.onAppear {
             self.viewModel.load(self.data)
             self.name = self.data?.name ?? ""
             self.value = self.data?.total.description ?? ""
-            self.entry = self.data?.total.description ?? ""
+            self.entry = self.data?.entry.description ?? ""
             self.kg = self.data?.kg.description ?? ""
             self.client = self.data?.client ?? ""
             self.location = self.data?.location ?? ""

@@ -22,6 +22,23 @@ extension MoneyEntry {
         year = mapIntegerValue(data["year"] as? NSDictionary)
     }
     
+    public init(data: [String : Any]) {
+        seq = UUID()
+        id = data["id"] as? String ?? ""
+        name = data["name"] as? String ?? ""
+        total = data["total"] as? Double ?? 0.0
+        entry = data["entry"] as? Double ?? 0.0
+        kg =  data["quantity"] as? Double ?? 0.0
+        date = data["date"] as? Date ?? Date()
+        type = data["type"] as? Int ?? 0
+        client =  data["client"] as? String ?? ""
+        location =  data["location"] as? String ?? ""
+        extras = data["extras"] as? String ?? ""
+        phone =  data["phone"] as? String ?? ""
+        month = data["month"] as? Int ?? 0
+        year = data["year"] as? Int ?? 0
+    }
+    
     private func mapStringValue(_ data: NSDictionary?) -> String {
         return data?["stringValue"] as? String ?? ""
     }
@@ -57,27 +74,76 @@ public struct MoneyEntry : Identifiable, Codable {
 
 protocol MoneyEntryService {
     func getAll(result: @escaping ([MoneyEntry]) -> Void)
-    func add(value: MoneyEntry)
+    func getAll(month: Int, year: Int, result: @escaping ([MoneyEntry]) -> Void)
+    func addOrUpdate(value: MoneyEntry, result: @escaping (Bool) -> Void)
 }
 
 public class MoneyEntryRepository: MoneyEntryService {
     
-    let baseGoogleCloudUrl = "https://identitytoolkit.googleapis.com/"
     let baseGoogleFirestoreUrl = "https://firestore.googleapis.com/"
     let serverGoogleCloudKey = "AIzaSyCOXsIcGPD75cf41G5R-UE7A2YgZYEtI5E"
-    let signInMethod = "v1/accounts:signInWithPassword"
+    let addMethod = "v1/accounts:signInWithPassword"
     let getFinanceMethod = "v1/projects/diogoprojects-617e2/databases/(default)/documents/helloJussyFinance"
     
     private var list: [MoneyEntry] = []
     
-    public func add(value: MoneyEntry) {
+    public func addOrUpdate(value: MoneyEntry, result: @escaping (Bool) -> Void) {
+        var id = value.id.trimmingCharacters(in: .whitespacesAndNewlines)
+        var body = value
         
+        if id.isEmpty {
+            id = Date().currentTimeMillis().description
+            body.id = id
+        }
+        
+        let params: Parameters = [ "fields" :MoneyEntryMapper().fields(model: value)]
+        
+        let requestURL = "\(baseGoogleFirestoreUrl)\(getFinanceMethod)/\(id)?key=\(serverGoogleCloudKey)"
+        let authtoken = token ?? ""
+        print("adding authtoken is empty: \(authtoken.isEmpty)")
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer \(authtoken)"
+        ]
+    
+        
+        sessionAuth.request(requestURL, method: .patch, parameters: params, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { response in
+            
+            switch response.result {
+            case .success(let value):
+                debugPrint("Success: \(value)")
+                result(true)
+            case .failure(let error):
+                debugPrint("Error: \(error)")
+                debugPrint(String(data: response.data!, encoding: String.Encoding.utf8)!)
+                result(false)
+            }
+        }
+        
+    }
+    
+    public func getAll(month: Int, year: Int, result: @escaping ([MoneyEntry]) -> Void) {
+        if self.list.isEmpty {
+            getAll { values in
+                result(self.filter(month: month, year: year, values: values))
+            }
+        }else {
+            result(filter(month: month, year: year, values: self.list))
+        }
+    }
+    
+    private func filter(month: Int, year: Int,values: [MoneyEntry]) -> [MoneyEntry] {
+        return values.filter { item in
+            return item.year == year && item.month == month
+        }
     }
     
     public func getAll(result: @escaping ([MoneyEntry]) -> Void) {
         let requestURL = "\(baseGoogleFirestoreUrl)\(getFinanceMethod)?key=\(serverGoogleCloudKey)"
         let authtoken = token ?? ""
-        print("authtoken is empty: \(authtoken.isEmpty)")
+        print("getting authtoken is empty: \(authtoken.isEmpty)")
         
         if authtoken.isEmpty {
             result([])
@@ -132,6 +198,42 @@ public class MoneyEntryRepository: MoneyEntryService {
         
         return sales
     }
+
     
+}
+
+
+struct MoneyEntryMapper {
+    func fields(model: MoneyEntry) -> Parameters {
+        var values: [String: Any] = [:]
+        
+        values.updateValue(mapString(value: model.name), forKey: "name")
+        values.updateValue(mapString(value: model.id), forKey: "id")
+        values.updateValue(mapString(value: model.client), forKey: "client")
+        values.updateValue(mapString(value: model.extras), forKey: "extras")
+        values.updateValue(mapString(value: model.location), forKey: "location")
+        values.updateValue(mapString(value: model.phone), forKey: "phone")
+        
+        values.updateValue(mapInteger(value: model.month), forKey: "month")
+        values.updateValue(mapInteger(value: model.year), forKey: "year")
+        values.updateValue(mapInteger(value: model.type), forKey: "type")
+        
+        values.updateValue(mapDouble(value: model.entry), forKey: "signal")
+        values.updateValue(mapDouble(value: model.total), forKey: "total")
+        values.updateValue(mapDouble(value: model.kg), forKey: "quantity")
+        
+        return values
+    }
     
+    private func mapString(value: String) -> NSDictionary {
+        return ["stringValue":value]
+    }
+    
+    private func mapInteger(value: Int) -> NSDictionary {
+        return ["integerValue":value]
+    }
+    
+    private func mapDouble(value: Double) -> NSDictionary {
+        return ["doubleValue":value]
+    }
 }
