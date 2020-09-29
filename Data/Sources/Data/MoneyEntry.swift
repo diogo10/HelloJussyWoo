@@ -20,6 +20,7 @@ extension MoneyEntry {
         phone =  mapStringValue(data["phone"] as? NSDictionary)
         month = mapIntegerValue(data["month"] as? NSDictionary)
         year = mapIntegerValue(data["year"] as? NSDictionary)
+        day = mapIntegerValue(data["day"] as? NSDictionary)
     }
     
     public init(data: [String : Any]) {
@@ -37,6 +38,7 @@ extension MoneyEntry {
         phone =  data["phone"] as? String ?? ""
         month = data["month"] as? Int ?? 0
         year = data["year"] as? Int ?? 0
+        day = data["day"] as? Int ?? 0
     }
     
     private func mapStringValue(_ data: NSDictionary?) -> String {
@@ -66,6 +68,7 @@ public struct MoneyEntry : Identifiable, Codable {
     public var phone: String = ""
     public var month: Int = 1
     public var year: Int = 1
+    public var day: Int = 1
     public var entry: Double = 0.0
     public var kg: Double = 0.0
 }
@@ -214,6 +217,7 @@ struct MoneyEntryMapper {
         values.updateValue(mapString(value: model.location), forKey: "location")
         values.updateValue(mapString(value: model.phone), forKey: "phone")
         
+        values.updateValue(mapInteger(value: model.day), forKey: "day")
         values.updateValue(mapInteger(value: model.month), forKey: "month")
         values.updateValue(mapInteger(value: model.year), forKey: "year")
         values.updateValue(mapInteger(value: model.type), forKey: "type")

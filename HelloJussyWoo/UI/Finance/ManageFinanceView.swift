@@ -46,12 +46,14 @@ class ManageFinanceViewModel: BaseViewModel, ObservableObject {
     private func manageTime(dic: [String : Any],date: Date) -> [String : Any] {
         var dic = dic
         
-        let times =  Calendar.current.dateComponents([.month,.year ], from: date)
+        let times =  Calendar.current.dateComponents([.month,.year,.day], from: date)
         let month = (times.month ?? 9) - 1
         let year = times.year
+        let day = times.day
         
         dic["month"] = month
         dic["year"] = year
+        dic["day"] = day
         
         return dic
     }

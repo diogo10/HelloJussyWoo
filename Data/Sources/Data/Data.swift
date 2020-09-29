@@ -209,6 +209,9 @@ public struct ExpensesServiceRepository: ExpensesService {
         let fixed = total()
         let target = getTargetSales()
         let total = (fixed / target) * 100
+        if total.isNaN {
+            return 0.0
+        }
         return total.rounded()
     }
     

@@ -101,9 +101,9 @@ struct ContentViewV2: View {
                     .resizable()
                     .padding(6)
                     .frame(width: 28, height: 28)
-                    .background(Color.green)
+                    .background(Color.white)
                     .clipShape(Circle())
-                    .foregroundColor(.white)
+                    .foregroundColor(.blue)
             }.padding(.top,imageTopSpace)
         }
         

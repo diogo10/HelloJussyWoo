@@ -155,13 +155,6 @@ struct FinanceView: View {
     @ObservedObject var viewModel: FinanceViewModel
     @State private var isShowing = false
     
-    @State var list: [MoneyEntry] = [] {
-        didSet {
-            print("did set list")
-            
-        }
-    }
-    
     var body: some View {
         
         List { Section(header: ListHeader(viewModel: viewModel).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))) {
@@ -179,8 +172,13 @@ struct FinanceView: View {
                             VStack(alignment: .leading) {
                                 Text("\(section.name)").bold().font(.subheadline).foregroundColor(.black)
                                 Text("\(section.client)").foregroundColor(.black).font(.caption)
-                                Text("\(section.location)").foregroundColor(.black).font(.caption)
-                                Text("Extra: \(section.extras)").foregroundColor(.black).font(.caption)
+                                
+                                if section.type == 1 {
+                                    Text("\(section.location)").foregroundColor(.black).font(.caption)
+                                    Text("Extra: \(section.extras)").foregroundColor(.black).font(.caption)
+                                }
+                                
+                                Text("Day: \(section.day)").foregroundColor(.black).font(.caption)
                             }
                             
                             Spacer()
