@@ -46,13 +46,16 @@ struct ManageProductView: View {
     @State var product: Product?
     
     private let viewModel = ManageProductViewModel()
-    private let unitProvider: UnitProvider = UnitProvider(list: units)
     
     var body: some View {
-      VStack {
+        VStack {
             Form {
-                Section(header: Text("General").fontWeight(.bold)) {
-                    TextField("Type in the name", text: self.$name).keyboardType(.default).accentColor(.blue)
+                Section(header: Text("Name").fontWeight(.bold)) {
+                    TextField("Type in the name", text: self.$name)
+                        .keyboardType(.default).accentColor(.blue)
+                }
+                
+                Section(header: Text("Unidades").fontWeight(.bold)) {
                     Picker(selection: self.$unitIndex, label: Text("")) {
                         ForEach(0 ..< units.count) {
                             Text(units[$0])
@@ -61,30 +64,37 @@ struct ManageProductView: View {
                 }
                 
                 Section(header: Text("Price").fontWeight(.bold)) {
-                    TextField("Type in the price", text: self.$price).keyboardType(.decimalPad).accentColor(.blue)
+                    TextField("Type in the price", text: self.$price)
+                        .keyboardType(.decimalPad).accentColor(.blue)
                 }
                 
-                
-                Section {
-                    Button(action: {
-                        if self.viewModel.save(name: self.name, price: self.price, unit: units[self.unitIndex]) {
-                            self.presentation.wrappedValue.dismiss()
-                        } else {
-                            print("Error")
-                        }
-                        
-                        
-                    }) {
-                        Text("Save changes").foregroundColor(.blue)
+            }
+            
+            VStack {
+                Button(action: {
+                    print("save")
+                    
+                    if self.viewModel.save(name: self.name, price: self.price, unit: units[self.unitIndex]) {
+                        self.presentation.wrappedValue.dismiss()
+                    } else {
+                        print("Error")
                     }
+                    
+                }) {
+                    Text("Save")
+                        .padding()
+                        .foregroundColor(.white)
+                        .font(.title).frame(maxWidth: .infinity)
                 }
-                }.foregroundColor(Color.black).background(Color.white)
+            }
+            .frame(maxWidth: .infinity)
+            .background(Color.pink)
+            .cornerRadius(6)
+            .padding()
             
-            
-        .navigationBarTitle(Text("Product"))
+            .navigationBarTitle(Text("Products detail"))
             
         }.onAppear {
-            print("onAppear")
             self.viewModel.load(product: self.product)
             self.name = self.product?.name ?? ""
             self.price = self.product?.price.format() ?? ""

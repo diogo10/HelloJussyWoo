@@ -123,7 +123,7 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     }
     
     func calculateLucro(valueString: String) {
-    
+        
         if let value = Double(valueString) {
             let per = ((value / self.custoTotalSemImposto) - 1) * 100
             self.margemLucroPer = "\(per.format())%"
@@ -154,9 +154,9 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
         let impactInEachProduct = repoExpenses.impactInEachProduct() - 1
         let per = (self.custoTotalSemImposto / impactInEachProduct)
         self.custoTotalComImposto = self.custoTotalSemImposto + per
-                                      
+        
         self.pesoTotal = (totalKilos / 1000)
-    
+        
         let markup = 30
         self.lucro = self.custoTotalSemImposto + Double(markup)*custoTotalSemImposto/100;
         calculateLucro(valueString: "\(lucro)")
@@ -166,7 +166,7 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
     private func calCustoTotal() -> Double {
         var total = 0.0
         self.selectedProducts.forEach { item in
-           
+            
             if let real = values[item.id.uuidString] {
                 total = total + calculateCustoBruto(price: item.price, qtUsada: real)
             }
@@ -204,27 +204,40 @@ struct ManageDatasheetView: View {
     @State var data: Datasheet?
     @ObservedObject var viewModel = ManageDatasheetViewModel()
     @State var nameBinding: String = ""
-    
+    @State private var stepper = 0
     
     var body: some View {
         VStack(alignment: .leading) {
             
+            Picker(selection: $stepper, label: Text("")) {
+                Text("Geral").tag(0)
+                Text("Valores").tag(1)
+            }.pickerStyle(SegmentedPickerStyle())
             
-            TextField("Type in the name", text: $nameBinding, onCommit: {
-                print(nameBinding)
-                self.viewModel.updateName(value: nameBinding)
-            }).padding().foregroundColor(.blue).font(.title)
             
             
-            List { Section(header: Header(viewModel: self.viewModel), footer: SummaryView(viewModel: self.viewModel)) {
+            if self.stepper == 0 {
                 
-                ForEach(self.viewModel.selectedProducts) { section in
-                    Item(product: section, viewModel: self.viewModel)
+                TextField("Type in the name", text: $nameBinding, onCommit: {
+                    print(nameBinding)
+                    self.viewModel.updateName(value: nameBinding)
+                }).padding().foregroundColor(.blue).font(.title)
+                
+                
+                List { Section(header: Header(viewModel: self.viewModel), footer: SummaryView(viewModel: self.viewModel)) {
+                    
+                    ForEach(self.viewModel.selectedProducts) { section in
+                        Item(product: section, viewModel: self.viewModel)
+                    }
                 }
+                }.listStyle(GroupedListStyle()).onAppear {
+                    self.viewModel.load()
                 }
-            }.listStyle(GroupedListStyle()).onAppear {
-                self.viewModel.load()
+                
             }
+            
+            
+            
             
             
             Spacer()
@@ -236,7 +249,7 @@ struct ManageDatasheetView: View {
                 self.viewModel.updateProductsFromData(list: self.data?.produtcs ?? [])
                 self.viewModel.id = self.data?.id ?? UUID()
             }
-           
+            
         }
         .banner(data: $viewModel.bannerData, show: $viewModel.showBanner)
     }
@@ -381,18 +394,18 @@ private struct SummaryView: View {
                             
                             
                         }.padding(.bottom,30)
-              
+                        
                         Text("\(self.viewModel.margemLucroPer)").font(.headline)
                         Text("\(self.viewModel.getCurrency()) \(self.viewModel.margemLucro.format())").font(.headline)
                     }.padding()
-                        
+                    
                     
                     
                 }.padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                    .background(Color.green).cornerRadius(6)
+                .background(Color.green).cornerRadius(6)
                 
-       
-               
+                
+                
                 //Save button
                 VStack {
                     Button(action: {
@@ -413,7 +426,7 @@ private struct SummaryView: View {
                 .cornerRadius(6)
                 .padding(.top,50)
                 
-            
+                
                 
             }.frame(maxWidth: .infinity)
             
@@ -469,13 +482,13 @@ struct DismissingKeyboard: ViewModifier {
         content
             .onTapGesture {
                 let keyWindow = UIApplication.shared.connectedScenes
-                        .filter({$0.activationState == .foregroundActive})
-                        .map({$0 as? UIWindowScene})
-                        .compactMap({$0})
-                        .first?.windows
-                        .filter({$0.isKeyWindow}).first
+                    .filter({$0.activationState == .foregroundActive})
+                    .map({$0 as? UIWindowScene})
+                    .compactMap({$0})
+                    .first?.windows
+                    .filter({$0.isKeyWindow}).first
                 keyWindow?.endEditing(true)
-        }
+            }
     }
 }
 

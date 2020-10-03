@@ -44,35 +44,31 @@ struct ProductsView: View {
     var body: some View {
         
         List {
-            ForEach(viewModel.list) { section in
+            
+            Section(header: Text("Continente").foregroundColor(.gray)) {
                 
-                NavigationLink(destination: ManageProductView(product: section) ) {
-                    VStack {
+                ForEach(viewModel.list) { section in
+                    
+                    NavigationLink(destination: ManageProductView(product: section) ) {
+                        
                         HStack {
                             VStack(alignment: .leading) {
-                                Text("\(section.name)").bold().font(.subheadline).foregroundColor(.black)
-                                Text("\(section.unit)").foregroundColor(.black).font(.caption)
+                                Text("\(section.name)").bold().font(.subheadline).foregroundColor(.white)
+                                Text("\(section.unit)").foregroundColor(.white).font(.caption)
                             }
                             
                             Spacer()
-                            Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.price))").bold().font(.subheadline).foregroundColor(.black)
+                            Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.price))").bold().font(.subheadline).foregroundColor(.white)
                             
                         }.padding()
+                        
                     }
-                }
+                    
+                    
+                }.onDelete(perform: self.deleteItem).listRowBackground(Color.black)
                 
-                
-            }.onDelete(perform: self.deleteItem)
-            
-            
-        }.pullToRefresh(isShowing: $isShowing) {
-            self.viewModel.load()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.isShowing = false
-            }
-        }
-        
-        .onAppear {
+            }.modifier(SectionHeaderStyle())
+        }.listStyle(GroupedListStyle()).onAppear {
             print("Product")
             self.viewModel.load()
         }
