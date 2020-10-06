@@ -8,198 +8,6 @@ import Data
 import Combine
 
 
-class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
-    
-    @Published var list: [Product] = []
-    @Published var selectedProducts: [Product] = []
-    private var provider:BaseSimpleProvider?
-    
-    @Published var name: String = ""
-    @Published var margemLucro: Double = 0.0
-    @Published var margemLucroPer: String = "0%"
-    @Published var lucro: Double = 0.0
-    @Published var pesoTotal: Double = 0.0
-    @Published var valorKilo: Double = 0.0
-    
-    @Published var custoTotalComImposto: Double = 0.0
-    @Published var custoTotalKiloComImposto: Double = 0.0
-    
-    @Published var custoTotalSemImposto: Double = 0.0
-    @Published var custoTotalKiloSemImposto: Double = 0.0
-    
-    @Published var state: Int = 0
-    
-    @Published var showBanner: Bool = false
-    @Published var bannerData: BannerModifier.BannerData = BannerModifier.BannerData(title: "", detail: "", type: .Info)
-    
-    var id: UUID = UUID()
-    var values = ["" : 0.0]
-    
-    func updateState(value: Int) {
-        print("updateState: \(value)")
-        self.state = value
-    }
-    
-    func updateProductsFromData(list: [Product]) {
-        self.selectedProducts = list
-        list.forEach { item in
-            calculate(product: item, value: item.quantity.description)
-        }
-        
-    }
-    
-    func load()  {
-        self.list =  productsRepository.getAll()
-        setUpProvider()
-        self.selectedProducts = getProductSelection()
-    }
-    
-    func save(yourPrice: String) -> Bool {
-        let finalPrice = Double(yourPrice) ?? self.lucro
-        
-        if name.isEmpty {
-            bannerData.title = "Error"
-            bannerData.detail = "Name can not be empty"
-            bannerData.type = .Error
-            showBanner = true
-            return false
-        }
-        
-        if finalPrice == 0.0 {
-            bannerData.title = "Error"
-            bannerData.detail = "Price can not be zero"
-            bannerData.type = .Error
-            showBanner = true
-            return false
-        }
-        
-        
-        var finalProds: [Product] = []
-        values.forEach { item in
-            if var prod = selectedProducts.first(where: {$0.id.uuidString == item.key }) {
-                prod.quantity = item.value
-                finalProds.append(prod)
-            }
-        }
-        
-        
-        do {
-            let dictionary = ["id" : id,"name": name, "price": finalPrice,"products": finalProds] as [String : Any]
-            let datasheet = try Datasheet(from: dictionary)
-            datasheetRepository.add(value: datasheet)
-            return true
-        } catch {
-            print("Error: \(error)")
-            return false
-        }
-        
-    }
-    
-    func productsNames() -> [String]  {
-        return self.list.map { $0.name }
-    }
-    
-    func provideProductSelection() -> BaseSimpleProvider {
-        return self.provider!
-    }
-    
-    func calCustoBruto(product: Product, qtUsada: String) -> Double {
-        var result = 0.0
-        
-        if let qt = Double(qtUsada) {
-            result = calculateCustoBruto(price: product.price, qtUsada: qt)
-        }
-        
-        return result
-    }
-    
-    private func calculateCustoBruto(price: Double,qtUsada: Double ) -> Double {
-        let fator = 1000.0
-        return (price * (qtUsada * 1000) ) / fator
-    }
-    
-    func updateName(value: String) {
-        self.name = value
-    }
-    
-    func calculateLucro(valueString: String) {
-        
-        if let value = Double(valueString) {
-            let per = ((value / self.custoTotalSemImposto) - 1) * 100
-            self.margemLucroPer = "\(per.format())%"
-            self.margemLucro = value - self.custoTotalSemImposto
-        }
-        
-    }
-    
-    func calculate(product: Product, value: String) {
-        updateValues(productId: product.id.uuidString, value: value)
-        
-        let kilos = getKiloProductsIds()
-        
-        
-        var totalKilos = 0.0
-        values.forEach { (key, value) in
-            
-            if kilos.contains(key){
-                totalKilos = totalKilos + (value * 1000)
-            }
-            
-        }
-        
-        self.custoTotalSemImposto = calCustoTotal()
-        self.valorKilo =  self.custoTotalSemImposto / pesoTotal
-        
-        
-        let impactInEachProduct = repoExpenses.impactInEachProduct() - 1
-        let per = (self.custoTotalSemImposto / impactInEachProduct)
-        self.custoTotalComImposto = self.custoTotalSemImposto + per
-        
-        self.pesoTotal = (totalKilos / 1000)
-        
-        let markup = 30
-        self.lucro = self.custoTotalSemImposto + Double(markup)*custoTotalSemImposto/100;
-        calculateLucro(valueString: "\(lucro)")
-        
-    }
-    
-    private func calCustoTotal() -> Double {
-        var total = 0.0
-        self.selectedProducts.forEach { item in
-            
-            if let real = values[item.id.uuidString] {
-                total = total + calculateCustoBruto(price: item.price, qtUsada: real)
-            }
-        }
-        
-        return total
-    }
-    
-    private func getKiloProductsIds() -> [String] {
-        self.selectedProducts.filter { item in
-            item.unit.uppercased() == "KG"
-        }.map { $0.id.uuidString }
-    }
-    
-    
-    private func setUpProvider() {
-        if provider == nil {
-            self.provider = BaseSimpleProvider(list: productsNames())
-        }
-    }
-    
-    private func getProductSelection() -> [Product] {
-        let selection = provider?.values ?? []
-        return self.list.filter { selection.contains($0.name) }
-    }
-    
-    private func updateValues(productId: String ,value: String){
-        if let real = Double(value) {
-            values[productId] = real
-        }
-    }
-}
-
 struct ManageDatasheetView: View {
     @State var data: Datasheet?
     @ObservedObject var viewModel = ManageDatasheetViewModel()
@@ -207,51 +15,55 @@ struct ManageDatasheetView: View {
     @State private var stepper = 0
     
     var body: some View {
-        VStack(alignment: .leading) {
-            
-            Picker(selection: $stepper, label: Text("")) {
-                Text("Geral").tag(0)
-                Text("Valores").tag(1)
-            }.pickerStyle(SegmentedPickerStyle())
-            
-            
-            
-            if self.stepper == 0 {
+        
+        ZStack { Color.black.edgesIgnoringSafeArea(.all)
+            VStack(alignment: .leading) {
                 
-                TextField("Type in the name", text: $nameBinding, onCommit: {
-                    print(nameBinding)
-                    self.viewModel.updateName(value: nameBinding)
-                }).padding().foregroundColor(.blue).font(.title)
+                Picker(selection: $stepper, label: Text("")) {
+                    Text("Geral").tag(0)
+                    Text("Ingredientes").tag(1)
+                    Text("Valores").tag(2)
+                }.pickerStyle(SegmentedPickerStyle()).padding()
                 
-                
-                List { Section(header: Header(viewModel: self.viewModel), footer: SummaryView(viewModel: self.viewModel)) {
+                if self.stepper == 0 {
                     
-                    ForEach(self.viewModel.selectedProducts) { section in
-                        Item(product: section, viewModel: self.viewModel)
+                    Form {
+                        Section(header: Text("Name").fontWeight(.bold)) {
+                            TextField("Type in the name", text: $nameBinding, onCommit: {
+                                self.viewModel.updateName(value: nameBinding)
+                            }).foregroundColor(.blue).font(.title)
+                        }
+                                                
                     }
+                    
+                } else if self.stepper == 1 {
+                    
+                    List { Section(header: Header(viewModel: self.viewModel)) {
+                        
+                        ForEach(self.viewModel.selectedProducts) { section in
+                            Item(product: section, viewModel: self.viewModel)
+                        }
+                    }
+                    }.listStyle(GroupedListStyle()).onAppear {
+                        self.viewModel.load()
+                    }
+                    
+                } else if self.stepper == 2 {
+                    SummaryView(viewModel: self.viewModel)
                 }
-                }.listStyle(GroupedListStyle()).onAppear {
-                    self.viewModel.load()
+                Spacer()
+            }.navigationBarTitle(Text("Datasheet")).onAppear {
+                
+                if self.viewModel.state == 0 {
+                    self.nameBinding = self.data?.name ?? ""
+                    self.viewModel.updateProductsFromData(list: self.data?.produtcs ?? [])
+                    self.viewModel.id = self.data?.id ?? UUID()
                 }
                 
-            }
-            
-            
-            
-            
-            
-            Spacer()
-        }.navigationBarTitle(Text("Datasheet"))
-        .onAppear {
-            
-            if self.viewModel.state == 0 {
-                self.nameBinding = self.data?.name ?? ""
-                self.viewModel.updateProductsFromData(list: self.data?.produtcs ?? [])
-                self.viewModel.id = self.data?.id ?? UUID()
-            }
-            
+            }.banner(data: $viewModel.bannerData, show: $viewModel.showBanner)
         }
-        .banner(data: $viewModel.bannerData, show: $viewModel.showBanner)
+        
+        
     }
 }
 
@@ -265,7 +77,7 @@ private struct Header: View {
     
     var body: some View {
         HStack{
-            Text("Products").foregroundColor(.black).font(.headline)
+            Text("Products").foregroundColor(.white).font(.headline)
             NavigationLink(destination: MultiSelectionViewProvider(provider: viewModel.provideProductSelection()), isActive: $isLinkActive) {
                 Button(action: {
                     self.isLinkActive = true
@@ -311,9 +123,9 @@ private struct Item: View {
         }
         .onAppear {
             
-            if self.viewModel.state == 0 {
+            //if self.viewModel.state == 0 {
                 self.yourBindingHere = self.product.quantity.description
-            }
+            //}
             
         }
     }
@@ -330,21 +142,14 @@ private struct SummaryView: View {
         
         VStack{
             
-            if viewModel.selectedProducts.isEmpty {
-                Image("lost").padding(.top,50)
-                Text("Add products clicking on plus button").padding()
-            }
-            
             HStack {
-                Text("Peso final").bold().font(.subheadline).padding(.leading,20)
+                Text("Peso final").bold().font(.subheadline).padding(.leading,20).foregroundColor(.white)
                 Spacer()
-                Text("\(self.viewModel.pesoTotal.description)").font(.subheadline).padding(.trailing,20)
+                Text("\(self.viewModel.pesoTotal.description)").font(.subheadline).padding(.trailing,20).foregroundColor(.white)
             }.opacity(self.viewModel.selectedProducts.isEmpty ? 0 : 1)
             
             
             VStack(alignment: .leading) {
-                
-                Text("Resumo").bold().foregroundColor(.black).font(.subheadline).padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
                 
                 VStack {
                     
@@ -352,22 +157,23 @@ private struct SummaryView: View {
                         Text("Custo Total Bruto").bold().font(.subheadline)
                         Spacer()
                         Text("\(self.viewModel.getCurrency()) \(self.viewModel.custoTotalSemImposto.format())").bold().font(.subheadline)
-                    }
+                    }.padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
                     
                     HStack {
                         Text("Custo Total com Imposto").bold().font(.subheadline)
                         Spacer()
                         Text("\(self.viewModel.getCurrency()) \(self.viewModel.custoTotalComImposto.format())").bold().font(.subheadline)
-                    }
+                    }.padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
                     
                     
                     HStack {
                         Text("Valor do (KG)").bold().font(.subheadline)
                         Spacer()
                         Text("\(self.viewModel.valorKilo.format())").bold().font(.subheadline)
-                    }.padding(.top,10)
+                    }.padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
                     
-                }.padding(.bottom,20)
+                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                .background(Color.green).cornerRadius(6)
                 
                 HStack {
                     VStack (alignment: .leading) {
@@ -422,7 +228,7 @@ private struct SummaryView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .background(Color.blue)
+                .background(Color.pink)
                 .cornerRadius(6)
                 .padding(.top,50)
                 
@@ -433,7 +239,7 @@ private struct SummaryView: View {
             .opacity(self.viewModel.selectedProducts.isEmpty ? 0 : 1)
         }
         
-        
+        .padding()
         .modifier(DismissingKeyboard())
     }
 }

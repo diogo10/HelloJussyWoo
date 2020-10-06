@@ -44,6 +44,7 @@
 		D9C631962517D64000A7300F /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = D9C631952517D64000A7300F /* SwiftUICharts */; };
 		D9DE6C142502A38700C6A728 /* ManagePricingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DE6C132502A38700C6A728 /* ManagePricingItemView.swift */; };
 		D9DEF80125273B6D00A013DF /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DEF80025273B6D00A013DF /* ViewModifiers.swift */; };
+		D9FF8CD3252CF72600E1070B /* ManageDatasheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FF8CD2252CF72600E1070B /* ManageDatasheetViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,7 @@
 		D9DE6C132502A38700C6A728 /* ManagePricingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagePricingItemView.swift; sourceTree = "<group>"; };
 		D9DEF80025273B6D00A013DF /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		D9F8D6EF247179C0004F43FF /* Data */ = {isa = PBXFileReference; lastKnownFileType = text; path = Data; sourceTree = SOURCE_ROOT; };
+		D9FF8CD2252CF72600E1070B /* ManageDatasheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageDatasheetViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			children = (
 				5B2963E1A1CBE357DB415326 /* ManageDatasheetView.swift */,
 				D9663B7124FBADD100EFCCD5 /* DatasheetsView.swift */,
+				D9FF8CD2252CF72600E1070B /* ManageDatasheetViewModel.swift */,
 			);
 			path = Datasheet;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 				D9ABB30B247A95E500107707 /* ActivityIndicator.swift in Sources */,
 				D999767825003962004C9767 /* PricingView.swift in Sources */,
 				D950894F24D5568800D30648 /* ContentViewV2.swift in Sources */,
+				D9FF8CD3252CF72600E1070B /* ManageDatasheetViewModel.swift in Sources */,
 				D962EA5C24F53DA400D4F521 /* ManageFixedExpenses.swift in Sources */,
 				D9663B7224FBADD100EFCCD5 /* DatasheetsView.swift in Sources */,
 				D950895124D5570000D30648 /* FinanceView.swift in Sources */,

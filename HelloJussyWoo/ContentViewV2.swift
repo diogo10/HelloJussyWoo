@@ -25,7 +25,7 @@ class ContentViewV2Model {
 }
 
 struct ContentViewV2: View {
-    @State private var selection = 0
+    @State private var selection = 1
     @State private var selectionTitle = ["Ingredients","Datasheets"]
     
     private var financeViewModel = FinanceViewModel()

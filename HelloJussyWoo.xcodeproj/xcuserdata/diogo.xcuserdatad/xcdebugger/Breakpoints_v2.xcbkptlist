@@ -3,4 +3,70 @@
    uuid = "4580FC32-5FDB-439F-B024-79FF51BC544F"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "13A94522-CA5A-4CA7-833C-CF5B1478FFC8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HelloJussyWoo/UI/Datasheet/ManageDatasheetViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "updateProductsFromData(list:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "13A94522-CA5A-4CA7-833C-CF5B1478FFC8 - c440df15cdd29366"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HelloJussyWoo.ManageDatasheetViewModel.updateProductsFromData(list: Swift.Array&lt;Data.Product&gt;) -&gt; ()"
+                  moduleName = "HelloJussyWoo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/diogo/Documents/XcodeProjects/HelloJussyWoo/HelloJussyWoo/UI/Datasheet/ManageDatasheetViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "47"
+                  endingLineNumber = "47"
+                  offsetFromSymbolStart = "105">
+               </Location>
+               <Location
+                  uuid = "13A94522-CA5A-4CA7-833C-CF5B1478FFC8 - c92653723aa58d7d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Data.Product) -&gt; () in HelloJussyWoo.ManageDatasheetViewModel.updateProductsFromData(list: Swift.Array&lt;Data.Product&gt;) -&gt; ()"
+                  moduleName = "HelloJussyWoo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/diogo/Documents/XcodeProjects/HelloJussyWoo/HelloJussyWoo/UI/Datasheet/ManageDatasheetViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "42">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B033769-E8B3-4B63-908B-89597E725141"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HelloJussyWoo/UI/Datasheet/ManageDatasheetViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "load()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
