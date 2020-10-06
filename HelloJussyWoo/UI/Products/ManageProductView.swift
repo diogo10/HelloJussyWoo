@@ -24,6 +24,13 @@ class ManageProductViewModel: BaseViewModel {
         self.model = product
     }
     
+    func getUnit(product: Product?) -> Int {
+        if let targetUnit = product?.unit {
+            return units.firstIndex { $0 == targetUnit } ?? 0
+        }
+        return 0
+    }
+    
     func save(name: String, price: String, unit: String) -> Bool {
         
         if var item = model {
@@ -92,12 +99,13 @@ struct ManageProductView: View {
             .cornerRadius(6)
             .padding()
             
-            .navigationBarTitle(Text("Products detail"))
+            .navigationBarTitle(Text("Product detail"))
             
         }.onAppear {
             self.viewModel.load(product: self.product)
             self.name = self.product?.name ?? ""
             self.price = self.product?.price.format() ?? ""
+            self.unitIndex = self.viewModel.getUnit(product: self.product)
             
         }
         
