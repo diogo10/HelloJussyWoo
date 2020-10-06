@@ -139,7 +139,7 @@ public class MoneyEntryRepository: MoneyEntryService {
     
     private func filter(month: Int, year: Int,values: [MoneyEntry]) -> [MoneyEntry] {
         return values.filter { item in
-            return item.year == year && item.month == month
+            return item.year == year && item.month == month && !item.id.isEmpty
         }
     }
     

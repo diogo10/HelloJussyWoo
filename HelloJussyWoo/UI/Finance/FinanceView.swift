@@ -188,7 +188,8 @@ struct FinanceView: View {
                     }
                 }
                 
-            }.onDelete(perform: self.deleteItem)
+            }
+            //.onDelete(perform: self.deleteItem)
             
             
         }
