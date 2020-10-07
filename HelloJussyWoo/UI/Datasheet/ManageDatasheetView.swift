@@ -28,7 +28,7 @@ struct ManageDatasheetView: View {
                 if self.stepper == 0 {
                     
                     Form {
-                        Section(header: Text("Name").fontWeight(.bold)) {
+                        Section(header: Text("Name").fontWeight(.bold).modifier(SectionHeaderStyle())) {
                             TextField("Type in the name", text: $nameBinding, onCommit: {
                                 self.viewModel.updateName(value: nameBinding)
                             }).foregroundColor(.blue).font(.title)
@@ -51,7 +51,7 @@ struct ManageDatasheetView: View {
                 } else if self.stepper == 2 {
                     SummaryView(viewModel: self.viewModel)
                 }
-                Spacer()
+               
             }.navigationBarTitle(Text("Datasheet")).onAppear {
                 
                 if self.viewModel.state == 0 {
@@ -78,13 +78,13 @@ private struct Header: View {
     
     var body: some View {
         HStack{
-            Text("Products").foregroundColor(.white).font(.headline)
+            Text("Products").foregroundColor(.white).font(.headline).modifier(SectionHeaderStyle())
             NavigationLink(destination: MultiSelectionViewProvider(provider: viewModel.provideProductSelection()), isActive: $isLinkActive) {
                 Button(action: {
                     self.isLinkActive = true
                     self.viewModel.updateState(value: 1)
                 }) {
-                    Image(systemName: "plus").foregroundColor(.blue)
+                    Image(systemName: "plus").foregroundColor(.white)
                 }
             }
         }
@@ -204,7 +204,7 @@ private struct SummaryView: View {
                     
                     
                     
-                }.padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                }.padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
                 .background(Color.green).cornerRadius(6)
                 
                 

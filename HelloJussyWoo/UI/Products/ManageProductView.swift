@@ -61,12 +61,12 @@ struct ManageProductView: View {
             
             VStack {
                 Form {
-                    Section(header: Text("Name").fontWeight(.bold)) {
+                    Section(header: Text("Name").fontWeight(.bold).modifier(SectionHeaderStyle())) {
                         TextField("Type in the name", text: self.$name)
                             .keyboardType(.default).accentColor(.blue)
                     }
                     
-                    Section(header: Text("Unidades").fontWeight(.bold)) {
+                    Section(header: Text("Unidades").fontWeight(.bold).modifier(SectionHeaderStyle())) {
                         Picker(selection: self.$unitIndex, label: Text("")) {
                             ForEach(0 ..< units.count) {
                                 Text(units[$0])
@@ -74,7 +74,7 @@ struct ManageProductView: View {
                         }.pickerStyle(SegmentedPickerStyle())
                     }
                     
-                    Section(header: Text("Price").fontWeight(.bold)) {
+                    Section(header: Text("Price").fontWeight(.bold).modifier(SectionHeaderStyle())) {
                         TextField("Type in the price", text: self.$price)
                             .keyboardType(.decimalPad).accentColor(.blue)
                     }
