@@ -33,7 +33,7 @@ struct ManageDatasheetView: View {
                                 self.viewModel.updateName(value: nameBinding)
                             }).foregroundColor(.blue).font(.title)
                         }
-                                                
+                        
                     }
                     
                 } else if self.stepper == 1 {
@@ -42,11 +42,11 @@ struct ManageDatasheetView: View {
                         
                         ForEach(self.viewModel.selectedProducts) { section in
                             Item(product: section, viewModel: self.viewModel)
-                        }
+                        }.listRowBackground(Color.black)
                     }
                     }.listStyle(GroupedListStyle()).onAppear {
                         self.viewModel.load()
-                    }
+                    }.modifier(DismissingKeyboard())
                     
                 } else if self.stepper == 2 {
                     SummaryView(viewModel: self.viewModel)
@@ -57,7 +57,8 @@ struct ManageDatasheetView: View {
                 if self.viewModel.state == 0 {
                     self.nameBinding = self.data?.name ?? ""
                     self.viewModel.updateProductsFromData(list: self.data?.produtcs ?? [])
-                    self.viewModel.id = self.data?.id ?? UUID()
+                    self.viewModel.id = self.data?.id ?? UUID().uuidString
+                    self.viewModel.name = self.data?.name ?? ""
                 }
                 
             }.banner(data: $viewModel.bannerData, show: $viewModel.showBanner)
@@ -104,9 +105,9 @@ private struct Item: View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("\(product.name)").bold().font(.subheadline)
-                    Text("\(product.unit) / \(product.price.format())").font(.caption)
-                    Text("Custo Bruto: \(self.viewModel.calCustoBruto(product: product, qtUsada: yourBindingHere ).format())").font(.caption)
+                    Text("\(product.name)").bold().font(.subheadline).foregroundColor(Color.white)
+                    Text("\(product.unit) / \(product.price.format())").font(.caption).foregroundColor(Color.white)
+                    Text("Custo Bruto: \(self.viewModel.calCustoBruto(product: product, qtUsada: yourBindingHere ).format())").font(.caption).foregroundColor(Color.white)
                 }
                 
                 Spacer()
@@ -120,14 +121,10 @@ private struct Item: View {
                 }.padding(.leading,50).accentColor(.blue)
                 
             }.padding()
+        }.background(Color.black).onAppear {
+            self.yourBindingHere = self.product.quantity.description
         }
-        .onAppear {
-            
-            //if self.viewModel.state == 0 {
-                self.yourBindingHere = self.product.quantity.description
-            //}
-            
-        }
+        .background(Color.black)
     }
     
     

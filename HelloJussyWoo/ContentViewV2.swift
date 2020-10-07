@@ -35,6 +35,7 @@ struct ContentViewV2: View {
         UITableViewCell.appearance().selectionStyle = .none
         UITableViewCell.appearance().backgroundColor = .clear
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().backgroundColor = UIColor.black
         
         UITabBar.appearance().barTintColor = UIColor.black
         UITabBar.appearance().backgroundColor = UIColor.black

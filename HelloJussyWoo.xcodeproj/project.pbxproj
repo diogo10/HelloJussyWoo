@@ -31,6 +31,9 @@
 		D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB310247AB0AD00107707 /* ConfigurationViewModel.swift */; };
 		D9B6A8C224F11FA8005437D9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B6A8C124F11FA8005437D9 /* SettingsView.swift */; };
 		D9B799A62516C50D00707EC6 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B799A52516C50D00707EC6 /* MoreView.swift */; };
+		D9BE35B7252E135100ACB78A /* ASCollectionView in Frameworks */ = {isa = PBXBuildFile; productRef = D9BE35B6252E135100ACB78A /* ASCollectionView */; };
+		D9BE35BC252E182300ACB78A /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = D9BE35BB252E182300ACB78A /* QGrid */; };
+		D9BE35BF252E18FC00ACB78A /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BE35BE252E18FC00ACB78A /* Collection.swift */; };
 		D9C59D482470717F00569FC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D472470717F00569FC8 /* AppDelegate.swift */; };
 		D9C59D4A2470717F00569FC8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D492470717F00569FC8 /* SceneDelegate.swift */; };
 		D9C59D4C2470717F00569FC8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D4B2470717F00569FC8 /* ContentView.swift */; };
@@ -69,6 +72,7 @@
 		D9ABB310247AB0AD00107707 /* ConfigurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewModel.swift; sourceTree = "<group>"; };
 		D9B6A8C124F11FA8005437D9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D9B799A52516C50D00707EC6 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		D9BE35BE252E18FC00ACB78A /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		D9C59D442470717F00569FC8 /* HelloJussyWoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloJussyWoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9C59D472470717F00569FC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9C59D492470717F00569FC8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +96,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9BE35BC252E182300ACB78A /* QGrid in Frameworks */,
+				D9BE35B7252E135100ACB78A /* ASCollectionView in Frameworks */,
 				D93257432506982100FA311E /* SwiftUIRefresh in Frameworks */,
 				D9663B7024FBADA400EFCCD5 /* Data in Frameworks */,
 				D9663B6F24FBADA400EFCCD5 /* Alamofire in Frameworks */,
@@ -176,6 +182,7 @@
 				D92A82C324F1601200ED30BF /* BaseFormView.swift */,
 				D954AC1D25178D0200CE6A02 /* Banner.swift */,
 				D9DEF80025273B6D00A013DF /* ViewModifiers.swift */,
+				D9BE35BE252E18FC00ACB78A /* Collection.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -294,6 +301,8 @@
 				D9F8D6F0247179E6004F43FF /* Data */,
 				D93257422506982100FA311E /* SwiftUIRefresh */,
 				D9C631952517D64000A7300F /* SwiftUICharts */,
+				D9BE35B6252E135100ACB78A /* ASCollectionView */,
+				D9BE35BB252E182300ACB78A /* QGrid */,
 			);
 			productName = HelloJussyWoo;
 			productReference = D9C59D442470717F00569FC8 /* HelloJussyWoo.app */;
@@ -327,6 +336,8 @@
 				D9C59D5D2470728000569FC8 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				D93257412506982100FA311E /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */,
 				D9C631942517D64000A7300F /* XCRemoteSwiftPackageReference "ChartView" */,
+				D9BE35B5252E135100ACB78A /* XCRemoteSwiftPackageReference "ASCollectionView" */,
+				D9BE35BA252E182300ACB78A /* XCRemoteSwiftPackageReference "QGrid" */,
 			);
 			productRefGroup = D9C59D452470717F00569FC8 /* Products */;
 			projectDirPath = "";
@@ -365,6 +376,7 @@
 				D9B799A62516C50D00707EC6 /* MoreView.swift in Sources */,
 				D9C59D4C2470717F00569FC8 /* ContentView.swift in Sources */,
 				D9B6A8C224F11FA8005437D9 /* SettingsView.swift in Sources */,
+				D9BE35BF252E18FC00ACB78A /* Collection.swift in Sources */,
 				D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */,
 				D9ABB30B247A95E500107707 /* ActivityIndicator.swift in Sources */,
 				D999767825003962004C9767 /* PricingView.swift in Sources */,
@@ -591,6 +603,22 @@
 				minimumVersion = 0.0.3;
 			};
 		};
+		D9BE35B5252E135100ACB78A /* XCRemoteSwiftPackageReference "ASCollectionView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apptekstudios/ASCollectionView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.1;
+			};
+		};
+		D9BE35BA252E182300ACB78A /* XCRemoteSwiftPackageReference "QGrid" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Q-Mobile/QGrid";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 		D9C59D5D2470728000569FC8 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -614,6 +642,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D93257412506982100FA311E /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */;
 			productName = SwiftUIRefresh;
+		};
+		D9BE35B6252E135100ACB78A /* ASCollectionView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9BE35B5252E135100ACB78A /* XCRemoteSwiftPackageReference "ASCollectionView" */;
+			productName = ASCollectionView;
+		};
+		D9BE35BB252E182300ACB78A /* QGrid */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9BE35BA252E182300ACB78A /* XCRemoteSwiftPackageReference "QGrid" */;
+			productName = QGrid;
 		};
 		D9C59D5E2470728000569FC8 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
