@@ -41,7 +41,7 @@ struct FixedExpensesView: View {
     
     var body: some View {
         List {
-            Section(header: Text("General"), footer: FixedExpensesListFooter(value: viewModel.total() )) {
+            Section(footer: FixedExpensesListFooter(value: viewModel.total() )) {
                 ForEach(viewModel.list) { section in
                     
                     NavigationLink(destination: ManageFixedExpenses(id: section.id) ) {
@@ -55,11 +55,11 @@ struct FixedExpensesView: View {
                                 Spacer()
                                 Text("R$ \(String(format: "%.2f", section.total))").bold().font(.subheadline)
                             }.padding()
-                        }
+                        }.foregroundColor(Color.white)
                     }
                     
                     
-                }.onDelete(perform: self.deleteItem)
+                }.onDelete(perform: self.deleteItem).listRowBackground(Color.black)
             }
             
         }.onAppear {

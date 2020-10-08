@@ -61,7 +61,7 @@ struct ContentViewV2: View {
                 
                 DatasheetsView().tabItem {
                     VStack {
-                        Image(systemName: "bag")
+                        Image(systemName: "folder")
                         Text("Datasheets")
                     }
                     
@@ -86,15 +86,10 @@ struct ContentViewV2: View {
 //                .tag(3)
                 
             }.accentColor(.white)
-            
-            
             .navigationBarTitle(self.selectionTitle[self.selection])
-                        .navigationBarItems(trailing: iconView())
+            .navigationBarItems(trailing: iconView())
             
-            
-            //.navigationBarItems(trailing: iconView())
-            //.navigationBarTitle(Text("Ingredients"))
-            
+             
         }
     }
     
@@ -102,6 +97,8 @@ struct ContentViewV2: View {
     private var imageTopSpace = CGFloat(10)
     
     private func iconView() -> some View {
+        
+        let shouldBeVisible = self.selection != 2
         
         return NavigationLink(destination:  defineDestination() , isActive: $isLinkActive) {
             Button(action: {
@@ -113,7 +110,7 @@ struct ContentViewV2: View {
                     .padding(6)
                     .frame(width: 28, height: 28)
                     .foregroundColor(.white)
-            }.padding(.top,imageTopSpace)
+            }.padding(.top,imageTopSpace).opacity(shouldBeVisible ? 1 : 0)
         }
         
     }
@@ -126,7 +123,7 @@ struct ContentViewV2: View {
         }else if self.selection == 3 {
             return AnyView(ManageFinanceView(data: nil))
         } else {
-             return AnyView(MoreView())
+             return AnyView(EmptyView())
         }
     }
     

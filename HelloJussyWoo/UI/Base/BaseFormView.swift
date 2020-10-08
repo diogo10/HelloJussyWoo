@@ -58,7 +58,7 @@ class BaseFormViewModel : FixedExpensesViewModel {
             return repoExpenses.getTax().format()
         case .targetInSales:
             return repoExpenses.getTargetSales().format()
-         default:
+        default:
             return ""
         }
     }
@@ -69,13 +69,13 @@ class BaseFormViewModel : FixedExpensesViewModel {
             return .decimalPad
         case .targetInSales:
             return .decimalPad
-         default:
+        default:
             return .default
         }
     }
     
     func saveCurrency(value: Int) {
-         print("value: \(value)")
+        print("value: \(value)")
         
         if value == 1 {
             //EU
@@ -87,16 +87,16 @@ class BaseFormViewModel : FixedExpensesViewModel {
     }
     
     func save(type: BaseFormType, value: String) {
-         print("value: \(value)")
+        print("value: \(value)")
         let doubleValue = Double(value) ?? 0.0
         switch type {
         case .tax:
             print("in tax")
             repoExpenses.addTax(value: doubleValue)
-           
-       default:
+            
+        default:
             print("in target")
-             repoExpenses.setTargetSales(value: doubleValue)
+            repoExpenses.setTargetSales(value: doubleValue)
         }
     }
 }
@@ -135,19 +135,30 @@ struct BaseFormView: View {
                 }
                 
                 Section {
-                    Button(action: {
-                        
-                        if self.type == .currency {
-                            self.viewModel.saveCurrency(value: self.previewIndex)
-                        }else {
-                           self.viewModel.save(type: self.type, value: self.value)
+                    
+                    HStack {
+                        Button(action: {
+                            
+                            if self.type == .currency {
+                                self.viewModel.saveCurrency(value: self.previewIndex)
+                            }else {
+                                self.viewModel.save(type: self.type, value: self.value)
+                            }
+                            self.presentation.wrappedValue.dismiss()
+                            
+                            
+                        }) {
+                            HStack {
+                                Spacer()
+                                Text("Save changes").foregroundColor(.white)
+                                Spacer()
+                            }
+                            
                         }
-                        self.presentation.wrappedValue.dismiss()
-                        
-                        
-                    }) {
-                        Text("Save changes")
-                    }
+                        Spacer()
+                    }.padding().listRowInsets(EdgeInsets()).background(Color.pink)
+                    
+                    
                 }
             }.onAppear {
                 self.value = self.viewModel.getValue(type: self.type)
@@ -155,7 +166,7 @@ struct BaseFormView: View {
             
             
         }.navigationBarTitle(self.viewModel.getTitle(type: self.type))
-            .listStyle(GroupedListStyle())
+        .listStyle(GroupedListStyle())
     }
 }
 
