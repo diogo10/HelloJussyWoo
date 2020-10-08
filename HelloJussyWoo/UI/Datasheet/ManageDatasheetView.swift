@@ -59,6 +59,7 @@ struct ManageDatasheetView: View {
                     self.viewModel.updateProductsFromData(list: self.data?.produtcs ?? [])
                     self.viewModel.id = self.data?.id ?? UUID().uuidString
                     self.viewModel.name = self.data?.name ?? ""
+                    self.viewModel.lucro = self.data?.price ?? 0.0
                 }
                 
             }.banner(data: $viewModel.bannerData, show: $viewModel.showBanner)
@@ -140,10 +141,11 @@ private struct SummaryView: View {
         VStack{
             
             HStack {
-                Text("Peso final").bold().font(.subheadline).padding(.leading,20).foregroundColor(.white)
+                Text("Peso final").bold().font(.subheadline).padding(.leading,20).foregroundColor(.black)
                 Spacer()
-                Text("\(self.viewModel.pesoTotal.description)").font(.subheadline).padding(.trailing,20).foregroundColor(.white)
-            }.opacity(self.viewModel.selectedProducts.isEmpty ? 0 : 1)
+                Text("\(self.viewModel.pesoTotal.description)").font(.subheadline).padding(.trailing,20).foregroundColor(.black)
+            }.opacity(self.viewModel.selectedProducts.isEmpty ? 0 : 1).padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+            .background(Color.green).cornerRadius(6)
             
             
             VStack(alignment: .leading) {
@@ -234,9 +236,7 @@ private struct SummaryView: View {
             }.frame(maxWidth: .infinity)
             
             .opacity(self.viewModel.selectedProducts.isEmpty ? 0 : 1)
-        }
-        
-        .padding()
+        }.padding()
         .modifier(DismissingKeyboard())
     }
 }

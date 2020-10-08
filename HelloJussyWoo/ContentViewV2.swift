@@ -25,10 +25,11 @@ class ContentViewV2Model {
 }
 
 struct ContentViewV2: View {
-    @State private var selection = 1
-    @State private var selectionTitle = ["Ingredients","Datasheets"]
+    @State private var selection = 2
+    @State private var selectionTitle = ["Ingredients","Datasheets", "Taxes"]
     
     private var financeViewModel = FinanceViewModel()
+    private var taxesViewModel = TaxesViewModel()
     
     init() {
         UITableView.appearance().backgroundColor = UIColor.black
@@ -66,14 +67,14 @@ struct ContentViewV2: View {
                     
                 }.tag(1)
                 
-//                ProfileView()
-//                    .tabItem {
-//                        VStack {
-//                            Image(systemName: "arkit")
-//                            Text("Settings").foregroundColor(.accentColor)
-//                        }
-//                }
-//                .tag(2)
+                TaxesView(viewModel: taxesViewModel)
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "arkit")
+                            Text("Taxes").foregroundColor(.accentColor)
+                        }
+                }.tag(2)
+                
 //
 //                FinanceView(viewModel: financeViewModel)
 //                    .tabItem {
