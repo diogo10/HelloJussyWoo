@@ -26,7 +26,7 @@ class ContentViewV2Model {
 
 struct ContentViewV2: View {
     @State private var selection = 2
-    @State private var selectionTitle = ["Ingredients","Datasheets", "Taxes"]
+    @State private var selectionTitle = ["Ingredients","Datasheets", "Taxes", "Sales"]
     
     private var financeViewModel = FinanceViewModel()
     private var taxesViewModel = TaxesViewModel()
@@ -75,15 +75,14 @@ struct ContentViewV2: View {
                         }
                 }.tag(2)
                 
-//
-//                FinanceView(viewModel: financeViewModel)
-//                    .tabItem {
-//                        VStack {
-//                            Image(systemName: "bag")
-//                            Text("Sales").foregroundColor(.accentColor)
-//                        }
-//                }
-//                .tag(3)
+
+                FinanceView(viewModel: financeViewModel)
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "bag")
+                            Text("Sales").foregroundColor(.accentColor)
+                        }
+                } .tag(3)
                 
             }.accentColor(.white)
             .navigationBarTitle(self.selectionTitle[self.selection])
@@ -133,6 +132,8 @@ struct ContentViewV2: View {
         }else if self.selection == 1 {
             return "plus"
         }else if self.selection == 2 {
+            return "plus"
+        }else if self.selection == 3 {
             return "plus"
         } else {
              return "person"
