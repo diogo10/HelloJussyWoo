@@ -99,23 +99,35 @@ struct ManageFinanceView: View {
         VStack {
             Form {
                 Section(header: Text("General").fontWeight(.bold)) {
-                    TextField("Client name", text: self.$client).keyboardType(.default).accentColor(.blue)
-                    TextField("Type in the name", text: self.$name).keyboardType(.default).accentColor(.blue)
-                    TextField("Extras", text: self.$extras).keyboardType(.default).accentColor(.blue)
-                    TextField("Location", text: self.$location).keyboardType(.default).accentColor(.blue)
-                    TextField("Phone", text: self.$phone).keyboardType(.default).accentColor(.blue)
+                    
                     Picker(selection: self.$pickerIndex, label: Text("")) {
                         ForEach(0 ..< moneyEntryTypes.count) {
                             Text(moneyEntryTypes[$0])
                         }
                     }.pickerStyle(SegmentedPickerStyle())
+                    
+                    if self.pickerIndex == 1 {
+                        TextField("Client name", text: self.$client).keyboardType(.default).accentColor(.blue)
+                        TextField("Type in the reference name", text: self.$name).keyboardType(.default).accentColor(.blue)
+                        TextField("Extras", text: self.$extras).keyboardType(.default).accentColor(.blue)
+                        TextField("Location", text: self.$location).keyboardType(.default).accentColor(.blue)
+                        TextField("Phone", text: self.$phone).keyboardType(.default).accentColor(.blue)
+                    } else {
+                        TextField("Type in the reference name", text: self.$name).keyboardType(.default).accentColor(.blue)
+                    }
+                    
+                    
                 }
                 
                 Section(header: Text("Values").fontWeight(.bold)) {
                     TextField("Type in the value", text: self.$value).keyboardType(.decimalPad).accentColor(.blue)
-                    TextField("KG", text: self.$kg).keyboardType(.decimalPad).accentColor(.blue)
-                    TextField("Entry", text: self.$entry).keyboardType(.decimalPad).accentColor(.blue)
-                       .modifier(DismissingKeyboard())
+                    
+                    if self.pickerIndex == 1 {
+                        TextField("KG", text: self.$kg).keyboardType(.decimalPad).accentColor(.blue)
+                        TextField("Entry", text: self.$entry).keyboardType(.decimalPad).accentColor(.blue)
+                           .modifier(DismissingKeyboard())
+                    }
+                   
                 }
                 
                 

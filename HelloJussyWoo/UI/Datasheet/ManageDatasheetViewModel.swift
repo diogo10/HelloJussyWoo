@@ -163,7 +163,7 @@ class ManageDatasheetViewModel: BaseViewModel, ObservableObject {
         
         let markup = 30
         self.lucro = self.custoTotalSemImposto + Double(markup)*custoTotalSemImposto/100;
-        calculateLucro(valueString: "\(lucro)")
+        //calculateLucro(valueString: "\(lucro)")
         
     }
     

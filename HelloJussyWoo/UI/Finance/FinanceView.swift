@@ -171,9 +171,9 @@ struct FinanceView: View {
                             
                             VStack(alignment: .leading) {
                                 Text("\(section.name)").bold().font(.subheadline).foregroundColor(.white)
-                                Text("\(section.client)").foregroundColor(.black).font(.caption).foregroundColor(.white)
                                 
                                 if section.type == 1 {
+                                    Text("\(section.client)").foregroundColor(.black).font(.caption).foregroundColor(.white)
                                     Text("\(section.location)").font(.caption).foregroundColor(.white)
                                     Text("Extra: \(section.extras)").font(.caption).foregroundColor(.white)
                                 }
