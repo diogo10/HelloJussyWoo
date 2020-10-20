@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		5B2961E0CA496B08B76DE793 /* ManageDatasheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2963E1A1CBE357DB415326 /* ManageDatasheetView.swift */; };
 		5B2963FAC60AE40E9FCC6EBE /* FixedExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B29606CC2FD27C3A633913B /* FixedExpensesView.swift */; };
-		D92A82C224F145A800ED30BF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A82C124F145A800ED30BF /* ProfileView.swift */; };
+		D92A82C224F145A800ED30BF /* TaxesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A82C124F145A800ED30BF /* TaxesView.swift */; };
 		D92A82C424F1601200ED30BF /* BaseFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A82C324F1601200ED30BF /* BaseFormView.swift */; };
 		D93257432506982100FA311E /* SwiftUIRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = D93257422506982100FA311E /* SwiftUIRefresh */; };
 		D950894F24D5568800D30648 /* ContentViewV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D950894E24D5568800D30648 /* ContentViewV2.swift */; };
@@ -31,6 +31,9 @@
 		D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ABB310247AB0AD00107707 /* ConfigurationViewModel.swift */; };
 		D9B6A8C224F11FA8005437D9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B6A8C124F11FA8005437D9 /* SettingsView.swift */; };
 		D9B799A62516C50D00707EC6 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B799A52516C50D00707EC6 /* MoreView.swift */; };
+		D9BE35B7252E135100ACB78A /* ASCollectionView in Frameworks */ = {isa = PBXBuildFile; productRef = D9BE35B6252E135100ACB78A /* ASCollectionView */; };
+		D9BE35BC252E182300ACB78A /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = D9BE35BB252E182300ACB78A /* QGrid */; };
+		D9BE35BF252E18FC00ACB78A /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9BE35BE252E18FC00ACB78A /* Collection.swift */; };
 		D9C59D482470717F00569FC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D472470717F00569FC8 /* AppDelegate.swift */; };
 		D9C59D4A2470717F00569FC8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D492470717F00569FC8 /* SceneDelegate.swift */; };
 		D9C59D4C2470717F00569FC8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C59D4B2470717F00569FC8 /* ContentView.swift */; };
@@ -43,12 +46,14 @@
 		D9C6319225179FF200A7300F /* ManageFinanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C6319125179FF200A7300F /* ManageFinanceView.swift */; };
 		D9C631962517D64000A7300F /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = D9C631952517D64000A7300F /* SwiftUICharts */; };
 		D9DE6C142502A38700C6A728 /* ManagePricingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DE6C132502A38700C6A728 /* ManagePricingItemView.swift */; };
+		D9DEF80125273B6D00A013DF /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DEF80025273B6D00A013DF /* ViewModifiers.swift */; };
+		D9FF8CD3252CF72600E1070B /* ManageDatasheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FF8CD2252CF72600E1070B /* ManageDatasheetViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5B29606CC2FD27C3A633913B /* FixedExpensesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedExpensesView.swift; sourceTree = "<group>"; };
 		5B2963E1A1CBE357DB415326 /* ManageDatasheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageDatasheetView.swift; sourceTree = "<group>"; };
-		D92A82C124F145A800ED30BF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		D92A82C124F145A800ED30BF /* TaxesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxesView.swift; sourceTree = "<group>"; };
 		D92A82C324F1601200ED30BF /* BaseFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFormView.swift; sourceTree = "<group>"; };
 		D950894E24D5568800D30648 /* ContentViewV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewV2.swift; sourceTree = "<group>"; };
 		D950895024D5570000D30648 /* FinanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceView.swift; sourceTree = "<group>"; };
@@ -67,6 +72,7 @@
 		D9ABB310247AB0AD00107707 /* ConfigurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewModel.swift; sourceTree = "<group>"; };
 		D9B6A8C124F11FA8005437D9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D9B799A52516C50D00707EC6 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		D9BE35BE252E18FC00ACB78A /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		D9C59D442470717F00569FC8 /* HelloJussyWoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloJussyWoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9C59D472470717F00569FC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9C59D492470717F00569FC8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,7 +86,9 @@
 		D9C59D642470889200569FC8 /* OrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
 		D9C6319125179FF200A7300F /* ManageFinanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFinanceView.swift; sourceTree = "<group>"; };
 		D9DE6C132502A38700C6A728 /* ManagePricingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagePricingItemView.swift; sourceTree = "<group>"; };
+		D9DEF80025273B6D00A013DF /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		D9F8D6EF247179C0004F43FF /* Data */ = {isa = PBXFileReference; lastKnownFileType = text; path = Data; sourceTree = SOURCE_ROOT; };
+		D9FF8CD2252CF72600E1070B /* ManageDatasheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageDatasheetViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +96,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9BE35BC252E182300ACB78A /* QGrid in Frameworks */,
+				D9BE35B7252E135100ACB78A /* ASCollectionView in Frameworks */,
 				D93257432506982100FA311E /* SwiftUIRefresh in Frameworks */,
 				D9663B7024FBADA400EFCCD5 /* Data in Frameworks */,
 				D9663B6F24FBADA400EFCCD5 /* Alamofire in Frameworks */,
@@ -112,6 +122,7 @@
 			children = (
 				5B2963E1A1CBE357DB415326 /* ManageDatasheetView.swift */,
 				D9663B7124FBADD100EFCCD5 /* DatasheetsView.swift */,
+				D9FF8CD2252CF72600E1070B /* ManageDatasheetViewModel.swift */,
 			);
 			path = Datasheet;
 			sourceTree = "<group>";
@@ -137,11 +148,12 @@
 		D9ABB30C247A964E00107707 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				D9DEF80425273BB400A013DF /* Settings */,
 				D9B799A82516C52900707EC6 /* Base */,
 				D9B799B02516C58A00707EC6 /* Woo */,
 				D9B799AA2516C53900707EC6 /* Finance */,
 				D962EA5D24F5451B00D4F521 /* FixedExpenses */,
-				D9B799AC2516C55600707EC6 /* Settings */,
+				D9B799AC2516C55600707EC6 /* Taxes */,
 				D9663B7324FBB04600EFCCD5 /* Datasheet */,
 				D999767925003967004C9767 /* Pricing */,
 				D9904F9525039EF9005159CD /* Products */,
@@ -169,6 +181,8 @@
 				D9663B7424FBB0E000EFCCD5 /* BaseView.swift */,
 				D92A82C324F1601200ED30BF /* BaseFormView.swift */,
 				D954AC1D25178D0200CE6A02 /* Banner.swift */,
+				D9DEF80025273B6D00A013DF /* ViewModifiers.swift */,
+				D9BE35BE252E18FC00ACB78A /* Collection.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -182,13 +196,12 @@
 			path = Finance;
 			sourceTree = "<group>";
 		};
-		D9B799AC2516C55600707EC6 /* Settings */ = {
+		D9B799AC2516C55600707EC6 /* Taxes */ = {
 			isa = PBXGroup;
 			children = (
-				D9B6A8C124F11FA8005437D9 /* SettingsView.swift */,
-				D92A82C124F145A800ED30BF /* ProfileView.swift */,
+				D92A82C124F145A800ED30BF /* TaxesView.swift */,
 			);
-			path = Settings;
+			path = Taxes;
 			sourceTree = "<group>";
 		};
 		D9B799AE2516C56C00707EC6 /* Pickers */ = {
@@ -252,6 +265,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		D9DEF80425273BB400A013DF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D9B6A8C124F11FA8005437D9 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		D9F8D6EC24717777004F43FF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,6 +301,8 @@
 				D9F8D6F0247179E6004F43FF /* Data */,
 				D93257422506982100FA311E /* SwiftUIRefresh */,
 				D9C631952517D64000A7300F /* SwiftUICharts */,
+				D9BE35B6252E135100ACB78A /* ASCollectionView */,
+				D9BE35BB252E182300ACB78A /* QGrid */,
 			);
 			productName = HelloJussyWoo;
 			productReference = D9C59D442470717F00569FC8 /* HelloJussyWoo.app */;
@@ -313,6 +336,8 @@
 				D9C59D5D2470728000569FC8 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				D93257412506982100FA311E /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */,
 				D9C631942517D64000A7300F /* XCRemoteSwiftPackageReference "ChartView" */,
+				D9BE35B5252E135100ACB78A /* XCRemoteSwiftPackageReference "ASCollectionView" */,
+				D9BE35BA252E182300ACB78A /* XCRemoteSwiftPackageReference "QGrid" */,
 			);
 			productRefGroup = D9C59D452470717F00569FC8 /* Products */;
 			projectDirPath = "";
@@ -343,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9C59D482470717F00569FC8 /* AppDelegate.swift in Sources */,
+				D9DEF80125273B6D00A013DF /* ViewModifiers.swift in Sources */,
 				D9C59D4A2470717F00569FC8 /* SceneDelegate.swift in Sources */,
 				D9C59D652470889200569FC8 /* OrderView.swift in Sources */,
 				D9DE6C142502A38700C6A728 /* ManagePricingItemView.swift in Sources */,
@@ -350,10 +376,12 @@
 				D9B799A62516C50D00707EC6 /* MoreView.swift in Sources */,
 				D9C59D4C2470717F00569FC8 /* ContentView.swift in Sources */,
 				D9B6A8C224F11FA8005437D9 /* SettingsView.swift in Sources */,
+				D9BE35BF252E18FC00ACB78A /* Collection.swift in Sources */,
 				D9ABB311247AB0AD00107707 /* ConfigurationViewModel.swift in Sources */,
 				D9ABB30B247A95E500107707 /* ActivityIndicator.swift in Sources */,
 				D999767825003962004C9767 /* PricingView.swift in Sources */,
 				D950894F24D5568800D30648 /* ContentViewV2.swift in Sources */,
+				D9FF8CD3252CF72600E1070B /* ManageDatasheetViewModel.swift in Sources */,
 				D962EA5C24F53DA400D4F521 /* ManageFixedExpenses.swift in Sources */,
 				D9663B7224FBADD100EFCCD5 /* DatasheetsView.swift in Sources */,
 				D950895124D5570000D30648 /* FinanceView.swift in Sources */,
@@ -361,7 +389,7 @@
 				D9ABB30F247AAD7900107707 /* ConfigurationView.swift in Sources */,
 				D9874DA3247A766D0018B243 /* ViewExtensions.swift in Sources */,
 				D9C59D612470762100569FC8 /* OrdersViewModel.swift in Sources */,
-				D92A82C224F145A800ED30BF /* ProfileView.swift in Sources */,
+				D92A82C224F145A800ED30BF /* TaxesView.swift in Sources */,
 				D954AC1E25178D0200CE6A02 /* Banner.swift in Sources */,
 				D9904F9425039EF4005159CD /* ProductsView.swift in Sources */,
 				D9C6319225179FF200A7300F /* ManageFinanceView.swift in Sources */,
@@ -575,6 +603,22 @@
 				minimumVersion = 0.0.3;
 			};
 		};
+		D9BE35B5252E135100ACB78A /* XCRemoteSwiftPackageReference "ASCollectionView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apptekstudios/ASCollectionView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.1;
+			};
+		};
+		D9BE35BA252E182300ACB78A /* XCRemoteSwiftPackageReference "QGrid" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Q-Mobile/QGrid";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 		D9C59D5D2470728000569FC8 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -598,6 +642,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D93257412506982100FA311E /* XCRemoteSwiftPackageReference "SwiftUIRefresh" */;
 			productName = SwiftUIRefresh;
+		};
+		D9BE35B6252E135100ACB78A /* ASCollectionView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9BE35B5252E135100ACB78A /* XCRemoteSwiftPackageReference "ASCollectionView" */;
+			productName = ASCollectionView;
+		};
+		D9BE35BB252E182300ACB78A /* QGrid */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9BE35BA252E182300ACB78A /* XCRemoteSwiftPackageReference "QGrid" */;
+			productName = QGrid;
 		};
 		D9C59D5E2470728000569FC8 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

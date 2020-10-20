@@ -24,66 +24,71 @@ class ContentViewV2Model {
     
 }
 
-
 struct ContentViewV2: View {
     @State private var selection = 2
-    @State private var selectionTitle = ["Products","Datasheet", "Settings", "Sales" ,"Finance"]
+    @State private var selectionTitle = ["Ingredients","Datasheets", "Taxes", "Sales"]
     
     private var financeViewModel = FinanceViewModel()
+    private var taxesViewModel = TaxesViewModel()
     
     init() {
-        UITableView.appearance().backgroundColor = .white
+        UITableView.appearance().backgroundColor = UIColor.black
+        UITableViewCell.appearance().selectionStyle = .none
+        UITableViewCell.appearance().backgroundColor = .clear
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().backgroundColor = UIColor.black
+        
+        UITabBar.appearance().barTintColor = UIColor.black
+        UITabBar.appearance().backgroundColor = UIColor.black
+        
+        UISegmentedControl.appearance().selectedSegmentTintColor = .systemPink
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.systemPink], for: .normal)
     }
     
     var body: some View {
         
         NavigationView {
-            TabBgView(content: {
-                TabView(selection: self.$selection){
-                    
-                    ProductsView().tabItem {
-                        VStack {
-                            Image(systemName: "cart")
-                            Text("Products")
-                        }
-                        
-                    }.tag(0)
-                    
-                    DatasheetsView().tabItem {
-                        VStack {
-                            Image(systemName: "square.and.pencil")
-                            Text("Datasheet")
-                        }
-                        
-                    }.tag(1)
-                    
-                    ProfileView()
-                        .tabItem {
-                            VStack {
-                                Image(systemName: "arkit")
-                                Text("Settings").foregroundColor(.accentColor)
-                            }
+            TabView(selection: self.$selection){
+                
+                ProductsView().tabItem {
+                    VStack {
+                        Image(systemName: "cart")
+                        Text("Ingredients")
                     }
-                    .tag(2)
                     
-                    FinanceView(viewModel: financeViewModel)
-                        .tabItem {
-                            VStack {
-                                Image(systemName: "bag")
-                                Text("Sales").foregroundColor(.accentColor)
-                            }
+                }.tag(0)
+                
+                DatasheetsView().tabItem {
+                    VStack {
+                        Image(systemName: "folder")
+                        Text("Datasheets")
                     }
-                    .tag(3)
                     
-                }
-            }, title: self.selectionTitle[self.selection])
-            
+                }.tag(1)
+                
+                TaxesView(viewModel: taxesViewModel)
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "arkit")
+                            Text("Taxes").foregroundColor(.accentColor)
+                        }
+                }.tag(2)
+                
+
+                FinanceView(viewModel: financeViewModel)
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "bag")
+                            Text("Sales").foregroundColor(.accentColor)
+                        }
+                } .tag(3)
+                
+            }.accentColor(.white)
+            .navigationBarTitle(self.selectionTitle[self.selection])
             .navigationBarItems(trailing: iconView())
             
-            
-        }
-        .onAppear {
-            print("on load contentview")
+             
         }
     }
     
@@ -91,6 +96,8 @@ struct ContentViewV2: View {
     private var imageTopSpace = CGFloat(10)
     
     private func iconView() -> some View {
+        
+        let shouldBeVisible = self.selection != 2
         
         return NavigationLink(destination:  defineDestination() , isActive: $isLinkActive) {
             Button(action: {
@@ -101,10 +108,8 @@ struct ContentViewV2: View {
                     .resizable()
                     .padding(6)
                     .frame(width: 28, height: 28)
-                    .background(Color.white)
-                    .clipShape(Circle())
-                    .foregroundColor(.blue)
-            }.padding(.top,imageTopSpace)
+                    .foregroundColor(.white)
+            }.padding(.top,imageTopSpace).opacity(shouldBeVisible ? 1 : 0)
         }
         
     }
@@ -117,7 +122,7 @@ struct ContentViewV2: View {
         }else if self.selection == 3 {
             return AnyView(ManageFinanceView(data: nil))
         } else {
-             return AnyView(MoreView())
+             return AnyView(EmptyView())
         }
     }
     
@@ -127,9 +132,11 @@ struct ContentViewV2: View {
         }else if self.selection == 1 {
             return "plus"
         }else if self.selection == 2 {
-            return "person"
+            return "plus"
+        }else if self.selection == 3 {
+            return "plus"
         } else {
-             return "plus"
+             return "person"
         }
     }
     

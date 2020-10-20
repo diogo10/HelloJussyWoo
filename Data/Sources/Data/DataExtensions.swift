@@ -18,6 +18,9 @@ public let moneyEntryTypes: [String] = ["Expense", "Income"]
 
 public extension Double {
     func format() -> String {
+        if isNaN {
+            return String(format: "%.2f", 0.0)
+        }
         return String(format: "%.2f", self)
     }
 }

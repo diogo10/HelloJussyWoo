@@ -1,17 +1,73 @@
 import SwiftUI
 import Data
 
-struct ProfileView: View {
+struct TaxViewModel : Identifiable {
+    var id: UUID
+    var title: String
+    var anyView: AnyView
+}
+
+struct TaxesView: View {
+    @ObservedObject var viewModel: TaxesViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
-            ProfileHeader(viewModel: ProfileViewModel())
+            List {
+                
+                ForEach(viewModel.values) { section in
+                    section.anyView
+                }.listRowBackground((Color.black))
+                
+            }.onAppear {
+                self.viewModel.load()
+            }
         }
     }
 }
 
 
-class ProfileViewModel : FixedExpensesViewModel {
+class TaxesViewModel : FixedExpensesViewModel {
+    
+    @Published var values: [TaxViewModel] = []
+    
+    
+    
+    
+    override func load() {
+        super.load()
+        values.removeAll()
+        
+        values.append(TaxViewModel(id: UUID(), title: "Currency", anyView: AnyView(
+            NavigationLink(destination: CountryFormView()) {
+                CountryItem(viewModel: self).foregroundColor(Color.white)
+            }.background(Color.black)
+
+        )))
+                
+        values.append(TaxViewModel(id: UUID(), title: "Fixed expenses", anyView: AnyView(
+            NavigationLink(destination: FixedExpensesView(viewModel: FixedExpensesViewModel())) {
+                FixedExpenseItem(viewModel: self).foregroundColor(.white)
+            }
+        )))
+        
+        values.append(TaxViewModel(id: UUID(), title: "Target in Sales", anyView: AnyView(
+            NavigationLink(destination: TargetSalesFormView()) {
+                TargetInputItem(viewModel: self).foregroundColor(.white)
+            }
+        )))
+        
+       
+        values.append(TaxViewModel(id: UUID(), title: "Taxes", anyView: AnyView(
+            NavigationLink(destination: TaxFormView()) {
+                TaxInputItem(viewModel: self).foregroundColor(.white)
+            }
+        )))
+        
+        values.append(TaxViewModel(id: UUID(), title: "Total", anyView: AnyView(
+            TotalItem(viewModel: self).foregroundColor(.white)
+        )))
+        
+    }
     
     func getTax() -> String {
         return repoExpenses.getTax().format() + " %"
@@ -35,46 +91,8 @@ class ProfileViewModel : FixedExpensesViewModel {
     
 }
 
-
-struct ProfileHeader: View {
-    @ObservedObject var viewModel: ProfileViewModel
-    
-    var body: some View {
-        VStack {
-            List {
-                
-                NavigationLink(destination: CountryFormView()) {
-                    CountryItem(viewModel: self.viewModel)
-                }
-                
-                NavigationLink(destination: FixedExpensesView(viewModel: FixedExpensesViewModel())) {
-                    FixedExpenseItem(viewModel: self.viewModel)
-                }
-                
-                NavigationLink(destination: TargetSalesFormView()) {
-                    TargetInputItem(viewModel: self.viewModel)
-                }
-                
-                NavigationLink(destination: TaxFormView()) {
-                    TaxInputItem(viewModel: viewModel)
-                }
-                
-                TotalItem(viewModel: self.viewModel)
-                
-            }
-            
-            
-        }
-        
-        .onAppear {
-            print("Seetings")
-            self.viewModel.load()
-        }
-    }
-}
-
 private struct FixedExpenseItem: View {
-    @ObservedObject var viewModel: ProfileViewModel
+    @ObservedObject var viewModel: TaxesViewModel
     var body: some View {
         VStack {
             HStack {
@@ -90,7 +108,7 @@ private struct FixedExpenseItem: View {
 }
 
 private struct CountryItem: View {
-    @ObservedObject var viewModel: ProfileViewModel
+    @ObservedObject var viewModel: TaxesViewModel
     
     var body: some View {
         VStack {
@@ -104,13 +122,13 @@ private struct CountryItem: View {
                 
                 Text("Currency").bold().font(.subheadline)
                 Spacer()
-            }.padding()
+            }.padding().background(Color.black)
         }
     }
 }
 
 private struct TargetInputItem: View {
-    @ObservedObject var viewModel: ProfileViewModel
+    @ObservedObject var viewModel: TaxesViewModel
     
     var body: some View {
         VStack {
@@ -127,7 +145,7 @@ private struct TargetInputItem: View {
 }
 
 private struct TaxInputItem: View {
-    @ObservedObject var viewModel: ProfileViewModel
+    @ObservedObject var viewModel: TaxesViewModel
     
     var body: some View {
         VStack {
@@ -146,7 +164,7 @@ private struct TaxInputItem: View {
 
 private struct TotalItem: View {
     
-    @ObservedObject var viewModel: ProfileViewModel
+    @ObservedObject var viewModel: TaxesViewModel
     
     var body: some View {
         VStack {

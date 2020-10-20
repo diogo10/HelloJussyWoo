@@ -24,6 +24,13 @@ class ManageProductViewModel: BaseViewModel {
         self.model = product
     }
     
+    func getUnit(product: Product?) -> Int {
+        if let targetUnit = product?.unit {
+            return units.firstIndex { $0 == targetUnit } ?? 0
+        }
+        return 0
+    }
+    
     func save(name: String, price: String, unit: String) -> Bool {
         
         if var item = model {
@@ -46,51 +53,69 @@ struct ManageProductView: View {
     @State var product: Product?
     
     private let viewModel = ManageProductViewModel()
-    private let unitProvider: UnitProvider = UnitProvider(list: units)
     
     var body: some View {
-      VStack {
-            Form {
-                Section(header: Text("General").fontWeight(.bold)) {
-                    TextField("Type in the name", text: self.$name).keyboardType(.default).accentColor(.blue)
-                    Picker(selection: self.$unitIndex, label: Text("")) {
-                        ForEach(0 ..< units.count) {
-                            Text(units[$0])
-                        }
-                    }.pickerStyle(SegmentedPickerStyle())
+        
+        ZStack { Color.black.edgesIgnoringSafeArea(.all)
+            
+            
+            VStack {
+                Form {
+                    Section(header: Text("Name").fontWeight(.bold).modifier(SectionHeaderStyle())) {
+                        TextField("Type in the name", text: self.$name)
+                            .keyboardType(.default).accentColor(.blue)
+                    }
+                    
+                    Section(header: Text("Unidades").fontWeight(.bold).modifier(SectionHeaderStyle())) {
+                        Picker(selection: self.$unitIndex, label: Text("")) {
+                            ForEach(0 ..< units.count) {
+                                Text(units[$0])
+                            }
+                        }.pickerStyle(SegmentedPickerStyle())
+                    }
+                    
+                    Section(header: Text("Price").fontWeight(.bold).modifier(SectionHeaderStyle())) {
+                        TextField("Type in the price", text: self.$price)
+                            .keyboardType(.decimalPad).accentColor(.blue)
+                    }
+                    
+                    
+                    
                 }
                 
-                Section(header: Text("Price").fontWeight(.bold)) {
-                    TextField("Type in the price", text: self.$price).keyboardType(.decimalPad).accentColor(.blue)
-                }
-                
-                
-                Section {
+                VStack {
                     Button(action: {
+                        print("save")
+                        
                         if self.viewModel.save(name: self.name, price: self.price, unit: units[self.unitIndex]) {
                             self.presentation.wrappedValue.dismiss()
                         } else {
                             print("Error")
                         }
                         
-                        
                     }) {
-                        Text("Save changes").foregroundColor(.blue)
+                        Text("Save")
+                            .padding()
+                            .foregroundColor(.white)
+                            .font(.title).frame(maxWidth: .infinity)
                     }
                 }
-                }.foregroundColor(Color.black).background(Color.white)
-            
-            
-        .navigationBarTitle(Text("Product"))
-            
-        }.onAppear {
-            print("onAppear")
-            self.viewModel.load(product: self.product)
-            self.name = self.product?.name ?? ""
-            self.price = self.product?.price.format() ?? ""
-            
+                .frame(maxWidth: .infinity)
+                .background(Color.pink)
+                .cornerRadius(6)
+                .padding()
+                
+                
+                
+            }.onAppear {
+                self.viewModel.load(product: self.product)
+                self.name = self.product?.name ?? ""
+                self.price = self.product?.price.format() ?? ""
+                self.unitIndex = self.viewModel.getUnit(product: self.product)
+            }
         }
         
+        .navigationBarTitle("")
     }
 }
 

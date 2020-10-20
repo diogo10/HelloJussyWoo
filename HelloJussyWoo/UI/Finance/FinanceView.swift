@@ -170,19 +170,19 @@ struct FinanceView: View {
                                 .frame(width: 14, height: 14)
                             
                             VStack(alignment: .leading) {
-                                Text("\(section.name)").bold().font(.subheadline).foregroundColor(.black)
-                                Text("\(section.client)").foregroundColor(.black).font(.caption)
+                                Text("\(section.name)").bold().font(.subheadline).foregroundColor(.white)
                                 
                                 if section.type == 1 {
-                                    Text("\(section.location)").foregroundColor(.black).font(.caption)
-                                    Text("Extra: \(section.extras)").foregroundColor(.black).font(.caption)
+                                    Text("\(section.client)").foregroundColor(.black).font(.caption).foregroundColor(.white)
+                                    Text("\(section.location)").font(.caption).foregroundColor(.white)
+                                    Text("Extra: \(section.extras)").font(.caption).foregroundColor(.white)
                                 }
                                 
-                                Text("Day: \(section.day)").foregroundColor(.black).font(.caption)
+                                Text("Day: \(section.day)").font(.caption).foregroundColor(.white)
                             }
                             
                             Spacer()
-                            Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.total))").bold().font(.subheadline).foregroundColor(.black)
+                            Text("\(self.viewModel.getCurrency()) \(String(format: "%.2f", section.total))").bold().font(.subheadline).foregroundColor(.white)
                             
                         }.padding()
                     }

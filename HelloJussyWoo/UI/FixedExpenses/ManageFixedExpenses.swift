@@ -67,13 +67,26 @@ struct ManageFixedExpenses: View {
                     TextField("Type in your amount", text: $value2).keyboardType(.decimalPad)
                 }
                 
+                
                 Section {
-                    Button(action: {
-                        self.viewModel.save(value: self.value2, name: self.value1)
-                        self.presentation.wrappedValue.dismiss()
-                    }) {
-                        Text("Save changes")
-                    }
+                    
+                    HStack {
+                        Button(action: {
+                            
+                            self.viewModel.save(value: self.value2, name: self.value1)
+                            self.presentation.wrappedValue.dismiss()
+                        }) {
+                            HStack {
+                                Spacer()
+                                Text("Save changes").foregroundColor(.white)
+                                Spacer()
+                            }
+                            
+                        }
+                        Spacer()
+                    }.padding().listRowInsets(EdgeInsets()).background(Color.pink)
+                    
+                    
                 }
             }
             

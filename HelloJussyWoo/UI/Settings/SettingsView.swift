@@ -6,10 +6,7 @@ struct SettingsView: View {
 
         List {
             Section(header: ListHeader()) {
-                
-                NavigationLink(destination: ProfileView()) {
-                    Item(value: 0)
-                }
+            
 
                 NavigationLink(destination: FixedExpensesView(viewModel: FixedExpensesViewModel())) {
                     Item(value: 1)
