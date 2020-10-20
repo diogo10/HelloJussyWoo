@@ -1,2 +1,7 @@
 # HelloJussyWoo
-Woocommerce companion app 
+HelloJussy companion application written in SwiftUI
+
+# Screeshots
+
+
+
