@@ -9,5 +9,10 @@ HelloJussy companion application written in SwiftUI. It helps to define the reci
 
 # Screeshots
 
+![alt text](https://github.com/diogo10/HelloJussyWoo/blob/v1/HelloJussyWoo/prints/taxas.png?raw=true)
 
+![alt text](https://github.com/diogo10/HelloJussyWoo/blob/v1/HelloJussyWoo/prints/datasheet0.png?raw=true)
 
+![alt text](https://github.com/diogo10/HelloJussyWoo/blob/v1/HelloJussyWoo/prints/datasheet1.png?raw=true)
+
+![alt text](https://github.com/diogo10/HelloJussyWoo/blob/v1/HelloJussyWoo/prints/datasheet2.png?raw=true)
